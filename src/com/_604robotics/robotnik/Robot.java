@@ -12,7 +12,7 @@ import com._604robotics.robotnik.procedure.Procedure;
 import edu.wpi.first.wpilibj.SampleRobot;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-public class RobotTemplate extends SampleRobot {
+public class Robot extends SampleRobot {
     public static interface Safety {
         public static boolean ENABLED  = true;
         public static boolean DISABLED = false;
@@ -25,8 +25,8 @@ public class RobotTemplate extends SampleRobot {
     private CoordinatorList coordinatorList = new CoordinatorList();
     private ModeMap modeMap = new ModeMap();
     
-    public RobotTemplate () {}
-    public RobotTemplate (boolean safetyEnabled) {
+    public Robot () {}
+    public Robot (boolean safetyEnabled) {
         if (!safetyEnabled) {
             RobotProxy.disable();
             
