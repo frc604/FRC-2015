@@ -26,6 +26,16 @@
  
  11. Select the branches you'd like to edit. 
  
+ 12. Click next
+
+ 13. Click next again
+
+ 14. Select Import as general project
+
+ 15. Click next 
+
+ 16. Click finish
+ 
 
 If you have any questions, talked to [Alan][4].
 
