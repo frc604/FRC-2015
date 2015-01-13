@@ -8,13 +8,15 @@ public class JoystickController {
     
     public final ControllerAxis axisX;
     public final ControllerAxis axisY;
+    public final ControllerAxis axisAdjust;
     
     public JoystickController (int port) {
         final Joystick joystick = new Joystick(port);
         
         this.buttons = new JoystickControllerButtons(joystick);
         
-        this.axisX = new ControllerAxis(joystick, 1);
-        this.axisY = new ControllerAxis(joystick, 2);
+        this.axisX = new ControllerAxis(joystick, 0);
+        this.axisY = new ControllerAxis(joystick, 1);
+        this.axisAdjust = new ControllerAxis(joystick, 2);
     }
 }

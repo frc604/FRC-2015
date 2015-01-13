@@ -14,5 +14,9 @@ public class Dashboard extends Module {
             add("Arcade Drive", driveMode.add("Arcade Drive"));
             add("Stick Drive", driveMode.add("Stick Drive"));
         }});
+        this.set(new DataMap() {{
+    		add("Low Rumble", new DashboardData("Low Rumble", 0));
+    		add("High Rumble", new DashboardData("High Rumble", 0));
+    	}});
     }
 }

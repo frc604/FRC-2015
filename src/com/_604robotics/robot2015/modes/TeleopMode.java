@@ -77,4 +77,10 @@ public class TeleopMode extends Coordinator {
                 //this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "turn", leftDrive.axisX));
             }
         }
+        
+        /*Xbox Rumble testing*/
+        {
+        	this.fill(new DataWire(driver.rumble, "low rumble", modules.getModule("Dashboard").getData("Low Rumble")));
+        	this.fill(new DataWire(driver.rumble, "high rumble", modules.getModule("Dashboard").getData("High Rumble")));
+        }
 }}
