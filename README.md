@@ -36,14 +36,15 @@
 
  16. Click finish
  
+For info on contributing, learning java, and anything else, check the wiki! (It's a bit lacking right now but that will change!)
 
-If you have any questions, talked to [Alan][4].
+For everything else, talk to [Alan][4]!
 
 [1]: http://wpilib.screenstepslive.com/s/4485/m/13809/l/145002-installing-eclipse-c-java
 [2]: http://eclipse.org/egit/download/
 [3]: http://git-scm.com/
 [4]: mailto:alanpusongli@gmail.com 
 
-TODO:   
-1. How to contribute  
+TODO:
+1. Edit wiki   
 2. Figure out what else TODO  
