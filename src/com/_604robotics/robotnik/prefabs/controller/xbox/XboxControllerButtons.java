@@ -31,7 +31,7 @@ public class XboxControllerButtons {
         this.LeftStick  = new ControllerButton(joystick,  9);
         this.RightStick = new ControllerButton(joystick, 10);
         
-        this.LT = new ControllerAxisButton(joystick, 3,  1);
-        this.RT = new ControllerAxisButton(joystick, 3, -1);
+        this.LT = new ControllerAxisButton(joystick, 2, 1);
+        this.RT = new ControllerAxisButton(joystick, 3, 1);
     }
 }
