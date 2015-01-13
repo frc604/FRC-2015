@@ -1,16 +1,8 @@
-2015 robot code.
+#2015 Robot Code
 
-Getting started:
+##Getting started:
 
-We will be programming on an IDE called Eclipse this year. You can view the instructions to get ready here:
-
-http://wpilib.screenstepslive.com/s/4485/m/13809/l/145002-installing-eclipse-c-java
-
-TODO:   
-1. How to contribute  
-2. Figure out what else TODO  
-
-# Pulling the Code
+### Pulling the Code
 
  1. [Set up and configure][1] your Eclipse and FRC tools installation.
 
@@ -40,3 +32,7 @@ If you have any questions, talked to [Alan][4].
 [1]: http://wpilib.screenstepslive.com/s/4485/m/13809/l/145002-installing-eclipse-c-java
 [3]: http://git-scm.com/
 [4]: mailto:alanpusongli@gmail.com 
+
+TODO:   
+1. How to contribute  
+2. Figure out what else TODO  
