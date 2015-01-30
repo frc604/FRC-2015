@@ -8,35 +8,40 @@
 
  2. Download and install [git][3] for your system.
 
- 3. Install [EGit][2]
+If you’re comfortable with command prompt, or would like to become comfortable, continue to the next step. Otherwise, see the wiki for your respective OS. It is highly recommended that you become comfortable with your system’s command prompt.
  
- 4. In Eclipse, File -> Import
- 
- 5. In the window that pops up select Git -> Projects from Git
- 
- 6. Click next
- 
- 7. Select clone from URI
- 
- 8. Click next
- 
- 9. Provide the git URI for this project and your login info
- 
- 10. Click next
- 
- 11. Select the branches you'd like to edit. 
- 
- 12. Click next
+ 3. On Linux-based systems, open up a terminal; on Windows, find "Git Bash" in
+    the Start Menu and open it up.
 
- 13. Click next again
+4. You'll start out in your home directory. You'll need to switch over to your
+    “workspace” directory, which is usually in your "Documents" folder.
+    Run the following command inside your console window:
 
- 14. Select Import as general project
+        cd Documents/workspace
 
- 15. Click next 
+ 5. Pull down a copy of this repository by running the following commands:
 
- 16. Click finish
+        git clone git@github.com:frc604/FRC-2015.git
+
+NOTE: If you receive errors when trying "git clone git clone git@github.com:frc604/FRC-2015.git" [read this][5]
+
+ 6. Go to Eclipse and create a new “Robot Java Project” (File->New->Project->Robot Java Project) project with the
+    following settings:
+
+    | Field            | Value                      |
+    | ---------------- | -------------------------- |
+    | Project Name     | FRC-2015                   |
+    | Project Package  | com._604robotics.robot2015 |
+    | Project Type      | Iterative Robot              |
+
+    If you get strange errors starting up the code after a deploy, it's because
+    you messed these settings up!
  
 For info on contributing, learning java, and anything else, check the wiki! (It's a bit lacking right now but that will change!)
+
+ 7. Delete the Robot.java file in the project that should now appear. It is located in the com._604robotics.robot2015 package. 
+
+ Congrats! You should now be able to sync with github!
 
 For everything else, talk to [Alan][4]!
 
@@ -44,7 +49,8 @@ For everything else, talk to [Alan][4]!
 [2]: http://eclipse.org/egit/download/
 [3]: http://git-scm.com/
 [4]: mailto:alanpusongli@gmail.com 
+[5]: https://help.github.com/articles/generating-ssh-keys/
 
 TODO:
 1. Edit wiki   
-2. Figure out what else TODO  
+2. Figure out what else TODO 
