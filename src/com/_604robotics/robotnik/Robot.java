@@ -10,7 +10,6 @@ import com._604robotics.robotnik.logging.TimeSampler;
 import com._604robotics.robotnik.procedure.Procedure;
 
 import edu.wpi.first.wpilibj.SampleRobot;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot extends SampleRobot {
     public static interface Safety {
@@ -77,8 +76,6 @@ public class Robot extends SampleRobot {
     
     public void operatorControl () {
         Logger.log(" -- Teleop mode begin.");
-
-        SmartDashboard.putInt("COUNTER: ", 0);
         this.loopTime.start();
         RobotProxy.start(moduleManager);
         

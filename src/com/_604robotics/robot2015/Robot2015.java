@@ -9,7 +9,6 @@ import com._604robotics.robotnik.coordinator.CoordinatorList;
 import com._604robotics.robotnik.procedure.ModeMap;
 import com._604robotics.robotnik.module.ModuleMap;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Robot2015 extends Robot {
     public Robot2015 () {

@@ -11,8 +11,6 @@ import com._604robotics.robotnik.prefabs.trigger.TriggerOr;
 import com._604robotics.robotnik.prefabs.trigger.TriggerToggle;
 import com._604robotics.robotnik.trigger.TriggerAccess;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 public class TeleopMode extends Coordinator {
     //private final JoystickController leftDrive  = new JoystickController(1);
     //private final JoystickController rightDrive = new JgoystickController(2);
@@ -75,12 +73,8 @@ public class TeleopMode extends Coordinator {
                 
                 //this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "throttle", leftDrive.axisY));
                 //this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "turn", leftDrive.axisX));
+                
+                this.bind(new Binding(modules.getModule("Drive").getAction("Off"), modules.getModule("Dashboard").getTrigger("Off")));
             }
-        }
-        
-        /*Xbox Rumble testing*/
-        {
-        	this.fill(new DataWire(driver.rumble, "low rumble", modules.getModule("Dashboard").getData("Low Rumble")));
-        	this.fill(new DataWire(driver.rumble, "high rumble", modules.getModule("Dashboard").getData("High Rumble")));
         }
 }}
