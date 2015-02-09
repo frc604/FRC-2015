@@ -13,7 +13,7 @@ If you’re comfortable with command prompt, or would like to become comfortable
  3. On Linux-based systems, open up a terminal; on Windows, find "Git Bash" in
     the Start Menu and open it up.
 
-4. You'll start out in your home directory. You'll need to switch over to your
+ 4. You'll start out in your home directory. You'll need to switch over to your
     “workspace” directory, which is usually in your "Documents" folder.
     Run the following command inside your console window:
 
@@ -37,11 +37,12 @@ NOTE: If you receive errors when trying "git clone git clone git@github.com:frc6
     If you get strange errors starting up the code after a deploy, it's because
     you messed these settings up!
  
-For info on contributing, learning java, and anything else, check the wiki! (It's a bit lacking right now but that will change!)
-
  7. Delete the Robot.java file in the project that should now appear. It is located in the com._604robotics.robot2015 package. 
 
  Congrats! You should now be able to sync with github!
+ 
+
+ For info on contributing, learning java, and anything else, check the wiki! (It's a bit lacking right now but that will change!)
 
 For everything else, talk to [Alan][4]!
 
