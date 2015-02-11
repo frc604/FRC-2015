@@ -7,5 +7,7 @@ import com._604robotics.robotnik.prefabs.outputs.DashboardOutput;
 
 public class DashboardSystem extends Coordinator {
     protected void apply (ModuleManager modules) {
+    	this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"),
+                "throttle", modules.getModule("Dashboard").getData("Throttle")));
     }
 }

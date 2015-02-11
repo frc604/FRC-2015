@@ -17,11 +17,13 @@ public class Dashboard extends Module {
         this.set(new TriggerMap() {{
             final DashboardTriggerChoice driveMode = new DashboardTriggerChoice("Drive Mode");
             add("Tank Drive", driveMode.addDefault("Tank Drive"));
+            add("Throttled Tank Drive", driveMode.add("Throttled Tank Drive"));
             add("Arcade Drive", driveMode.add("Arcade Drive"));
             add("Stick Drive", driveMode.add("Stick Drive"));
             add("Off", driveMode.add("Off"));
         }});
         this.set(new DataMap() {{
+        	add("Throttle", new DashboardData("Throttle", 1D));
     	}});
         this.set(new ElasticController() {{
         	addDefault("Resting", new Action() {

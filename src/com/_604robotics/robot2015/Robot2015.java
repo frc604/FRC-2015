@@ -1,5 +1,6 @@
 package com._604robotics.robot2015;
 
+import com._604robotics.robot2015.systems.DashboardSystem;
 import com._604robotics.robot2015.modes.AutonomousMode;
 import com._604robotics.robot2015.modes.TeleopMode;
 import com._604robotics.robot2015.modules.Drive;
@@ -20,6 +21,10 @@ public class Robot2015 extends Robot {
         this.set(new ModeMap() {{
             setAutonomousMode(new AutonomousMode());
             setTeleopMode(new TeleopMode());
+        }});
+        
+        this.set(new CoordinatorList() {{
+            add(new DashboardSystem());
         }});
     }
 }
