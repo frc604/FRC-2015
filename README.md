@@ -43,6 +43,13 @@ NOTE: If you receive errors when trying "git clone git clone git@github.com:frc6
  
 
  For info on contributing, learning java, and anything else, check the wiki! (It's a bit lacking right now but that will change!)
+ 
+ ### Accessing the JavaDocs
+ 1. Set up your access to the code like above
+ 2. In Eclipse, slect the FRC-2015 project
+ 3. Select Project -> Generate JavaDoc
+ 4. Make sure FRC-2015, private, and Use Standard Doclet are selected
+ 5. You're now set up. To view the JavaDoc, go to Navigate->Open Attatched JavaDoc to view the JavaDoc
 
 For everything else, talk to [Alan][4]!
 

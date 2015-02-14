@@ -7,11 +7,27 @@ import com._604robotics.robotnik.procedure.Procedure;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class RobotProxy.
+ */
 public class RobotProxy {
+    
+    /** The active. */
     private static boolean active = true;
     
+    /**
+     * Disable.
+     */
     protected static void disable () { active = false; }
     
+    /**
+     * Tick.
+     *
+     * @param mode the mode
+     * @param modules the modules
+     * @param coordinators the coordinators
+     */
     public static void tick (Procedure mode, ModuleManager modules, CoordinatorList coordinators) {
         if (active) {
             try {
@@ -24,6 +40,13 @@ public class RobotProxy {
         }
     }
     
+    /**
+     * Process.
+     *
+     * @param mode the mode
+     * @param modules the modules
+     * @param coordinators the coordinators
+     */
     private static void process (Procedure mode, ModuleManager modules, CoordinatorList coordinators) {
         modules.update();
 
@@ -33,10 +56,20 @@ public class RobotProxy {
         modules.execute();
     }
     
+    /**
+     * Start.
+     *
+     * @param modules the modules
+     */
     public static void start (ModuleManager modules) {
         modules.start();
     }
     
+    /**
+     * Update.
+     *
+     * @param modules the modules
+     */
     public static void update (ModuleManager modules) {
         if (active) {
             try {
@@ -49,6 +82,12 @@ public class RobotProxy {
         }
     }
     
+    /**
+     * End.
+     *
+     * @param mode the mode
+     * @param modules the modules
+     */
     public static void end (Procedure mode, ModuleManager modules) {
         if (active) {
             try {

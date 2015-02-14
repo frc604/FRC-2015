@@ -6,9 +6,18 @@ import com._604robotics.robotnik.action.controllers.ElasticController;
 import com._604robotics.robotnik.module.Module;
 import edu.wpi.first.wpilibj.Talon;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Intake.
+ */
 public class Intake extends Module {
+    
+    /** The motor. */
     private final Talon motor = new Talon(0); //Placeholder Talon position
 
+    /**
+     * Instantiates a new intake.
+     */
     public Intake() {
         this.set(new ElasticController() {{
             addDefault("Off", new Action() {

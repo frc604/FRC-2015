@@ -12,7 +12,15 @@ import com._604robotics.robotnik.action.field.FieldMap;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Dashboard.
+ */
 public class Dashboard extends Module {
+    
+    /**
+     * Instantiates a new dashboard.
+     */
     public Dashboard () {
         this.set(new TriggerMap() {{
             final DashboardTriggerChoice driveMode = new DashboardTriggerChoice("Drive Mode");

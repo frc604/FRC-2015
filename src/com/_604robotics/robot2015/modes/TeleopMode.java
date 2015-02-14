@@ -11,14 +11,22 @@ import com._604robotics.robotnik.prefabs.trigger.TriggerOr;
 import com._604robotics.robotnik.prefabs.trigger.TriggerToggle;
 import com._604robotics.robotnik.trigger.TriggerAccess;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class TeleopMode.
+ */
 public class TeleopMode extends Coordinator {
     //private final JoystickController leftDrive  = new JoystickController(1);
     //private final JoystickController rightDrive = new JgoystickController(2);
     
+    /** The driver. */
     private final XboxController     driver = new XboxController(0);
 //    private final XboxController manipulator = new XboxController(2);
     
-    public TeleopMode () {
+    /**
+ * Instantiates a new teleop mode.
+ */
+public TeleopMode () {
         /*leftDrive.axisX.setFactor(-1);
         leftDrive.axisY.setFactor(-1);
         
@@ -48,6 +56,9 @@ public class TeleopMode extends Coordinator {
         driver.rightStick.Y.setDeadband(0.2);
     }
     
+    /* (non-Javadoc)
+     * @see com._604robotics.robotnik.coordinator.Coordinator#apply(com._604robotics.robotnik.module.ModuleManager)
+     */
     protected void apply (ModuleManager modules) {
     	/* Drive Controller */
         {

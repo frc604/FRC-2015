@@ -19,22 +19,42 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Drive.
+ */
 public class Drive extends Module {
+	
+	/** The left. */
 	private final Talon fLeft = new Talon(0);
+	
+	/** The r left. */
 	private final Talon rLeft = new Talon(1);
+	
+	/** The right. */
 	private final Talon fRight = new Talon(2);
+	
+	/** The r right. */
 	private final Talon rRight = new Talon(3);
+    
+    /** The drive. */
     private final RobotDrive drive = new RobotDrive(fLeft, rLeft, fRight, rRight);
     
+    /** The encoder left. */
     private final Encoder encoderLeft = new Encoder(2, 1);
+    
+    /** The encoder right. */
     private final Encoder encoderRight = new Encoder(3, 4);
     
+    /** The pid left. */
     private final PIDController pidLeft = new PIDController(0.005, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
             fLeft.set(output);
             rLeft.set(output);
         }
     });
+    
+    /** The pid right. */
     private final PIDController pidRight = new PIDController(0.005, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
             fRight.set(output);
@@ -42,6 +62,9 @@ public class Drive extends Module {
         }
     });
     
+    /**
+     * Instantiates a new drive.
+     */
     public Drive () {
         encoderLeft.setPIDSourceParameter(PIDSourceParameter.kDistance);
         encoderRight.setPIDSourceParameter(PIDSourceParameter.kDistance);

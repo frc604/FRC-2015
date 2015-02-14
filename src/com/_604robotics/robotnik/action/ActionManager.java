@@ -12,15 +12,35 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import java.util.Hashtable;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class ActionManager.
+ */
 public class ActionManager {
+    
+    /** The module name. */
     private final String moduleName;
     
+    /** The controller. */
     private final ActionController controller;
     
+    /** The trigger table. */
     private final IndexedTable triggerTable;
+    
+    /** The status table. */
     private final IndexedTable statusTable;
+    
+    /** The action table. */
     private final Hashtable actionTable;
     
+    /**
+     * Instantiates a new action manager.
+     *
+     * @param module the module
+     * @param moduleName the module name
+     * @param controller the controller
+     * @param table the table
+     */
     public ActionManager (final ModuleReference module, String moduleName, ActionController controller, final IndexedTable table) {
         this.moduleName = moduleName;
         
@@ -40,17 +60,29 @@ public class ActionManager {
         });
     }
     
+    /**
+     * Gets the action.
+     *
+     * @param name the name
+     * @return the action
+     */
     public ActionReference getAction (String name) {
         ActionReference ref = (ActionReference) this.actionTable.get(name);
         if (ref == null) InternalLogger.missing("ActionReference", name);
         return ref;
     }
     
+    /**
+     * Reset.
+     */
     public void reset () {
         final Iterator i = new Iterator(this.actionTable);
         while (i.next()) ((ActionReference) i.value).reset();
     }
     
+    /**
+     * Update.
+     */
     public void update () {
         final Scorekeeper r = new Scorekeeper(0D);
         final Iterator i = controller.iterate();
@@ -60,6 +92,9 @@ public class ActionManager {
         this.statusTable.putString("triggeredAction", r.score > 0 ? (String) r.victor : "");
     }
     
+    /**
+     * Execute.
+     */
     public void execute () {
         final String triggeredAction = this.statusTable.getString("triggeredAction", "");
         final String lastAction = this.statusTable.getString("lastAction", "");
@@ -83,6 +118,9 @@ public class ActionManager {
         this.statusTable.putString("lastAction", selectedAction);
     }
     
+    /**
+     * End.
+     */
     public void end () {
         final String lastAction = this.statusTable.getString("lastAction", "");
         

@@ -11,20 +11,49 @@ import com._604robotics.robotnik.procedure.Procedure;
 
 import edu.wpi.first.wpilibj.SampleRobot;
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Robot.
+ */
 public class Robot extends SampleRobot {
+    
+    /**
+     * The Interface Safety.
+     */
     public static interface Safety {
+        
+        /** The enabled. */
         public static boolean ENABLED  = true;
+        
+        /** The disabled. */
         public static boolean DISABLED = false;
     }
     
+    /** The table. */
     private final IndexedTable table = IndexedTable.getTable("robotnik");
+    
+    /** The loop time. */
     private final TimeSampler loopTime = new TimeSampler("Loop", 1D);
     
+    /** The module manager. */
     private ModuleManager moduleManager = new ModuleManager(new ModuleMap(), this.table.getSubTable("modules"));
+    
+    /** The coordinator list. */
     private CoordinatorList coordinatorList = new CoordinatorList();
+    
+    /** The mode map. */
     private ModeMap modeMap = new ModeMap();
     
+    /**
+     * Instantiates a new robot.
+     */
     public Robot () {}
+    
+    /**
+     * Instantiates a new robot.
+     *
+     * @param safetyEnabled the safety enabled
+     */
     public Robot (boolean safetyEnabled) {
         if (!safetyEnabled) {
             RobotProxy.disable();
@@ -39,23 +68,44 @@ public class Robot extends SampleRobot {
         }
     }
     
+    /**
+     * Sets the.
+     *
+     * @param moduleMap the module map
+     */
     protected void set (ModuleMap moduleMap) {
         this.moduleManager = new ModuleManager(moduleMap, this.table.getSubTable("modules"));
     }
     
+    /**
+     * Sets the.
+     *
+     * @param coordinatorList the coordinator list
+     */
     protected void set (CoordinatorList coordinatorList) {
         this.coordinatorList = coordinatorList;
     }
     
+    /**
+     * Sets the.
+     *
+     * @param modeMap the mode map
+     */
     protected void set (ModeMap modeMap) {
         this.modeMap = modeMap;
     }
     
+    /* (non-Javadoc)
+     * @see edu.wpi.first.wpilibj.SampleRobot#robotInit()
+     */
     public void robotInit () {
         this.coordinatorList.attach(this.moduleManager);
         this.modeMap.attach(this.moduleManager);
     }
     
+    /* (non-Javadoc)
+     * @see edu.wpi.first.wpilibj.SampleRobot#autonomous()
+     */
     public void autonomous () {
         Logger.log(" -- Autonomous mode begin.");
         
@@ -74,6 +124,9 @@ public class Robot extends SampleRobot {
         Logger.log(" -- Autonomous mode end.");
     }
     
+    /* (non-Javadoc)
+     * @see edu.wpi.first.wpilibj.SampleRobot#operatorControl()
+     */
     public void operatorControl () {
         Logger.log(" -- Teleop mode begin.");
         this.loopTime.start();
@@ -92,6 +145,9 @@ public class Robot extends SampleRobot {
         Logger.log(" -- Teleop mode end.");
     }
     
+    /* (non-Javadoc)
+     * @see edu.wpi.first.wpilibj.SampleRobot#disabled()
+     */
     public void disabled () {
         Logger.log(" -- Disabled mode begin.");
         

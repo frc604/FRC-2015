@@ -11,7 +11,15 @@ import com._604robotics.robotnik.procedure.ModeMap;
 import com._604robotics.robotnik.module.ModuleMap;
 
 
+// TODO: Auto-generated Javadoc
+/**
+ * The Class Robot2015.
+ */
 public class Robot2015 extends Robot {
+    
+    /**
+     * Instantiates a new robot2015.
+     */
     public Robot2015 () {
         this.set(new ModuleMap() {{
             add("Drive", new Drive());
