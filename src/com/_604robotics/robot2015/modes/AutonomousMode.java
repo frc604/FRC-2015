@@ -22,12 +22,25 @@ import edu.wpi.first.wpilibj.Talon;
  * The Class AutonomousMode.
  */
 public class AutonomousMode extends Procedure {
+<<<<<<< Updated upstream
+=======
+	Drive drive = new Drive();
+    
+    /**
+     * Instantiates a new autonomous mode.
+     */
+>>>>>>> Stashed changes
     public AutonomousMode () {
+    	
     }
     
     /* (non-Javadoc)
      * @see com._604robotics.robotnik.procedure.Procedure#apply(com._604robotics.robotnik.module.ModuleManager)
      */
     protected void apply (ModuleManager modules) {
+<<<<<<< Updated upstream
+=======
+    	
+>>>>>>> Stashed changes
     }
 }
