@@ -25,40 +25,29 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Module {
 	
-	/** The left. */
-	private final Talon fLeft = new Talon(0);
-	
-	/** The r left. */
-	private final Talon rLeft = new Talon(1);
-	
-	/** The right. */
-	private final Talon fRight = new Talon(2);
-	
-	/** The r right. */
-	private final Talon rRight = new Talon(3);
-    
     /** The drive. */
-    private final RobotDrive drive = new RobotDrive(fLeft, rLeft, fRight, rRight);
+    private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
     
     /** The encoder left. */
-    private final Encoder encoderLeft = new Encoder(2, 1);
+    private final Encoder encoderLeft = new Encoder(0, 1);
     
     /** The encoder right. */
-    private final Encoder encoderRight = new Encoder(3, 4);
+    private final Encoder encoderRight = new Encoder(2, 3);
+    
+    private double PIDLeftOut = 0D;
+    private double PIDRightOut = 0D;
     
     /** The pid left. */
-    private final PIDController pidLeft = new PIDController(0.005, 0D, 0.005, encoderRight, new PIDOutput () {
+    private final PIDController pidLeft = new PIDController(0.005, 0D, 0.005, encoderLeft, new PIDOutput () {
         public void pidWrite (double output) {
-            fLeft.set(output);
-            rLeft.set(output);
+            PIDLeftOut = output;
         }
     });
     
     /** The pid right. */
     private final PIDController pidRight = new PIDController(0.005, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
-            fRight.set(output);
-            rRight.set(output);
+            PIDRightOut = output;
         }
     });
     
@@ -216,10 +205,14 @@ public class Drive extends Module {
                 define("right clicks", 0D);
             }}) {
                 public void begin (ActionData data) {
-                    pidLeft.setSetpoint(data.get("left clicks") + data.data("Left Drive Clicks"));
-                    pidLeft.setSetpoint(data.get("right clicks") + data.data("Right Drive Clicks"));
+                    pidLeft.setSetpoint(data.get("left clicks") + data.get("Left Drive Clicks"));
+                    pidLeft.setSetpoint(data.get("right clicks") + data.get("Right Drive Clicks"));
                     pidLeft.enable();
                     pidRight.enable();
+                }
+                
+                public void run (ActionData data){
+                	drive.tankDrive(PIDLeftOut, PIDRightOut);
                 }
                 
                 public void end (ActionData data) {
