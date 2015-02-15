@@ -21,6 +21,9 @@ public class Robot2015 extends Robot {
     
     /**
      * Instantiates a new robot2015.
+     * <p>
+     * The constructor sets up the moduleMap, ModeMap, and coordinatorList
+     * to be used in the teleop and auton classes
      */
     public Robot2015 () {
         this.set(new ModuleMap() {{ //creates a module map containing all of the modules
