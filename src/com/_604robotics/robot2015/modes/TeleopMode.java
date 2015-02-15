@@ -73,9 +73,11 @@ public TeleopMode () {
                 this.bind(new Binding(modules.getModule("Drive").getAction("Off"), modules.getModule("Dashboard").getTrigger("Off")));
                 
                 /* Testing Drive Servo mode */
-                this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive"), modules.getModule("Dashboard").getTrigger("Servo Drive")));
+                this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive"), 
+                		new TriggerAnd(new TriggerAccess[]{modules.getModule("Dashboard").getTrigger("Servo Drive"), driver.buttons.A})));
                 
                 this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"), "left clicks", modules.getModule("Drive").getData("Left Drive Clicks")));
+                this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"), "right clicks", modules.getModule("Drive").getData("Right Drive Clicks")));
                 this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"), "elevator clicks", modules.getModule("Elevator").getData("Elevator Clicks")));
             }
         }

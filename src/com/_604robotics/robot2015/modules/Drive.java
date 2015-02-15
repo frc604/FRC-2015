@@ -200,24 +200,32 @@ public class Drive extends Module {
                 }
             });
             
-            add("Servo", new Action(new FieldMap() {{
+            add("Servo Drive", new Action(new FieldMap() {{
                 define("left clicks", 0D);
                 define("right clicks", 0D);
             }}) {
                 public void begin (ActionData data) {
                     pidLeft.setSetpoint(data.get("left clicks") + data.get("Left Drive Clicks"));
-                    pidLeft.setSetpoint(data.get("right clicks") + data.get("Right Drive Clicks"));
+                    pidRight.setSetpoint(data.get("right clicks") + data.get("Right Drive Clicks"));
                     pidLeft.enable();
                     pidRight.enable();
                 }
                 
                 public void run (ActionData data){
+                	if(pidLeft.getSetpoint() != data.get("left clicks") + data.get("Left Drive Clicks")){
+                		pidLeft.setSetpoint(data.get("left clicks") + data.get("Left Drive Clicks"));
+                	}
+                	if(pidRight.getSetpoint() != data.get("right clicks") + data.get("Right Drive Clicks")){
+                		pidRight.setSetpoint(data.get("right clicks") + data.get("Right Drive Clicks"));
+                	}
                 	drive.tankDrive(PIDLeftOut, PIDRightOut);
                 }
                 
                 public void end (ActionData data) {
                     pidLeft.reset();
                     pidRight.reset();
+                    pidLeft.disable();
+                    pidRight.disable();
                 }
             });
         }});

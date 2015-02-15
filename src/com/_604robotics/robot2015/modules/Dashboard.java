@@ -44,14 +44,19 @@ public class Dashboard extends Module {
         	});
         	addDefault("Display", new Action(new FieldMap () {{
                 define("left clicks", 0);
+                define("right clicks", 0);
                 define("elevator clicks", 0);
             }}) {
         		public void begin (ActionData data) {
-        	    	SmartDashboard.putNumber("Left Clicks", 0);
+        			SmartDashboard.putNumber("Right Clicks", 0);
+        			SmartDashboard.putNumber("Left Clicks", 0);
         	    	SmartDashboard.putNumber("Elevator Clicks", 0);
+        	    	
         		}
                 public void run (ActionData data) {
                     SmartDashboard.putNumber("Elevator Clicks", data.get("elevator clicks"));
+        			SmartDashboard.putNumber("Right Clicks", data.get("right clicks"));
+        			SmartDashboard.putNumber("Left Clicks", data.get("left clicks"));
                 }
             });
         }});
