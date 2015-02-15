@@ -27,23 +27,31 @@ public class Dashboard extends Module {
             add("Tank Drive", driveMode.addDefault("Tank Drive"));
             add("Throttled Tank Drive", driveMode.add("Throttled Tank Drive"));
             add("Arcade Drive", driveMode.add("Arcade Drive"));
-            add("Stick Drive", driveMode.add("Stick Drive"));
+            add("Servo Drive", driveMode.add("Servo Drive"));
             add("Off", driveMode.add("Off"));
         }});
         this.set(new DataMap() {{
         	add("Throttle", new DashboardData("Throttle", 1D));
+        	add("Manual Setpoint", new DashboardData("Manual Setpoint", 0D));
+        	/* Drive servo testing */
+        	{
+        		add("Left Drive Servo", new DashboardData("Left Drive Servo", 0D));
+        		add("Right Drive Servo", new DashboardData("Right Drive Servo", 0D));
+        	}
     	}});
         this.set(new ElasticController() {{
         	addDefault("Resting", new Action() {
         	});
         	addDefault("Display", new Action(new FieldMap () {{
-                define("dpad", -1000);
+                define("left clicks", 0);
+                define("elevator clicks", 0);
             }}) {
         		public void begin (ActionData data) {
-        	    	SmartDashboard.putNumber("Dpad Testing", -1000D);
+        	    	SmartDashboard.putNumber("Left Clicks", 0);
+        	    	SmartDashboard.putNumber("Elevator Clicks", 0);
         		}
                 public void run (ActionData data) {
-                    SmartDashboard.putNumber("Dpad Testing", data.get("dpad"));
+                    SmartDashboard.putNumber("Elevator Clicks", data.get("elevator clicks"));
                 }
             });
         }});

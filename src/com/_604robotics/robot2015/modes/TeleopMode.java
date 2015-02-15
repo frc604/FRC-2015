@@ -16,32 +16,22 @@ import com._604robotics.robotnik.trigger.TriggerAccess;
  * The Class TeleopMode.
  */
 public class TeleopMode extends Coordinator {
-    //private final JoystickController leftDrive  = new JoystickController(1);
-    //private final JoystickController rightDrive = new JgoystickController(2);
-    
     /** The driver. */
     private final XboxController     driver = new XboxController(0);
-//    private final XboxController manipulator = new XboxController(2);
+
+    /** The manipulator */
+    private final XboxController manipulator = new XboxController(2);
     
     /**
  * Instantiates a new teleop mode.
  */
 public TeleopMode () {
-        /*leftDrive.axisX.setFactor(-1);
-        leftDrive.axisY.setFactor(-1);
         
-        rightDrive.axisY.setFactor(-1);*/
+        manipulator.leftStick.Y.setFactor(-1);
+        manipulator.leftStick.X.setFactor(-1);
         
-//        manipulator.leftStick.Y.setFactor(-1);
-//        manipulator.leftStick.X.setFactor(-1);
-        
-        /*leftDrive.axisX.setDeadband(0.3);
-        leftDrive.axisY.setDeadband(0.3);
-        
-        rightDrive.axisY.setDeadband(0.3);*/
-        
-//        manipulator.leftStick.X.setDeadband(0.3);
-//        manipulator.leftStick.Y.setDeadband(0.3);
+        manipulator.leftStick.X.setDeadband(0.3);
+        manipulator.leftStick.Y.setDeadband(0.3);
         
         driver.leftStick.X.setFactor(-1);
         driver.rightStick.X.setFactor(-1);
@@ -72,24 +62,33 @@ public TeleopMode () {
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"), "left",  driver.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"), "right", driver.rightStick.Y));
                 
-                //this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "left", leftDrive.axisY));
-                //this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "right", rightDrive.axisY));
-                
                 this.bind(new Binding(modules.getModule("Drive").getAction("Arcade Drive"), modules.getModule("Dashboard").getTrigger("Arcade Drive")));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "throttle", driver.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "turn",     driver.rightStick.X));
-                
-                //this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "throttle", rightDrive.axisY));
-                //this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "turn", leftDrive.axisX));
                 
                 this.bind(new Binding(modules.getModule("Drive").getAction("Stick Drive"), modules.getModule("Dashboard").getTrigger("Stick Drive")));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "throttle", driver.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "turn",     driver.leftStick.X));
                 
-                //this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "throttle", leftDrive.axisY));
-                //this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "turn", leftDrive.axisX));
-                
                 this.bind(new Binding(modules.getModule("Drive").getAction("Off"), modules.getModule("Dashboard").getTrigger("Off")));
+                
+                /* Testing Drive Servo mode */
+                this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive"), modules.getModule("Dashboard").getTrigger("Servo Drive")));
+                
+                this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"), "left clicks", modules.getModule("Drive").getData("Left Drive Clicks")));
+                this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"), "elevator clicks", modules.getModule("Elevator").getData("Elevator Clicks")));
             }
         }
-}}
+        /* Manipulator Controller */
+        {
+        	/* Manual Operation */
+            {
+                this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "power",     manipulator.leftStick.Y));
+                this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "calibrate", manipulator.buttons.Back));
+            
+                this.bind(new Binding(modules.getModule("Elevator").getAction("Hold"),         manipulator.buttons.X));
+                this.bind(new Binding(modules.getModule("Elevator").getAction("Manual Setpoint"), manipulator.buttons.A));
+            }
+        }
+    }
+}

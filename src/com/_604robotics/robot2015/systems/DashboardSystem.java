@@ -17,5 +17,14 @@ public class DashboardSystem extends Coordinator {
     protected void apply (ModuleManager modules) {
     	this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"),
                 "throttle", modules.getModule("Dashboard").getData("Throttle")));
+    	this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual Setpoint"),
+    			"clicks", modules.getModule("Dashboard").getData("Throttle")));
+    	/* Drive servo testing */
+    	{
+    		this.fill(new DataWire(modules.getModule("Drive").getAction("Servo"),
+    				"left clicks", modules.getModule("Dashboard").getData("Left Drive Servo")));
+    		this.fill(new DataWire(modules.getModule("Drive").getAction("Servo"),
+    				"right clicks", modules.getModule("Dashboard").getData("Right Drive Servo")));
+    	}
     }
 }
