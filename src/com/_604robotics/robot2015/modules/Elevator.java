@@ -20,9 +20,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 public class Elevator extends Module {
 	private final Talon motor = new Talon(4);
 	private final Encoder encoder = new Encoder(4, 5, false, CounterBase.EncodingType.k4X);
-	private final double TOP_CLICKS = 380;	//TODO: determine actual value of MAXTICKS
+	private final double TOP_CLICKS = 900;	//TODO: determine actual value of MAXTICKS
 	
-    private final AntiWindupPIDController pid = new AntiWindupPIDController(0.025, 0, Double.MIN_VALUE, -1, 0.025, encoder, motor);
+    private final AntiWindupPIDController pid = new AntiWindupPIDController(0.0125, 0, Double.MIN_VALUE, -0.5, 0.0125, encoder, motor);
 	
 	public Elevator() {
 		SmartDashboard.putData("Elevator PID", pid);
@@ -70,7 +70,8 @@ public class Elevator extends Module {
                 define("calibrate", false);
             }}) {
                 public void run (ActionData data) {
-                	if(encoder.get() < TOP_CLICKS || data.get("power") < 0) motor.set(data.get("power"));
+                	if(encoder.get() < TOP_CLICKS - data.get("power") * 150 
+                			|| data.get("power") < 0) motor.set(data.get("power"));
                 	else motor.stopMotor();
                     if (data.is("calibrate"))
                         encoder.reset();
