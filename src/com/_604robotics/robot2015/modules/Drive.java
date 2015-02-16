@@ -10,6 +10,8 @@ import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
 
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -29,10 +31,10 @@ public class Drive extends Module {
     private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
     
     /** The encoder left. */
-    private final Encoder encoderLeft = new Encoder(0, 1);
+    private final Encoder encoderLeft = new Encoder(0, 1, true, CounterBase.EncodingType.k4X);
     
     /** The encoder right. */
-    private final Encoder encoderRight = new Encoder(2, 3);
+    private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
     
     private double PIDLeftOut = 0D;
     private double PIDRightOut = 0D;
@@ -40,14 +42,14 @@ public class Drive extends Module {
     /** The pid left. */
     private final PIDController pidLeft = new PIDController(0.005, 0D, 0.005, encoderLeft, new PIDOutput () {
         public void pidWrite (double output) {
-            PIDLeftOut = output;
+            PIDLeftOut = output * .6;
         }
     });
     
     /** The pid right. */
     private final PIDController pidRight = new PIDController(0.005, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
-            PIDRightOut = output;
+            PIDRightOut = output * .6;
         }
     });
     
@@ -60,6 +62,7 @@ public class Drive extends Module {
         
         pidLeft.setAbsoluteTolerance(25);
         pidRight.setAbsoluteTolerance(25);
+        
         SmartDashboard.putData("Left Drive PID", pidLeft);
         SmartDashboard.putData("Right Drive PID", pidRight);
         
@@ -142,6 +145,10 @@ public class Drive extends Module {
         
         this.set(new ElasticController() {{
             addDefault("Off", new Action() {
+            	public void begin (ActionData data){
+            		encoderLeft.reset();
+            		encoderRight.reset();
+            	}
                 public void run (ActionData data) {
                     drive.tankDrive(0D, 0D);
                 }
