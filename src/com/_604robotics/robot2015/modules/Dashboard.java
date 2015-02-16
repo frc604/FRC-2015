@@ -25,13 +25,17 @@ public class Dashboard extends Module {
         this.set(new TriggerMap() {{
             final DashboardTriggerChoice driveMode = new DashboardTriggerChoice("Drive Mode");
             add("Tank Drive", driveMode.addDefault("Tank Drive"));
-            add("Throttled Tank Drive", driveMode.add("Throttled Tank Drive"));
+            add("Geared Tank Drive", driveMode.add("Geared Tank Drive"));
             add("Arcade Drive", driveMode.add("Arcade Drive"));
+            add("Stick Drive", driveMode.add("Stick Drive"));
             add("Servo Drive", driveMode.add("Servo Drive"));
-            add("Off", driveMode.add("Off"));
+            
+            final DashboardTriggerChoice driveOn = new DashboardTriggerChoice("Drive On");
+            add("Off", driveOn.add("Off"));
+            add("On", driveOn.add("On"));
         }});
         this.set(new DataMap() {{
-        	add("Throttle", new DashboardData("Throttle", 1D));
+        	add("Scaling Factor", new DashboardData("Scaling Factor", 0.9D));
         	add("Manual Setpoint", new DashboardData("Manual Setpoint", 0D));
         	/* Drive servo testing */
         	{
@@ -46,17 +50,22 @@ public class Dashboard extends Module {
                 define("left clicks", 0);
                 define("right clicks", 0);
                 define("elevator clicks", 0);
+                define("current gear", 0);
+                define("current multiplier", 0);
             }}) {
         		public void begin (ActionData data) {
         			SmartDashboard.putNumber("Right Clicks", 0);
         			SmartDashboard.putNumber("Left Clicks", 0);
         	    	SmartDashboard.putNumber("Elevator Clicks", 0);
-        	    	
+        	    	SmartDashboard.putInt("Current Gear", 0);
+        	    	SmartDashboard.putNumber("Current Multiplier", 0);
         		}
                 public void run (ActionData data) {
                     SmartDashboard.putNumber("Elevator Clicks", data.get("elevator clicks"));
         			SmartDashboard.putNumber("Right Clicks", data.get("right clicks"));
         			SmartDashboard.putNumber("Left Clicks", data.get("left clicks"));
+        			SmartDashboard.putInt("Current Gear", (int) data.get("current gear"));
+        	    	SmartDashboard.putNumber("Current Multiplier", data.get("current multiplier"));
                 }
             });
         }});

@@ -1,12 +1,13 @@
 package com._604robotics.robot2015;
 
 import com._604robotics.robot2015.systems.DashboardSystem;
+import com._604robotics.robot2015.systems.GearSystem;
 import com._604robotics.robot2015.modes.AutonomousMode;
 import com._604robotics.robot2015.modes.TeleopMode;
 import com._604robotics.robot2015.modules.Drive;
 import com._604robotics.robot2015.modules.Dashboard;
 import com._604robotics.robot2015.modules.Elevator;
-import com._604robotics.robot2015.modules.Intake;
+import com._604robotics.robot2015.modules.Gear;
 import com._604robotics.robotnik.Robot;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
 import com._604robotics.robotnik.procedure.ModeMap;
@@ -30,6 +31,7 @@ public class Robot2015 extends Robot {
             add("Drive", new Drive());
             add("Dashboard", new Dashboard());
             add("Elevator", new Elevator());
+            add("Gear", new Gear());
         }});
         
         this.set(new ModeMap() {{
@@ -39,6 +41,7 @@ public class Robot2015 extends Robot {
         
         this.set(new CoordinatorList() {{
             add(new DashboardSystem());
+            add(new GearSystem());
         }});
     }
 }

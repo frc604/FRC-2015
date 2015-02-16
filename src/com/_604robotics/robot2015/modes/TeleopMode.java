@@ -54,31 +54,34 @@ public TeleopMode () {
         {
             /* Drive */
             {
-                this.bind(new Binding(modules.getModule("Drive").getAction("Tank Drive"), modules.getModule("Dashboard").getTrigger("Tank Drive")));
+                this.bind(new Binding(modules.getModule("Drive").getAction("Tank Drive"), new TriggerAnd(new TriggerAccess[] {
+                		modules.getModule("Dashboard").getTrigger("On"), modules.getModule("Dashboard").getTrigger("Tank Drive")})));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "left",  driver.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "right", driver.rightStick.Y));
                 
-                this.bind(new Binding(modules.getModule("Drive").getAction("Throttled Tank Drive"), modules.getModule("Dashboard").getTrigger("Throttled Tank Drive")));
+                this.bind(new Binding(modules.getModule("Drive").getAction("Throttled Tank Drive"), new TriggerAnd(new TriggerAccess[] {
+                		modules.getModule("Dashboard").getTrigger("On"), modules.getModule("Dashboard").getTrigger("Geared Tank Drive")})));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"), "left",  driver.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"), "right", driver.rightStick.Y));
                 
-                this.bind(new Binding(modules.getModule("Drive").getAction("Arcade Drive"), modules.getModule("Dashboard").getTrigger("Arcade Drive")));
+                this.bind(new Binding(modules.getModule("Drive").getAction("Arcade Drive"), new TriggerAnd(new TriggerAccess[] {
+                		modules.getModule("Dashboard").getTrigger("On"), modules.getModule("Dashboard").getTrigger("Arcade Drive")})));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "throttle", driver.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "turn",     driver.rightStick.X));
                 
-                this.bind(new Binding(modules.getModule("Drive").getAction("Stick Drive"), modules.getModule("Dashboard").getTrigger("Stick Drive")));
+                this.bind(new Binding(modules.getModule("Drive").getAction("Stick Drive"), new TriggerAnd(new TriggerAccess[] {
+                		modules.getModule("Dashboard").getTrigger("On"), modules.getModule("Dashboard").getTrigger("Stick Drive")})));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "throttle", driver.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "turn",     driver.leftStick.X));
                 
                 this.bind(new Binding(modules.getModule("Drive").getAction("Off"), modules.getModule("Dashboard").getTrigger("Off")));
                 
-                /* Testing Drive Servo mode */
-                this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive"), 
-                		new TriggerAnd(new TriggerAccess[]{modules.getModule("Dashboard").getTrigger("Servo Drive"), driver.buttons.A})));
+                this.bind(new Binding(modules.getModule("Gear").getAction("Upshift"), driver.buttons.RB));
+                this.bind(new Binding(modules.getModule("Gear").getAction("Downshift"), driver.buttons.LB));
                 
-                this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"), "left clicks", modules.getModule("Drive").getData("Left Drive Clicks")));
-                this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"), "right clicks", modules.getModule("Drive").getData("Right Drive Clicks")));
-                this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"), "elevator clicks", modules.getModule("Elevator").getData("Elevator Clicks")));
+                /* Testing Drive Servo mode */
+                this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive"), new TriggerAnd(new TriggerAccess[] {
+                		modules.getModule("Dashboard").getTrigger("Servo Drive"), driver.buttons.A})));
             }
         }
         /* Manipulator Controller */
