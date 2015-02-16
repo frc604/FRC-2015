@@ -25,26 +25,28 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Module {
 	
-    /** The drive. */
+    /** The drive for the robot. It is currently using channels 0, 1, 2, and 3 */
     private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
     
-    /** The encoder left. */
+    /** The encoder used on the left side of the robot drive. Measures in ticks. Currently in channels 0 and 1.*/
     private final Encoder encoderLeft = new Encoder(0, 1);
     
-    /** The encoder right. */
+    /** The encoder used on the right side of the robot drive. Measures in ticks. Currently in channels 2 and 3. */
     private final Encoder encoderRight = new Encoder(2, 3);
     
+    /** The PID output for the left side of the robot*/
     private double PIDLeftOut = 0D;
+    /** The PID output for the right side of the robot*/
     private double PIDRightOut = 0D;
     
-    /** The pid left. */
+    /** The left PID controller. Takes input from the left encoder and outputs values to PIDLeftOut*/
     private final PIDController pidLeft = new PIDController(0.005, 0D, 0.005, encoderLeft, new PIDOutput () {
         public void pidWrite (double output) {
             PIDLeftOut = output;
         }
     });
     
-    /** The pid right. */
+    /** The right PID controller. Takes input from the right encoder and outputs values to PIDRightOut*/
     private final PIDController pidRight = new PIDController(0.005, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
             PIDRightOut = output;
@@ -53,6 +55,8 @@ public class Drive extends Module {
     
     /**
      * Instantiates a new drive.
+     * <p>
+     * 
      */
     public Drive () {
         encoderLeft.setPIDSourceParameter(PIDSourceParameter.kDistance);
