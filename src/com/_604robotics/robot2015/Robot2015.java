@@ -30,7 +30,6 @@ public class Robot2015 extends Robot {
             add("Drive", new Drive());
             add("Dashboard", new Dashboard());
             add("Elevator", new Elevator());
-            add("Intake", new Intake());
         }});
         
         this.set(new ModeMap() {{
