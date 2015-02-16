@@ -39,17 +39,21 @@ public class Drive extends Module {
     private double PIDLeftOut = 0D;
     private double PIDRightOut = 0D;
     
+    private final double PID_HARDCAP = 0.6;
+    
     /** The pid left. */
     private final PIDController pidLeft = new PIDController(0.005, 0D, 0.005, encoderLeft, new PIDOutput () {
         public void pidWrite (double output) {
-            PIDLeftOut = output * .6;
+        	if (output > 0) PIDLeftOut = (output > PID_HARDCAP) ? PID_HARDCAP : output;
+        	else PIDLeftOut = (output < -PID_HARDCAP) ? -PID_HARDCAP : output;
         }
     });
     
     /** The pid right. */
     private final PIDController pidRight = new PIDController(0.005, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
-            PIDRightOut = output * .6;
+        	if (output > 0) PIDRightOut = (output > PID_HARDCAP) ? PID_HARDCAP : output;
+        	else PIDRightOut = (output < -PID_HARDCAP) ? -PID_HARDCAP : output;
         }
     });
     
