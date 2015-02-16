@@ -92,5 +92,13 @@ public TeleopMode () {
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Manual Setpoint"), manipulator.buttons.A));
             }
         }
+        {
+        	{
+        		 
+//                 this.bind(new Binding(modules.getModule("clamp").getAction("Open"),   manipulator.buttons.Y));
+//                 this.bind(new Binding(modules.getModule("clamp").getAction("Close"), manipulator.buttons.B));
+        	}
+        	
+        }
     }
 }
