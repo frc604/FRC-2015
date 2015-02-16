@@ -34,6 +34,6 @@ public class DashboardSystem extends Coordinator {
          this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"),
         		 "current gear", modules.getModule("Gear").getData("Gear")));
          this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"),
-        		 "current multiplier", modules.getModule("Elevator").getData("Current Multiplier")));
+        		 "current multiplier", modules.getModule("Gear").getData("Current Multiplier")));
     }
 }

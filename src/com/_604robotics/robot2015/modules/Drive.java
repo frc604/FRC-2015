@@ -204,19 +204,24 @@ public class Drive extends Module {
                 define("left clicks", 0D);
                 define("right clicks", 0D);
             }}) {
+            	double startLeftClicks;
+            	double startRightClicks;
+            	
                 public void begin (ActionData data) {
-                    pidLeft.setSetpoint(data.get("left clicks") + data.get("Left Drive Clicks"));
-                    pidRight.setSetpoint(data.get("right clicks") + data.get("Right Drive Clicks"));
+                	startLeftClicks = data.data("Left Drive Clicks");
+                	startRightClicks = data.data("Right Drive Clicks");
+                    pidLeft.setSetpoint(data.get("left clicks") + startLeftClicks);
+                    pidRight.setSetpoint(data.get("right clicks") + startRightClicks);
                     pidLeft.enable();
                     pidRight.enable();
                 }
                 
                 public void run (ActionData data){
-                	if(pidLeft.getSetpoint() != data.get("left clicks") + data.get("Left Drive Clicks")){
-                		pidLeft.setSetpoint(data.get("left clicks") + data.get("Left Drive Clicks"));
+                	if(pidLeft.getSetpoint() != data.get("left clicks") + startLeftClicks){
+                		pidLeft.setSetpoint(data.get("left clicks") + startLeftClicks);
                 	}
-                	if(pidRight.getSetpoint() != data.get("right clicks") + data.get("Right Drive Clicks")){
-                		pidRight.setSetpoint(data.get("right clicks") + data.get("Right Drive Clicks"));
+                	if(pidRight.getSetpoint() != data.get("right clicks") + startRightClicks){
+                		pidRight.setSetpoint(data.get("right clicks") + startRightClicks);
                 	}
                 	drive.tankDrive(PIDLeftOut, PIDRightOut);
                 }
