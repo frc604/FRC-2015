@@ -11,6 +11,7 @@ import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
 
+import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
@@ -18,7 +19,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Elevator extends Module {
 	private final Talon motor = new Talon(4);
-	private final Encoder encoder = new Encoder(4, 5);	//TODO: encoder, channels TBD
+	private final Encoder encoder = new Encoder(4, 5, false, CounterBase.EncodingType.k4X);
 	private final double TOP_CLICKS = 380;	//TODO: determine actual value of MAXTICKS
 	
     private final AntiWindupPIDController pid = new AntiWindupPIDController(0.025, 0, Double.MIN_VALUE, -1, 0.025, encoder, motor);
@@ -80,9 +81,9 @@ public class Elevator extends Module {
                 }
             });
             
-            add("Manual Setpoint", new AngleAction());
-            
-            add("Test Setpoint",   new AngleAction());
+            add("Test Setpoint 1", new AngleAction());
+            add("Test Setpoint 2", new AngleAction());
+            add("Test Setpoint 3", new AngleAction());
             
             add("Hold", new Action() {
                 public void begin (ActionData data) {
