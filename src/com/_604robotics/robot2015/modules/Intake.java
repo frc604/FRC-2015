@@ -13,7 +13,7 @@ import edu.wpi.first.wpilibj.Talon;
 public class Intake extends Module {
     
     /** The motor. */
-    private final Talon motor = new Talon(0); //Placeholder Talon position
+    private final Talon motor = new Talon(9); //Placeholder Talon position
 
     /**
      * Instantiates a new intake.
