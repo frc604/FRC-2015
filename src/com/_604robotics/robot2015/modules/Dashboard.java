@@ -36,7 +36,9 @@ public class Dashboard extends Module {
         }});
         this.set(new DataMap() {{
         	add("Scaling Factor", new DashboardData("Scaling Factor", 0.9D));
-        	add("Manual Setpoint", new DashboardData("Manual Setpoint", 0D));
+        	add("Test Setpoint 1", new DashboardData("Test Setpoint 1", 5D));
+        	add("Test Setpoint 2", new DashboardData("Test Setpoint 2", 180D));
+    		add("Test Setpoint 3", new DashboardData("Test Setpoint 3", 360D));
         	/* Drive servo testing */
         	{
         		add("Left Drive Servo", new DashboardData("Left Drive Servo", 0D));
@@ -49,25 +51,29 @@ public class Dashboard extends Module {
         	addDefault("Display", new Action(new FieldMap () {{
                 define("left clicks", 0);
                 define("right clicks", 0);
+                define("left rate", 0);
+                define("right rate", 0);
                 define("elevator clicks", 0);
                 define("current gear", 0);
                 define("current multiplier", 0);
             }}) {
-        		public void begin (ActionData data) {
-        			SmartDashboard.putNumber("Right Clicks", 0);
-        			SmartDashboard.putNumber("Left Clicks", 0);
-        	    	SmartDashboard.putNumber("Elevator Clicks", 0);
-        	    	SmartDashboard.putInt("Current Gear", 0);
-        	    	SmartDashboard.putNumber("Current Multiplier", 0);
-        		}
                 public void run (ActionData data) {
                     SmartDashboard.putNumber("Elevator Clicks", data.get("elevator clicks"));
         			SmartDashboard.putNumber("Right Clicks", data.get("right clicks"));
         			SmartDashboard.putNumber("Left Clicks", data.get("left clicks"));
+        			SmartDashboard.putNumber("Right Rate", data.get("right rate"));
+        			SmartDashboard.putNumber("Left Rate", data.get("left rate"));
         			SmartDashboard.putInt("Current Gear", (int) data.get("current gear"));
         	    	SmartDashboard.putNumber("Current Multiplier", data.get("current multiplier"));
                 }
             });
         }});
+		SmartDashboard.putNumber("Right Clicks", 0);
+    	SmartDashboard.putNumber("Right Rate", 0);
+		SmartDashboard.putNumber("Left Clicks", 0);
+		SmartDashboard.putNumber("Left Rate", 0);
+    	SmartDashboard.putNumber("Elevator Clicks", 0);
+    	SmartDashboard.putInt("Current Gear", 0);
+    	SmartDashboard.putNumber("Current Multiplier", 0);
     }
 }

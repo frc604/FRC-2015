@@ -92,7 +92,9 @@ public TeleopMode () {
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "calibrate", manipulator.buttons.Back));
             
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Hold"),         manipulator.buttons.X));
-                this.bind(new Binding(modules.getModule("Elevator").getAction("Manual Setpoint"), manipulator.buttons.A));
+                this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1"), manipulator.buttons.A));
+                this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2"), manipulator.buttons.B));
+                this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 3"), manipulator.buttons.Y));
             }
         }
         {
