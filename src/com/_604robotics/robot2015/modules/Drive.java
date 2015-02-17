@@ -26,6 +26,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * The Class Drive.
  */
 public class Drive extends Module {
+	//19.6 to 18.6 inches per 100 ticks
 	
     /** The drive. */
     private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
@@ -42,7 +43,7 @@ public class Drive extends Module {
     private final double PID_HARDCAP = 0.6;
     
     /** The pid left. */
-    private final PIDController pidLeft = new PIDController(0.005, 0D, 0.005, encoderLeft, new PIDOutput () {
+    private final PIDController pidLeft = new PIDController(0.010, 0D, 0.005, encoderLeft, new PIDOutput () {
         public void pidWrite (double output) {
         	if (output > 0) PIDLeftOut = (output > PID_HARDCAP) ? PID_HARDCAP : output;
         	else PIDLeftOut = (output < -PID_HARDCAP) ? -PID_HARDCAP : output;
@@ -50,7 +51,7 @@ public class Drive extends Module {
     });
     
     /** The pid right. */
-    private final PIDController pidRight = new PIDController(0.005, 0D, 0.005, encoderRight, new PIDOutput () {
+    private final PIDController pidRight = new PIDController(0.010, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
         	if (output > 0) PIDRightOut = (output > PID_HARDCAP) ? PID_HARDCAP : output;
         	else PIDRightOut = (output < -PID_HARDCAP) ? -PID_HARDCAP : output;
