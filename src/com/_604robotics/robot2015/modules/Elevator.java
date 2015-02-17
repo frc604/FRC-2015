@@ -21,6 +21,7 @@ public class Elevator extends Module {
 	private final Talon motor = new Talon(4);
 	private final Encoder encoder = new Encoder(4, 5, false, CounterBase.EncodingType.k4X);
 	private final double TOP_CLICKS = 900;	//TODO: determine actual value of MAXTICKS
+	private final double BOTTOM_CLICKS = 20;
 	
     private final AntiWindupPIDController pid = new AntiWindupPIDController(0.0125, 0, Double.MIN_VALUE, -0.5, 0.0125, encoder, motor);
 	
@@ -67,11 +68,17 @@ public class Elevator extends Module {
         this.set(new ElasticController() {{
             addDefault("Manual", new Action(new FieldMap() {{
                 define("power", 0D);
+                define("force", false);
                 define("calibrate", false);
             }}) {
                 public void run (ActionData data) {
-                	if(encoder.get() < TOP_CLICKS - data.get("power") * 150 
-                			|| data.get("power") < 0) motor.set(data.get("power"));
+                	if(data.is("force")){
+                		motor.set(data.get("power"));
+                	}
+                	else if((encoder.get() < TOP_CLICKS - data.get("power") * 150 
+                			|| data.get("power") < 0) &&
+                			(encoder.get() > BOTTOM_CLICKS - data.get("power") * 150
+                			|| data.get("power") > 0)) motor.set(data.get("power"));
                 	else motor.stopMotor();
                     if (data.is("calibrate"))
                         encoder.reset();
