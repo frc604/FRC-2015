@@ -8,6 +8,7 @@ import com._604robotics.robot2015.modules.Drive;
 import com._604robotics.robot2015.modules.Dashboard;
 import com._604robotics.robot2015.modules.Elevator;
 import com._604robotics.robot2015.modules.Gear;
+import com._604robotics.robot2015.modules.Clamp;
 import com._604robotics.robotnik.Robot;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
 import com._604robotics.robotnik.procedure.ModeMap;
@@ -32,6 +33,7 @@ public class Robot2015 extends Robot {
             add("Dashboard", new Dashboard());
             add("Elevator", new Elevator());
             add("Gear", new Gear());
+            add("Clamp", new Clamp());
         }});
         
         this.set(new ModeMap() {{

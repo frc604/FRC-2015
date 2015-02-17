@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.Timer;
 
 public class Clamp extends Module {
-	private final Solenoid piston = new Solenoid(4);
+	private final Solenoid piston = new Solenoid(1);
     private final Timer travelTimer = new Timer();
     
 	public Clamp() {
@@ -23,19 +23,19 @@ public class Clamp extends Module {
             });
             add("Open", new Trigger() {
             	public boolean run () {
-            		return piston.get() && getTrigger("Travelling").run();
+            		return !piston.get() && getTrigger("Travelling").run();
             	}
             });
         }});
 		
 		this.set(new StateController () {{
-	        addDefault("Close", new Action() {
+	        addDefault("Open", new Action() {
 	            public void begin (ActionData data) {
 	                piston.set(false);
 	                travelTimer.reset();
 	            }
 	        });
-	        add("Open", new Action() {
+	        add("Close", new Action() {
 	        	public void begin (ActionData data) {
 	        	    piston.set(true);
 	        	    travelTimer.reset();
