@@ -30,8 +30,8 @@ public TeleopMode () {
         manipulator.leftStick.Y.setFactor(-1);
         manipulator.leftStick.X.setFactor(-1);
         
-        manipulator.leftStick.X.setDeadband(0.3);
-        manipulator.leftStick.Y.setDeadband(0.3);
+        manipulator.leftStick.X.setDeadband(0.2);
+        manipulator.leftStick.Y.setDeadband(0.2);
         
         driver.leftStick.X.setFactor(-1);
         driver.rightStick.X.setFactor(-1);
@@ -76,7 +76,7 @@ public TeleopMode () {
                 
                 this.bind(new Binding(modules.getModule("Drive").getAction("Off"), modules.getModule("Dashboard").getTrigger("Off")));
                 
-                this.bind(new Binding(modules.getModule("Gear").getAction("Upshift"), driver.buttons.RB));
+                this.bind(new Binding(modules.getModule("Gear").getAction("Upshift"),   driver.buttons.RB));
                 this.bind(new Binding(modules.getModule("Gear").getAction("Downshift"), driver.buttons.LB));
                 
                 /* Testing Drive Servo mode */
@@ -89,9 +89,10 @@ public TeleopMode () {
         	/* Manual Operation */
             {
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "power",     manipulator.leftStick.Y));
+                this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "force",     manipulator.buttons.RightStick));
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "calibrate", manipulator.buttons.Back));
             
-                this.bind(new Binding(modules.getModule("Elevator").getAction("Hold"),         manipulator.buttons.X));
+                this.bind(new Binding(modules.getModule("Elevator").getAction("Hold"),            manipulator.buttons.X));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1"), manipulator.buttons.A));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2"), manipulator.buttons.B));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 3"), manipulator.buttons.Y));
@@ -100,8 +101,8 @@ public TeleopMode () {
         {
         	{
         		 
-//                 this.bind(new Binding(modules.getModule("clamp").getAction("Open"),   manipulator.buttons.Y));
-//                 this.bind(new Binding(modules.getModule("clamp").getAction("Close"), manipulator.buttons.B));
+                 this.bind(new Binding(modules.getModule("Clamp").getAction("Open"),  manipulator.buttons.LB));
+                 this.bind(new Binding(modules.getModule("Clamp").getAction("Close"), manipulator.buttons.RB));
         	}
         	
         }
