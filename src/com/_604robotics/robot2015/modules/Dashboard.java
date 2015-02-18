@@ -54,17 +54,25 @@ public class Dashboard extends Module {
                 define("left rate", 0);
                 define("right rate", 0);
                 define("elevator clicks", 0);
+                define("elevator rate", 0);
                 define("current gear", 0);
                 define("current multiplier", 0);
+                define("elevator on target", false);
+                define("left drive on target", false);
+                define("right drive on target", false);
             }}) {
                 public void run (ActionData data) {
                     SmartDashboard.putNumber("Elevator Clicks", data.get("elevator clicks"));
+                    SmartDashboard.putNumber("Elevator Rate", data.get("elevator rate"));
         			SmartDashboard.putNumber("Right Clicks", data.get("right clicks"));
         			SmartDashboard.putNumber("Left Clicks", data.get("left clicks"));
         			SmartDashboard.putNumber("Right Rate", data.get("right rate"));
         			SmartDashboard.putNumber("Left Rate", data.get("left rate"));
         			SmartDashboard.putInt("Current Gear", (int) data.get("current gear"));
         	    	SmartDashboard.putNumber("Current Multiplier", data.get("current multiplier"));
+        	    	SmartDashboard.putBoolean("Elevator On Target", data.is("elevator on target"));
+        	    	SmartDashboard.putBoolean("Left Drive On Target", data.is("left drive on target"));
+        	    	SmartDashboard.putBoolean("Right Drive On Target", data.is("right drive on target"));
                 }
             });
         }});
@@ -73,7 +81,11 @@ public class Dashboard extends Module {
 		SmartDashboard.putNumber("Left Clicks", 0);
 		SmartDashboard.putNumber("Left Rate", 0);
     	SmartDashboard.putNumber("Elevator Clicks", 0);
+    	SmartDashboard.putNumber("Elevator Rate", 0);
     	SmartDashboard.putInt("Current Gear", 0);
     	SmartDashboard.putNumber("Current Multiplier", 0);
+    	SmartDashboard.putBoolean("Elevator On Target", false);
+    	SmartDashboard.putBoolean("Left Drive On Target", false);
+    	SmartDashboard.putBoolean("Right Drive On Target", false);
     }
 }

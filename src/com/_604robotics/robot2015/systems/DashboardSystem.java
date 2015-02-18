@@ -40,8 +40,17 @@ public class DashboardSystem extends Coordinator {
          this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"),
         		 "elevator clicks", modules.getModule("Elevator").getData("Elevator Clicks")));
          this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"),
+        		 "elevator rate", modules.getModule("Elevator").getData("Elevator Rate")));
+         this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"),
         		 "current gear", modules.getModule("Gear").getData("Gear")));
          this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"),
         		 "current multiplier", modules.getModule("Gear").getData("Current Multiplier")));
+         
+         this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"),
+        		 "elevator on target", modules.getModule("Elevator").getTrigger("At Elevator Target")));
+         this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"),
+        		 "left drive on target", modules.getModule("Drive").getTrigger("At Left Servo Target")));
+         this.fill(new DataWire(modules.getModule("Dashboard").getAction("Display"),
+        		 "right drive on target", modules.getModule("Drive").getTrigger("At Right Servo Target")));
     }
 }
