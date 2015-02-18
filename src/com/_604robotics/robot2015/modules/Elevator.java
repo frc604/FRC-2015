@@ -96,8 +96,9 @@ public class Elevator extends Module {
                 define("slow mode", false);
             }}) {
                 public void run (ActionData data) {
-                	if(data.get("power") == 0)
+                	if(data.get("power") == 0) {
                 		rateLimitedMotor.stopped();
+                	}
                 	if(encoder.get() > TOP_CLICKS - SLOW_ZONE_TOP
                 			|| encoder.get() < BOTTOM_CLICKS + SLOW_ZONE_BOTTOM
                 			|| data.is("slow mode")) {
@@ -115,9 +116,12 @@ public class Elevator extends Module {
                 		}
                 	}
                 	else if((encoder.get() < TOP_CLICKS || data.get("power") < 0) &&
-                			(encoder.get() > BOTTOM_CLICKS || data.get("power") > 0))
+                			(encoder.get() > BOTTOM_CLICKS || data.get("power") > 0)){
                 		rateLimitedMotor.set(data.get("power"));
-                	else motor.stopMotor();
+                	}
+                	else {
+                		motor.stopMotor();
+                	}
                     if (data.is("calibrate"))
                         encoder.reset();
                 }
@@ -207,18 +211,30 @@ public class Elevator extends Module {
 			this.rampRate = 0.01;
 		}
 		public void set(double power){
-			if(encoder.getRate() > nominalRate && encoder.getRate() > 0)
-				maxPowerUp -= rampRate; // + (encoder.getRate() - nominalRate)/((maxRate - nominalRate)*10);
-			if(encoder.getRate() < nominalRate - tolerance && encoder.getRate() > 0)
+			if(encoder.getRate() > nominalRate && encoder.getRate() > 0) {
+				maxPowerUp -= rampRate;
+			}
+			if(encoder.getRate() < nominalRate - tolerance && encoder.getRate() > 0) {
 				maxPowerUp += rampRate;
-			if(encoder.getRate() < -nominalRate && encoder.getRate() < 0)
-				maxPowerDown += rampRate; //- (encoder.getRate() + nominalRate)/((maxRate - nominalRate)*10);
-			if(encoder.getRate() > -nominalRate + tolerance && encoder.getRate() < 0)
+			}
+			if(encoder.getRate() < -nominalRate && encoder.getRate() < 0) {
+				maxPowerDown += rampRate;
+			}
+			if(encoder.getRate() > -nominalRate + tolerance && encoder.getRate() < 0) {
 				maxPowerDown -= rampRate;
-			if(encoder.getRate() >= 0) maxPowerDown -= rampRate;
-			if(encoder.getRate() <= 0) maxPowerUp += rampRate;
-			if(maxPowerUp > 1) maxPowerUp = 1;
-			if(maxPowerDown < -1) maxPowerDown = -1;
+			}
+			if(encoder.getRate() >= 0) {
+				maxPowerDown -= rampRate;
+			}
+			if(encoder.getRate() <= 0) {
+				maxPowerUp += rampRate;
+			}
+			if(maxPowerUp > 1) {
+				maxPowerUp = 1;
+			}
+			if(maxPowerDown < -1) {
+				maxPowerDown = -1;
+			}
 			motor.set((power > 0) ? 
 					((power > maxPowerUp) ? maxPowerUp : power) :
 					((power < maxPowerDown) ? maxPowerDown : power));
