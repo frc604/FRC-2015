@@ -91,6 +91,8 @@ public TeleopMode () {
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "power",     manipulator.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "force",     manipulator.buttons.RightStick));
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "calibrate", manipulator.buttons.Back));
+                this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "slow mode", new TriggerOr(new TriggerAccess[] {
+                		manipulator.buttons.RT, manipulator.buttons.LT})));
             
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Hold"),            manipulator.buttons.X));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1"), manipulator.buttons.A));

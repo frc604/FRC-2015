@@ -16,25 +16,48 @@ import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj.PIDOutput;
 
 public class Elevator extends Module {
 	private final Talon motor = new Talon(4);
 	private final Encoder encoder = new Encoder(4, 5, false, CounterBase.EncodingType.k4X);
-	private final double TOP_CLICKS = 900;	//TODO: determine actual value of MAXTICKS
-	private final double BOTTOM_CLICKS = 20;
+	private final double TOP_CLICKS = 900;
+	private final double BOTTOM_CLICKS = 15;
+	private final double SLOW_ZONE_TOP = 80;
+	private final double SLOW_ZONE_BOTTOM = 120;
+	private final double SLOW_ZONE_AUTON_UP = 130;
+	private final double SLOW_ZONE_AUTON_DOWN = 170;
 	
-    private final AntiWindupPIDController pid = new AntiWindupPIDController(0.0125, 0, Double.MIN_VALUE, -0.5, 0.0125, encoder, motor);
+	/* Rate control*/
+	private final double NOMINAL_RATE = 500;
+	private final double SLOW_RATE = 180;
+	private final double MAX_RATE = 1000;
+	private final double TOLERANCE = 50;
+	private final double AUTO_RAMP_RATE = 0.02;
+	private final double MANUAL_RAMP_RATE = 0.01;
+	private final RateLimitedMotor rateLimitedMotor = new RateLimitedMotor(encoder, NOMINAL_RATE, MAX_RATE, TOLERANCE, motor);
+	
+    private final AntiWindupPIDController pid = 
+    		new AntiWindupPIDController(0.0125, 0.005, Double.MAX_VALUE, 0.5, 0.0125, encoder, rateLimitedMotor);
 	
 	public Elevator() {
 		SmartDashboard.putData("Elevator PID", pid);
-		pid.setPercentTolerance(5.0D);
+		pid.setAbsoluteTolerance(12);
+		encoder.setDistancePerPulse(1);
 		encoder.reset();
+		rateLimitedMotor.setRampRate(MANUAL_RAMP_RATE);
 		
 		this.set(new DataMap() {{
             add("Elevator Clicks", new Data() {
                 public double run () {
                     return encoder.get();
                 }
+            });
+            
+            add("Elevator Rate", new Data() {
+            	public double run() {
+            		return encoder.getRate();
+            	}
             });
         }});
 		
@@ -70,15 +93,30 @@ public class Elevator extends Module {
                 define("power", 0D);
                 define("force", false);
                 define("calibrate", false);
+                define("slow mode", false);
             }}) {
                 public void run (ActionData data) {
-                	if(data.is("force")){
-                		motor.set(data.get("power"));
+                	if(data.get("power") == 0)
+                		rateLimitedMotor.stopped();
+                	if(encoder.get() > TOP_CLICKS - SLOW_ZONE_TOP
+                			|| encoder.get() < BOTTOM_CLICKS + SLOW_ZONE_BOTTOM
+                			|| data.is("slow mode")) {
+                		rateLimitedMotor.setRate(SLOW_RATE);
                 	}
-                	else if((encoder.get() < TOP_CLICKS - data.get("power") * 150 
-                			|| data.get("power") < 0) &&
-                			(encoder.get() > BOTTOM_CLICKS - data.get("power") * 150
-                			|| data.get("power") > 0)) motor.set(data.get("power"));
+                	else {
+                		rateLimitedMotor.setRate(NOMINAL_RATE);
+                	}
+                	if(data.is("force")){
+                		if(data.is("slow mode")){
+                			rateLimitedMotor.set(data.get("power"));
+                		}
+                		else{
+                			motor.set(data.get("power"));
+                		}
+                	}
+                	else if((encoder.get() < TOP_CLICKS || data.get("power") < 0) &&
+                			(encoder.get() > BOTTOM_CLICKS || data.get("power") > 0))
+                		rateLimitedMotor.set(data.get("power"));
                 	else motor.stopMotor();
                     if (data.is("calibrate"))
                         encoder.reset();
@@ -107,6 +145,8 @@ public class Elevator extends Module {
     }
     
     private class AngleAction extends Action {
+    	private boolean up = false; 
+    	
         public AngleAction () {
             super(new FieldMap() {{
                 define("clicks", 0D);
@@ -114,12 +154,27 @@ public class Elevator extends Module {
         }
 
         public void begin(ActionData data) {
+        	rateLimitedMotor.stopped();
+        	rateLimitedMotor.setRate(NOMINAL_RATE);
+        	rateLimitedMotor.setRampRate(AUTO_RAMP_RATE);
             pid.setSetpoint(data.get("clicks"));
             pid.enable();
+            if(pid.getSetpoint() > data.get("clicks")){
+            	up = true;
+            }
+            else {
+            	up = false;
+            }
         }
 
         public void run(ActionData data) {
             final double setpoint = data.get("clicks");
+            if (Math.abs(pid.getSetpoint() - encoder.get()) < (up ? SLOW_ZONE_AUTON_UP : SLOW_ZONE_AUTON_DOWN)){
+            	rateLimitedMotor.setRate(SLOW_RATE);
+            }
+            else {
+            	rateLimitedMotor.setRate(NOMINAL_RATE);
+            }
             if (setpoint != pid.getSetpoint()) {
                 pid.setSetpoint(setpoint);
             }
@@ -127,6 +182,59 @@ public class Elevator extends Module {
 
         public void end(ActionData data) {
             pid.reset();
+        	rateLimitedMotor.setRampRate(MANUAL_RAMP_RATE);
         }
     }
+    
+	private class RateLimitedMotor implements PIDOutput {
+		private double maxRate;
+		private double nominalRate;
+		private double tolerance;
+		private double maxPowerUp;
+		private double maxPowerDown;
+		private double rampRate;
+		private Encoder encoder;
+		private Talon motor;
+		
+		RateLimitedMotor(Encoder encoder, double nominalRate, double maxRate, double tolerance, Talon motor){
+			this.encoder = encoder;
+			this.motor = motor;
+			this.maxRate = maxRate;
+			this.nominalRate = nominalRate;
+			this.tolerance = tolerance;
+			this.maxPowerUp = 1;
+			this.maxPowerDown = -1;
+			this.rampRate = 0.01;
+		}
+		public void set(double power){
+			if(encoder.getRate() > nominalRate && encoder.getRate() > 0)
+				maxPowerUp -= rampRate; // + (encoder.getRate() - nominalRate)/((maxRate - nominalRate)*10);
+			if(encoder.getRate() < nominalRate - tolerance && encoder.getRate() > 0)
+				maxPowerUp += rampRate;
+			if(encoder.getRate() < -nominalRate && encoder.getRate() < 0)
+				maxPowerDown += rampRate; //- (encoder.getRate() + nominalRate)/((maxRate - nominalRate)*10);
+			if(encoder.getRate() > -nominalRate + tolerance && encoder.getRate() < 0)
+				maxPowerDown -= rampRate;
+			if(encoder.getRate() >= 0) maxPowerDown -= rampRate;
+			if(encoder.getRate() <= 0) maxPowerUp += rampRate;
+			if(maxPowerUp > 1) maxPowerUp = 1;
+			if(maxPowerDown < -1) maxPowerDown = -1;
+			motor.set((power > 0) ? 
+					((power > maxPowerUp) ? maxPowerUp : power) :
+					((power < maxPowerDown) ? maxPowerDown : power));
+		}
+		public void stopped(){
+			maxPowerUp = 0.1;
+			maxPowerDown = 0;
+		}
+		public void setRate(double nominalRate){
+			this.nominalRate = nominalRate;
+		}
+		public void setRampRate(double rampRate){
+			this.rampRate = rampRate;
+		}
+		public void pidWrite(double output) {
+			set(output);
+		}
+	}
 }
