@@ -10,13 +10,11 @@ import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
 
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
-import edu.wpi.first.wpilibj.Talon;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -27,6 +25,12 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Drive extends Module {
 	//19.6 to 18.6 inches per 100 ticks
+	//-490/490 is 360 degrees with both wheels driving, 115 is 90 degrees
+	
+	// Locking a side: put it 18 in the opposite direction
+	// 430 is 180 degrees with one side locked
+	
+	// When decreasing angle it needs a little bit less than you'd think
 	
     /** The drive. */
     private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
@@ -43,7 +47,7 @@ public class Drive extends Module {
     private final double PID_HARDCAP = 0.6;
     
     /** The pid left. */
-    private final PIDController pidLeft = new PIDController(0.010, 0D, 0.005, encoderLeft, new PIDOutput () {
+    private final PIDController pidLeft = new PIDController(0.020, 0D, 0.005, encoderLeft, new PIDOutput () {
         public void pidWrite (double output) {
         	if (output > 0) PIDLeftOut = (output > PID_HARDCAP) ? PID_HARDCAP : output;
         	else PIDLeftOut = (output < -PID_HARDCAP) ? -PID_HARDCAP : output;
@@ -51,7 +55,7 @@ public class Drive extends Module {
     });
     
     /** The pid right. */
-    private final PIDController pidRight = new PIDController(0.010, 0D, 0.005, encoderRight, new PIDOutput () {
+    private final PIDController pidRight = new PIDController(0.020, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
         	if (output > 0) PIDRightOut = (output > PID_HARDCAP) ? PID_HARDCAP : output;
         	else PIDRightOut = (output < -PID_HARDCAP) ? -PID_HARDCAP : output;
@@ -65,8 +69,8 @@ public class Drive extends Module {
         encoderLeft.setPIDSourceParameter(PIDSourceParameter.kDistance);
         encoderRight.setPIDSourceParameter(PIDSourceParameter.kDistance);
         
-        pidLeft.setAbsoluteTolerance(25);
-        pidRight.setAbsoluteTolerance(25);
+        pidLeft.setAbsoluteTolerance(20);
+        pidRight.setAbsoluteTolerance(20);
         
         SmartDashboard.putData("Left Drive PID", pidLeft);
         SmartDashboard.putData("Right Drive PID", pidRight);
