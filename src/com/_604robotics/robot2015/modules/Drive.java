@@ -56,6 +56,9 @@ public class Drive extends Module {
     /**
      * Instantiates a new drive.
      * <p>
+     * Sets the left and right pidController's tolerances to 25
+     * Makes the PID data viewable on the smart dashboard
+     * Creates a dataMap to store the left and right drive's clicks and rates
      * 
      */
     public Drive () {
@@ -97,7 +100,9 @@ public class Drive extends Module {
             add("At Left Servo Target", new Trigger() {
                 private final Timer timer = new Timer();
                 private boolean timing = false;
-                
+                /**
+                 * Checks to see if the left servo stays on target for half a second. 
+                 */
                 public boolean run () {
                     if (pidLeft.isEnable() && pidLeft.onTarget()) {
                         if (!timing) {
@@ -121,7 +126,9 @@ public class Drive extends Module {
             add("At Right Servo Target", new Trigger() {
                 private final Timer timer = new Timer();
                 private boolean timing = false;
-                
+                /**
+                 * Checks to see if the right servo stays on target for half a second
+                 */
                 public boolean run () {
                     if (pidRight.isEnable() && pidRight.onTarget()) {
                         if (!timing) {

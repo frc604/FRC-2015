@@ -4,7 +4,7 @@ import java.util.Hashtable;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Repackager.
+ * It "repackages" by moving all the keys and values from one hashtable to a second hashtable
  */
 public abstract class Repackager {
     
@@ -18,10 +18,10 @@ public abstract class Repackager {
     protected abstract Object wrap (Object key, Object value);
 
     /**
-     * Compute.
+     * Puts all the keys and values into the hashtable using the iterator
      *
-     * @param i the i
-     * @return the hashtable
+     * @param iterator used to iterate through the hashtable
+     * @return the hashtable that all the keys and values from the iterator have been put in
      */
     private Hashtable compute (Iterator i) {
         final Hashtable table = new Hashtable();
@@ -32,11 +32,11 @@ public abstract class Repackager {
     }
 
     /**
-     * Repackage.
+     * Uses the private compute method to repackage a hashtable
      *
-     * @param i the i
+     * @param the iterator the hashtable is attached to
      * @param r the r
-     * @return the hashtable
+     * @return the repackaged hashtable
      */
     public static Hashtable repackage (Iterator i, Repackager r) {
         return r.compute(i);

@@ -7,7 +7,7 @@ package com._604robotics.robotnik.data;
 public interface DataAccess {
     
     /**
-     * Gets the.
+     * Gets the data.
      *
      * @return the double
      */

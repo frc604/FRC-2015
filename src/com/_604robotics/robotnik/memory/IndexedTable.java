@@ -27,10 +27,10 @@ public class IndexedTable {
     private final ITable table;
     
     /**
-     * Knows about.
+     * Checks whether or not the key in question is in the set of indexed keys
      *
-     * @param key the key
-     * @return true, if successful
+     * @param key the key being looked for in the set of keys
+     * @return true, if the key is found in the set
      */
     public boolean knowsAbout (String key) {
         return this.keys.contains(key);
@@ -54,7 +54,7 @@ public class IndexedTable {
      */
     public IndexedTable getSubTable(String key) {
         this.addKey(key);
-        return TableCache.getSubTable(this.table, key);
+        return TableCache.getSubTable(this.table, key); //defined in TableCache.java
     }
     
     /**
@@ -126,7 +126,7 @@ public class IndexedTable {
     public void putValue   (String key, Object  value) { this.table.putValue  (key, value); this.addKey(key); }
     
     /**
-     * Adds the key.
+     * Adds the key if the key doesn't already exist in the set.
      *
      * @param key the key
      */
@@ -155,7 +155,7 @@ public class IndexedTable {
     /**
      * The Class Slice.
      */
-    public class Slice {
+    public class Slice { //TODO learn about nested classes
         
         /** The source. */
         private final IndexedTable source;

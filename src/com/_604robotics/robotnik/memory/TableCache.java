@@ -20,17 +20,19 @@ public class TableCache {
      * @return the table
      */
     protected static IndexedTable getTable (String key) {
-        return getTable(NetworkTable.getTable(key));
+        return getTable(NetworkTable.getTable(key)); //calling the ITable version of getTable
     }
     
     /**
-     * Gets the sub table.
+     * Gets the sub table. Used in IndexedTable.java.
+     * <p>
+     * Gets a table within a table
      *
-     * @param parent the parent
-     * @param key the key
-     * @return the sub table
+     * @param parent the parent table of the table being looked for
+     * @param key the key assigned to the table being looked for
+     * @return the table being looked for
      */
-    protected static IndexedTable getSubTable(ITable parent, String key) {
+    protected static IndexedTable getSubTable(ITable parent, String key) { 
         return getTable(parent.getSubTable(key));
     }
     

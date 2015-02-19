@@ -10,7 +10,7 @@ import java.util.Vector;
 public class FieldMap {
     
     /** The fields. */
-    private final Vector fields = new Vector();
+    private final Vector fields = new Vector(); //TODO: figure out why a vector is used instead of a hashtable.
     
     /**
      * Define.

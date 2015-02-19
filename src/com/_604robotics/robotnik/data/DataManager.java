@@ -21,6 +21,8 @@ public class DataManager {
     
     /**
      * Instantiates a new data manager.
+     * <p>
+     * It does this by assigning the parameter module to the local moduleName member.  
      *
      * @param moduleName the module name
      * @param dataMap the data map
