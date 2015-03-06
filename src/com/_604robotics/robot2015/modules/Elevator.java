@@ -21,7 +21,7 @@ import edu.wpi.first.wpilibj.PIDOutput;
 public class Elevator extends Module {
 	private final Talon motor = new Talon(4);
 	private final Encoder encoder = new Encoder(4, 5, false, CounterBase.EncodingType.k4X);
-	private final double TOP_CLICKS = 900;
+	private final double TOP_CLICKS = 1750;
 	private final double BOTTOM_CLICKS = 15;
 	private final double SLOW_ZONE_TOP = 80;
 	private final double SLOW_ZONE_BOTTOM = 120;
@@ -85,6 +85,13 @@ public class Elevator extends Module {
                         return false;
                     }
                 }
+            });
+            
+            add("Tote Lifted", new Trigger() {
+            	public boolean run () {
+            		if(encoder.get() > 150) return true;
+            		else return false;
+            	}
             });
         }});
         

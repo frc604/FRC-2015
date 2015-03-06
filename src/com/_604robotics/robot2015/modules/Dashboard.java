@@ -37,8 +37,8 @@ public class Dashboard extends Module {
         this.set(new DataMap() {{
         	add("Scaling Factor", new DashboardData("Scaling Factor", 0.9D));
         	add("Test Setpoint 1", new DashboardData("Test Setpoint 1", 5D));
-        	add("Test Setpoint 2", new DashboardData("Test Setpoint 2", 450D));
-    		add("Test Setpoint 3", new DashboardData("Test Setpoint 3", 900D));
+        	add("Test Setpoint 2", new DashboardData("Test Setpoint 2", 1000D));
+    		add("Test Setpoint 3", new DashboardData("Test Setpoint 3", 1850D));
         	/* Drive servo testing */
         	{
         		add("Left Drive Servo", new DashboardData("Left Drive Servo", 0D));
