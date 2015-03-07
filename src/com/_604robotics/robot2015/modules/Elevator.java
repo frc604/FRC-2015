@@ -23,6 +23,7 @@ public class Elevator extends Module {
 	private final Encoder encoder = new Encoder(4, 5, false, CounterBase.EncodingType.k4X);
 	private final double TOP_CLICKS = 1750;
 	private final double BOTTOM_CLICKS = 15;
+	private final double INTAKE_CLOSED_BOTTOM = 300;
 	private final double SLOW_ZONE_TOP = 150;
 	private final double SLOW_ZONE_BOTTOM = 200;
 	private final double SLOW_ZONE_AUTON_UP = 170;
@@ -101,13 +102,16 @@ public class Elevator extends Module {
                 define("force", false);
                 define("calibrate", false);
                 define("slow mode", false);
+                define("intake open", false);
             }}) {
                 public void run (ActionData data) {
                 	if(data.get("power") == 0) {
                 		rateLimitedMotor.stopped();
                 	}
                 	if(encoder.get() > TOP_CLICKS - SLOW_ZONE_TOP
-                			|| encoder.get() < BOTTOM_CLICKS + SLOW_ZONE_BOTTOM
+                			|| encoder.get() <
+                				(data.is("intake open") ? INTAKE_CLOSED_BOTTOM : BOTTOM_CLICKS )
+                				+ SLOW_ZONE_BOTTOM
                 			|| data.is("slow mode")) {
                 		rateLimitedMotor.setRate(SLOW_RATE);
                 	}
@@ -123,7 +127,9 @@ public class Elevator extends Module {
                 		}
                 	}
                 	else if((encoder.get() < TOP_CLICKS || data.get("power") < 0) &&
-                			(encoder.get() > BOTTOM_CLICKS || data.get("power") > 0)){
+                			(encoder.get() >
+                				(data.is("intake open") ? INTAKE_CLOSED_BOTTOM : BOTTOM_CLICKS )
+                				|| data.get("power") > 0)){
                 		rateLimitedMotor.set(data.get("power"));
                 	}
                 	else {
@@ -162,6 +168,7 @@ public class Elevator extends Module {
         public AngleAction () {
             super(new FieldMap() {{
                 define("clicks", 0D);
+                define("intake open", false);
             }});
         }
 
@@ -169,7 +176,13 @@ public class Elevator extends Module {
         	rateLimitedMotor.stopped();
         	rateLimitedMotor.setRate(NOMINAL_RATE);
         	rateLimitedMotor.setRampRate(AUTO_RAMP_RATE);
-            pid.setSetpoint(data.get("clicks"));
+        	if(data.is("intake open")){
+        		pid.setSetpoint(data.get("clicks"));
+        	}
+        	else{
+        		pid.setSetpoint((data.get("clicks") > INTAKE_CLOSED_BOTTOM) ?
+        				data.get("clicks") : INTAKE_CLOSED_BOTTOM);
+        	}
             pid.enable();
             if(pid.getSetpoint() > data.get("clicks")){
             	up = true;
@@ -180,16 +193,24 @@ public class Elevator extends Module {
         }
 
         public void run(ActionData data) {
-            final double setpoint = data.get("clicks");
             if (Math.abs(pid.getSetpoint() - encoder.get()) < (up ? SLOW_ZONE_AUTON_UP : SLOW_ZONE_AUTON_DOWN)){
             	rateLimitedMotor.setRate(SLOW_RATE);
             }
             else {
             	rateLimitedMotor.setRate(NOMINAL_RATE);
             }
-            if (setpoint != pid.getSetpoint()) {
-                pid.setSetpoint(setpoint);
-            }
+            if(data.is("intake open")){
+            	if (data.get("clicks") != pid.getSetpoint()) {
+            		pid.setSetpoint(data.get("clicks"));
+            	}
+        	}
+        	else{
+        		if (((data.get("clicks") > INTAKE_CLOSED_BOTTOM) ?
+        				data.get("clicks") : INTAKE_CLOSED_BOTTOM) != pid.getSetpoint()){
+        			pid.setSetpoint((data.get("clicks") > INTAKE_CLOSED_BOTTOM) ?
+            				data.get("clicks") : INTAKE_CLOSED_BOTTOM);		
+        		}
+        	}
         }
 
         public void end(ActionData data) {
