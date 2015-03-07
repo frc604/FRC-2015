@@ -54,63 +54,81 @@ public TeleopMode () {
         {
             /* Drive */
             {
-                this.bind(new Binding(modules.getModule("Drive").getAction("Tank Drive"), new TriggerAnd(new TriggerAccess[] {
-                		modules.getModule("Dashboard").getTrigger("Drive On"),
-                		modules.getModule("Dashboard").getTrigger("Debugging On"),
-                		modules.getModule("Dashboard").getTrigger("Tank Drive")})));
-                this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "left",  driver.leftStick.Y));
-                this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "right", driver.rightStick.Y));
-                
-                this.bind(new Binding(modules.getModule("Drive").getAction("Throttled Tank Drive"), new TriggerOr(new TriggerAccess[] {
-                		modules.getModule("Dashboard").getTrigger("Debugging Off"),
-                		new TriggerAnd(new TriggerAccess[] {
-                				modules.getModule("Dashboard").getTrigger("Drive On"),
-                				modules.getModule("Dashboard").getTrigger("Debugging On"),
-                				modules.getModule("Dashboard").getTrigger("Geared Tank Drive")
-                		}),
-                		modules.getModule("Dashboard").getTrigger("Geared Tank Drive")})));
-                this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"), "left",  driver.leftStick.Y));
-                this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"), "right", driver.rightStick.Y));
-                
-                this.bind(new Binding(modules.getModule("Drive").getAction("Arcade Drive"), new TriggerAnd(new TriggerAccess[] {
-                		modules.getModule("Dashboard").getTrigger("Drive On"),
-                		modules.getModule("Dashboard").getTrigger("Debugging On"),
-                		modules.getModule("Dashboard").getTrigger("Arcade Drive")})));
-                this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "throttle", driver.leftStick.Y));
-                this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "turn",     driver.rightStick.X));
-                
-                this.bind(new Binding(modules.getModule("Drive").getAction("Stick Drive"), new TriggerAnd(new TriggerAccess[] {
-                		modules.getModule("Dashboard").getTrigger("Drive On"),
-                		modules.getModule("Dashboard").getTrigger("Debugging On"),
-                		modules.getModule("Dashboard").getTrigger("Stick Drive")})));
-                this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "throttle", driver.leftStick.Y));
-                this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "turn",     driver.leftStick.X));
-                
-                this.bind(new Binding(modules.getModule("Drive").getAction("Off"), new TriggerAnd(new TriggerAccess[] {
-                		modules.getModule("Dashboard").getTrigger("Drive Off"),
-                		modules.getModule("Dashboard").getTrigger("Debugging On")})));
-                
-                this.bind(new Binding(modules.getModule("Gear").getAction("Upshift"),   driver.buttons.RB));
-                this.bind(new Binding(modules.getModule("Gear").getAction("Downshift"), driver.buttons.LB));
-                
-                this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive"), new TriggerAnd(new TriggerAccess[] {
-                		modules.getModule("Dashboard").getTrigger("Drive On"),
-                		modules.getModule("Dashboard").getTrigger("Debugging On"),
-                		modules.getModule("Dashboard").getTrigger("Servo Drive"),
-                		driver.buttons.Back})));
+            	/* Standard Drive */
+            	{
+            		this.bind(new Binding(modules.getModule("Drive").getAction("Throttled Tank Drive"), new TriggerOr(new TriggerAccess[] {
+                    		modules.getModule("Dashboard").getTrigger("Debugging Off"),
+                    		new TriggerAnd(new TriggerAccess[] {
+                    				modules.getModule("Dashboard").getTrigger("Drive On"),
+                    				modules.getModule("Dashboard").getTrigger("Debugging On"),
+                    				modules.getModule("Dashboard").getTrigger("Geared Tank Drive")
+                    		})
+                    		})));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"), "left",  driver.leftStick.Y));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Throttled Tank Drive"), "right", driver.rightStick.Y));
+                    /* Gear Shifting */
+                    {
+                    	this.bind(new Binding(modules.getModule("Gear").getAction("Upshift"),   driver.buttons.RB));
+                        this.bind(new Binding(modules.getModule("Gear").getAction("Downshift"), driver.buttons.LB));
+                    }
+            	}
+            	/* Debugging and other Movement*/
+            	{
+            		this.bind(new Binding(modules.getModule("Drive").getAction("Off"), new TriggerAnd(new TriggerAccess[] {
+                    		modules.getModule("Dashboard").getTrigger("Drive Off"),
+                    		modules.getModule("Dashboard").getTrigger("Debugging On")})));
+            		
+            		this.bind(new Binding(modules.getModule("Drive").getAction("Tank Drive"), new TriggerAnd(new TriggerAccess[] {
+                    		modules.getModule("Dashboard").getTrigger("Drive On"),
+                    		modules.getModule("Dashboard").getTrigger("Debugging On"),
+                    		modules.getModule("Dashboard").getTrigger("Tank Drive")})));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "left",  driver.leftStick.Y));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "right", driver.rightStick.Y));
+                    
+                    this.bind(new Binding(modules.getModule("Drive").getAction("Arcade Drive"), new TriggerAnd(new TriggerAccess[] {
+                    		modules.getModule("Dashboard").getTrigger("Drive On"),
+                    		modules.getModule("Dashboard").getTrigger("Debugging On"),
+                    		modules.getModule("Dashboard").getTrigger("Arcade Drive")})));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "throttle", driver.leftStick.Y));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "turn",     driver.rightStick.X));
+                    
+                    this.bind(new Binding(modules.getModule("Drive").getAction("Stick Drive"), new TriggerAnd(new TriggerAccess[] {
+                    		modules.getModule("Dashboard").getTrigger("Drive On"),
+                    		modules.getModule("Dashboard").getTrigger("Debugging On"),
+                    		modules.getModule("Dashboard").getTrigger("Stick Drive")})));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "throttle", driver.leftStick.Y));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "turn",     driver.leftStick.X));
+                    
+                    this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive"), new TriggerAnd(new TriggerAccess[] {
+                    		modules.getModule("Dashboard").getTrigger("Drive On"),
+                    		modules.getModule("Dashboard").getTrigger("Debugging On"),
+                    		modules.getModule("Dashboard").getTrigger("Servo Drive"),
+                    		driver.buttons.Back})));
+            	}
+            	/* Intake */
+            	{	
+            		final TriggerToggle toggle = new TriggerToggle(driver.buttons.A, true);
+                    this.bind(new Binding(modules.getModule("Clamp").getAction("Open"),  toggle.on));
+                    this.bind(new Binding(modules.getModule("Clamp").getAction("Close"), toggle.off));
+                    
+                    
+                    this.bind(new Binding(modules.getModule("Intake").getAction("In"), driver.buttons.RT));
+            	}
             }
         }
         /* Manipulator Controller */
         {
-        	/* Manual Operation */
+        	/* Elevator Manual Operation */
             {
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "power",     manipulator.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "force",     manipulator.buttons.RightStick));
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "calibrate", manipulator.buttons.Back));
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "slow mode", new TriggerOr(new TriggerAccess[] {
                 		manipulator.buttons.RT, manipulator.buttons.LT})));
-            
-                this.bind(new Binding(modules.getModule("Elevator").getAction("Hold"),            manipulator.buttons.X));
+            }
+            /* Elevator Setpoints */
+            {
+            	this.bind(new Binding(modules.getModule("Elevator").getAction("Hold"),            manipulator.buttons.X));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1"), manipulator.buttons.A));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1.5"), manipulator.dpad.imprecise.DOWN));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2"), manipulator.buttons.B));
@@ -118,14 +136,6 @@ public TeleopMode () {
                 		manipulator.buttons.Y, manipulator.dpad.imprecise.UP
                 })));
             }
-        }
-        {
-        	{
-        		 
-                 this.bind(new Binding(modules.getModule("Clamp").getAction("Open"),  manipulator.buttons.LB));
-                 this.bind(new Binding(modules.getModule("Clamp").getAction("Close"), manipulator.buttons.RB));
-        	}
-        	
         }
     }
 }
