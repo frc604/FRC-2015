@@ -18,6 +18,8 @@ public class XboxController {
     /** The right stick. */
     public final XboxControllerStick rightStick;
     
+    public final XboxControllerTriggers triggers;
+    
     /** The dpad. */
     public final XboxControllerDpad dpad;
     
@@ -37,6 +39,8 @@ public class XboxController {
         
         this.leftStick  = new XboxControllerStick(joystick, 0, 1);
         this.rightStick = new XboxControllerStick(joystick, 4, 5);
+        
+        this.triggers = new XboxControllerTriggers(joystick, 2, 3);
         
         this.dpad = new XboxControllerDpad(joystick);
         
