@@ -28,10 +28,10 @@ public class TeleopMode extends Coordinator {
 public TeleopMode () {
         
         manipulator.leftStick.Y.setFactor(-1);
-        manipulator.leftStick.X.setFactor(-1);
+        manipulator.rightStick.Y.setFactor(-1);
         
-        manipulator.leftStick.X.setDeadband(0.2);
         manipulator.leftStick.Y.setDeadband(0.2);
+        manipulator.rightStick.Y.setDeadband(0.2);
         
         driver.leftStick.X.setFactor(-1);
         driver.rightStick.X.setFactor(-1);
@@ -43,7 +43,7 @@ public TeleopMode () {
         driver.rightStick.X.setDeadband(0.2);
         
         driver.leftStick.Y.setDeadband(0.2);
-        driver.rightStick.Y.setDeadband(0.2);
+        driver.rightStick.Y.setDeadband(0.2);        
     }
     
     /* (non-Javadoc)
@@ -105,15 +105,6 @@ public TeleopMode () {
                     		modules.getModule("Dashboard").getTrigger("Servo Drive"),
                     		driver.buttons.Back})));
             	}
-            	/* Intake */
-            	{	
-            		final TriggerToggle toggle = new TriggerToggle(driver.buttons.A, true);
-                    this.bind(new Binding(modules.getModule("Clamp").getAction("Open"),  toggle.on));
-                    this.bind(new Binding(modules.getModule("Clamp").getAction("Close"), toggle.off));
-                    
-                    
-                    this.bind(new Binding(modules.getModule("Intake").getAction("In"), driver.buttons.RT));
-            	}
             }
         }
         /* Manipulator Controller */
@@ -136,6 +127,15 @@ public TeleopMode () {
                 		manipulator.buttons.Y, manipulator.dpad.imprecise.UP
                 })));
             }
+            /* Intake */
+        	{	
+                this.bind(new Binding(modules.getModule("Clamp").getAction("Open"),  manipulator.buttons.LB));
+                this.bind(new Binding(modules.getModule("Clamp").getAction("Close"), manipulator.buttons.RB));
+                
+                
+                this.bind(new Binding(modules.getModule("Intake").getAction("Run")));
+                this.fill(new DataWire(modules.getModule("Intake").getAction("Run"), "power", driver.rightStick.Y));
+        	}
         }
     }
 }
