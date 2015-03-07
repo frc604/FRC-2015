@@ -23,14 +23,14 @@ public class Elevator extends Module {
 	private final Encoder encoder = new Encoder(4, 5, false, CounterBase.EncodingType.k4X);
 	private final double TOP_CLICKS = 1750;
 	private final double BOTTOM_CLICKS = 15;
-	private final double SLOW_ZONE_TOP = 80;
-	private final double SLOW_ZONE_BOTTOM = 120;
-	private final double SLOW_ZONE_AUTON_UP = 130;
-	private final double SLOW_ZONE_AUTON_DOWN = 170;
+	private final double SLOW_ZONE_TOP = 150;
+	private final double SLOW_ZONE_BOTTOM = 200;
+	private final double SLOW_ZONE_AUTON_UP = 170;
+	private final double SLOW_ZONE_AUTON_DOWN = 220;
 	
 	/* Rate control*/
-	private final double NOMINAL_RATE = 500;
-	private final double SLOW_RATE = 180;
+	private final double NOMINAL_RATE = 650;
+	private final double SLOW_RATE = 250;
 	private final double MAX_RATE = 1000;
 	private final double TOLERANCE = 50;
 	private final double AUTO_RAMP_RATE = 0.02;
@@ -140,6 +140,7 @@ public class Elevator extends Module {
             
             add("Test Setpoint 1", new AngleAction());
             add("Test Setpoint 2", new AngleAction());
+            add("Test Setpoint 1.5", new AngleAction());
             add("Test Setpoint 3", new AngleAction());
             
             add("Hold", new Action() {

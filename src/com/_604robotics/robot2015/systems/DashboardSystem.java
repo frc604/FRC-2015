@@ -18,6 +18,8 @@ public class DashboardSystem extends Coordinator {
                 "multiplier", modules.getModule("Dashboard").getData("Scaling Factor")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 1"),
     			"clicks", modules.getModule("Dashboard").getData("Test Setpoint 1")));
+    	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 1.5"),
+    			"clicks", modules.getModule("Dashboard").getData("Test Setpoint 1.5")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 2"),
     			"clicks", modules.getModule("Dashboard").getData("Test Setpoint 2")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 3"),
