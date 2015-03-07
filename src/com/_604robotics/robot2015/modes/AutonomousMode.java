@@ -33,6 +33,8 @@ public class AutonomousMode extends Procedure {
      * @see com._604robotics.robotnik.procedure.Procedure#apply(com._604robotics.robotnik.module.ModuleManager)
      */
     protected void apply (ModuleManager modules) {
+    	add("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
+    	
     	add("Lift", new Step(new TriggerMeasure(modules.getModule("Elevator").getTrigger("Tote Lifted")), new Coordinator()));
     	
     	add("Back", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {

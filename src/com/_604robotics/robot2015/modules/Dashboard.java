@@ -31,12 +31,21 @@ public class Dashboard extends Module {
             add("Servo Drive", driveMode.add("Servo Drive"));
             
             final DashboardTriggerChoice driveOn = new DashboardTriggerChoice("Drive On");
-            add("Off", driveOn.add("Off"));
-            add("On", driveOn.add("On"));
+            add("Drive Off", driveOn.add("Drive Off"));
+            add("Drive On", driveOn.add("Drive On"));
+            
+            final DashboardTriggerChoice autonOn = new DashboardTriggerChoice("Auton On");
+            add("Auton On", autonOn.add("Auton On"));
+            add("Auton Off", autonOn.add("Auton Off"));
+            
+            final DashboardTriggerChoice debuggingOn = new DashboardTriggerChoice("Debugging On");
+            add("Debugging Off", debuggingOn.add("Debugging Off"));
+            add("Debugging On", debuggingOn.add("Debugging On"));
         }});
         this.set(new DataMap() {{
         	add("Scaling Factor", new DashboardData("Scaling Factor", 0.9D));
         	add("Test Setpoint 1", new DashboardData("Test Setpoint 1", 5D));
+        	add("Test Setpoint 1.5", new DashboardData("Test Setpoint 1.5", 500D));
         	add("Test Setpoint 2", new DashboardData("Test Setpoint 2", 1000D));
     		add("Test Setpoint 3", new DashboardData("Test Setpoint 3", 1850D));
         	/* Drive servo testing */
