@@ -17,6 +17,10 @@ public class DashboardSystem extends Coordinator {
     protected void apply (ModuleManager modules) {
     	this.fill(new DataWire(modules.getModule("Gear").getAction("Not Shifting"),
                 "multiplier", modules.getModule("Dashboard").getData("Scaling Factor")));
+    	
+
+    	this.fill(new DataWire(modules.getModule("Elevator").getAction("Teselation Setpoint"),
+    			"clicks", modules.getModule("Dashboard").getData("Teselation Setpoint")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 1"),
     			"clicks", modules.getModule("Dashboard").getData("Test Setpoint 1")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 1.5"),

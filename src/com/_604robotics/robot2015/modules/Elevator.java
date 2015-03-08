@@ -110,7 +110,7 @@ public class Elevator extends Module {
                 	}
                 	if(encoder.get() > TOP_CLICKS - SLOW_ZONE_TOP
                 			|| encoder.get() <
-                				(data.is("intake open") ? INTAKE_CLOSED_BOTTOM : BOTTOM_CLICKS )
+                				(data.is("intake open") ? BOTTOM_CLICKS : INTAKE_CLOSED_BOTTOM)
                 				+ SLOW_ZONE_BOTTOM
                 			|| data.is("slow mode")) {
                 		rateLimitedMotor.setRate(SLOW_RATE);
@@ -128,7 +128,7 @@ public class Elevator extends Module {
                 	}
                 	else if((encoder.get() < TOP_CLICKS || data.get("power") < 0) &&
                 			(encoder.get() >
-                				(data.is("intake open") ? INTAKE_CLOSED_BOTTOM : BOTTOM_CLICKS )
+                				(data.is("intake open") ? BOTTOM_CLICKS : INTAKE_CLOSED_BOTTOM)
                 				|| data.get("power") > 0)){
                 		rateLimitedMotor.set(data.get("power"));
                 	}
@@ -144,9 +144,10 @@ public class Elevator extends Module {
                 }
             });
             
+            add("Teselation Setpoint", new AngleAction());
             add("Test Setpoint 1", new AngleAction());
-            add("Test Setpoint 2", new AngleAction());
             add("Test Setpoint 1.5", new AngleAction());
+            add("Test Setpoint 2", new AngleAction());
             add("Test Setpoint 3", new AngleAction());
             
             add("Hold", new Action() {
@@ -168,7 +169,7 @@ public class Elevator extends Module {
         public AngleAction () {
             super(new FieldMap() {{
                 define("clicks", 0D);
-                define("intake open", false);
+                define("intake open", true);
             }});
         }
 
