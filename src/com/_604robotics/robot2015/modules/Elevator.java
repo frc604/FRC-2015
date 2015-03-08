@@ -144,7 +144,7 @@ public class Elevator extends Module {
                 }
             });
             
-            add("Teselation Setpoint", new AngleAction());
+            add("Tessellation Setpoint", new AngleAction());
             add("Test Setpoint 1", new AngleAction());
             add("Test Setpoint 1.5", new AngleAction());
             add("Test Setpoint 2", new AngleAction());

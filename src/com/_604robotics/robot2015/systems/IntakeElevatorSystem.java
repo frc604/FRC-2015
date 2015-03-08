@@ -14,6 +14,8 @@ public class IntakeElevatorSystem extends Coordinator {
     protected void apply (ModuleManager modules) {
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"),
                 "intake open", modules.getModule("Clamp").getTrigger("Open")));
+    	this.fill(new DataWire(modules.getModule("Elevator").getAction("Tessellation Setpoint"),
+                "intake open", modules.getModule("Clamp").getTrigger("Open")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 1"),
                 "intake open", modules.getModule("Clamp").getTrigger("Open")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 1.5"),

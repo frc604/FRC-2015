@@ -119,7 +119,7 @@ public TeleopMode () {
             /* Elevator Setpoints */
             {
             	this.bind(new Binding(modules.getModule("Elevator").getAction("Hold"),            manipulator.buttons.X));
-            	this.bind(new Binding(modules.getModule("Elevator").getAction("Teselation Setpoint"), manipulator.buttons.RT));
+            	this.bind(new Binding(modules.getModule("Elevator").getAction("Tessellation Setpoint"), manipulator.buttons.RT));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1"), manipulator.buttons.A));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1.5"), manipulator.dpad.imprecise.DOWN));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2"), manipulator.buttons.B));

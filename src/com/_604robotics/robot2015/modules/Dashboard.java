@@ -44,7 +44,7 @@ public class Dashboard extends Module {
         }});
         this.set(new DataMap() {{
         	add("Scaling Factor", new DashboardData("Scaling Factor", 0.9D));
-        	add("Teselation Setpoint", new DashboardData("Teselation Setpoint", 250D));
+        	add("Tessellation Setpoint", new DashboardData("Tessellation Setpoint", 250D));
         	add("Test Setpoint 1", new DashboardData("Test Setpoint 1", 5D));
         	add("Test Setpoint 1.5", new DashboardData("Test Setpoint 1.5", 500D));
         	add("Test Setpoint 2", new DashboardData("Test Setpoint 2", 1000D));
