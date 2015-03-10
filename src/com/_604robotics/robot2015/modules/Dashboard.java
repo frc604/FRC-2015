@@ -38,6 +38,10 @@ public class Dashboard extends Module {
             add("Auton On", autonOn.add("Auton On"));
             add("Auton Off", autonOn.add("Auton Off"));
             
+            final DashboardTriggerChoice autonMode = new DashboardTriggerChoice("Auton Mode");
+            add("Drive Only", autonMode.add("Drive Only"));
+            add("Full Auton", autonMode.add("Full Auton"));
+            
             final DashboardTriggerChoice debuggingOn = new DashboardTriggerChoice("Debugging On");
             add("Debugging Off", debuggingOn.add("Debugging Off"));
             add("Debugging On", debuggingOn.add("Debugging On"));

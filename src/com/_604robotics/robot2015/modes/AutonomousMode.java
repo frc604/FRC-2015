@@ -9,6 +9,7 @@ import com._604robotics.robotnik.coordinator.connectors.DataWire;
 import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.prefabs.measure.TriggerMeasure;
 import com._604robotics.robotnik.prefabs.trigger.TriggerAnd;
+import com._604robotics.robotnik.prefabs.trigger.TriggerOr;
 import com._604robotics.robotnik.procedure.Procedure;
 import com._604robotics.robotnik.procedure.Step;
 import com._604robotics.robotnik.trigger.TriggerAccess;
@@ -22,11 +23,7 @@ public class AutonomousMode extends Procedure {
      * Instantiates a new autonomous mode.
      */
     public AutonomousMode () {
-    	super(new Coordinator() {
-    		protected void apply (ModuleManager modules) {
-    			this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2")));
-    		}
-    	});
+    	super(new Coordinator());
     }
     
     /* (non-Javadoc)
@@ -35,11 +32,20 @@ public class AutonomousMode extends Procedure {
     protected void apply (ModuleManager modules) {
     	add("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
     	
-    	add("Lift", new Step(new TriggerMeasure(modules.getModule("Elevator").getTrigger("Tote Lifted")), new Coordinator()));
+    	add("Lift", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    			modules.getModule("Dashboard").getTrigger("Drive Only"),
+    			modules.getModule("Elevator").getTrigger("At Elevator Target")
+    	})), new Coordinator() {
+    		protected void apply (ModuleManager modules) {
+    			this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2")));
+    		}
+    	}));
     	
-    	add("Back", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
-    			modules.getModule("Drive").getTrigger("At Left Servo Target"),
-    			modules.getModule("Drive").getTrigger("At Right Servo Target"),
+    	add("Back", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    			modules.getModule("Dashboard").getTrigger("Drive Only"),
+    				new TriggerAnd(new TriggerAccess[] {
+    						modules.getModule("Drive").getTrigger("At Left Servo Target"),
+    						modules.getModule("Drive").getTrigger("At Right Servo Target")})
     	})), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
@@ -48,9 +54,11 @@ public class AutonomousMode extends Procedure {
     		}
     	}));
     	
-    	add("Turn", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
-    			modules.getModule("Drive").getTrigger("At Left Servo Target"),
-    			modules.getModule("Drive").getTrigger("At Right Servo Target"),
+    	add("Turn", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    			modules.getModule("Dashboard").getTrigger("Drive Only"),
+    				new TriggerAnd(new TriggerAccess[] {
+    						modules.getModule("Drive").getTrigger("At Left Servo Target"),
+    						modules.getModule("Drive").getTrigger("At Right Servo Target")})
     	})), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
@@ -62,8 +70,10 @@ public class AutonomousMode extends Procedure {
     	add("Drive", new Step(new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks", 600));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks", 600));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks",
+    					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 600));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks",
+    					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 600));
     		}
     	}));
     }
