@@ -5,15 +5,17 @@ import java.util.Hashtable;
 
 // TODO: Auto-generated Javadoc
 /**
- * The Class Iterator.
+ * The Class Iterator. Iterates through a hashtable. 
  */
 public class Iterator {
     
     /** The keys. */
-    private final Enumeration keys;
+    @SuppressWarnings("rawtypes")
+	private final Enumeration keys;
     
     /** The values. */
-    private final Enumeration values;
+    @SuppressWarnings("rawtypes")
+	private final Enumeration values;
     
     /** The key. */
     public Object key = null;
@@ -26,7 +28,8 @@ public class Iterator {
      *
      * @param table the table
      */
-    public Iterator (Hashtable table) {
+    @SuppressWarnings("rawtypes")
+	public Iterator (Hashtable table) {
         this.keys = table.keys();
         this.values = table.elements();
     }

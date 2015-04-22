@@ -1,6 +1,7 @@
 package com._604robotics.robotnik.data;
 
 import com._604robotics.robotnik.meta.Iterator;
+
 import java.util.Hashtable;
 
 /**
@@ -9,7 +10,7 @@ import java.util.Hashtable;
 public class DataMap {
     
     /** The hashtable that is to be used to store data*/
-    private final Hashtable dataTable = new Hashtable();
+    private final Hashtable<String, Data> dataTable = new Hashtable<String, Data>();
     
     /**
      * Adds the name and data combination to the hashtable
@@ -28,7 +29,7 @@ public class DataMap {
      * @return the data
      */
     protected Data getData (String name) {
-        return (Data) this.dataTable.get(name);
+        return this.dataTable.get(name);
     }
     
     /**

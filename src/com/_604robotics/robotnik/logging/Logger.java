@@ -1,7 +1,7 @@
 package com._604robotics.robotnik.logging;
 
-import java.io.BufferedOutputStream;
-import java.io.IOException;
+import java.io.BufferedOutputStream; //TODO: stay or go?
+import java.io.IOException; //TODO: stay or go?
 import java.io.PrintStream;
 import java.util.Random;
 
