@@ -44,21 +44,21 @@ public class Drive extends Module {
     private double PIDLeftOut = 0D;
     private double PIDRightOut = 0D;
     
-    private final double PID_HARDCAP = 0.6;
+    private double pid_power_cap = 0.6;
     
     /** The pid left. */
     private final PIDController pidLeft = new PIDController(0.020, 0D, 0.005, encoderLeft, new PIDOutput () {
         public void pidWrite (double output) {
-        	if (output > 0) PIDLeftOut = (output > PID_HARDCAP) ? PID_HARDCAP : output;
-        	else PIDLeftOut = (output < -PID_HARDCAP) ? -PID_HARDCAP : output;
+        	if (output > 0) PIDLeftOut = (output > pid_power_cap) ? pid_power_cap : output;
+        	else PIDLeftOut = (output < -pid_power_cap) ? -pid_power_cap : output;
         }
     });
     
     /** The pid right. */
     private final PIDController pidRight = new PIDController(0.020, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
-        	if (output > 0) PIDRightOut = (output > PID_HARDCAP) ? PID_HARDCAP : output;
-        	else PIDRightOut = (output < -PID_HARDCAP) ? -PID_HARDCAP : output;
+        	if (output > 0) PIDRightOut = (output > pid_power_cap) ? pid_power_cap : output;
+        	else PIDRightOut = (output < -pid_power_cap) ? -pid_power_cap : output;
         }
     });
     
@@ -219,11 +219,13 @@ public class Drive extends Module {
             add("Servo Drive", new Action(new FieldMap() {{
                 define("left clicks", 0D);
                 define("right clicks", 0D);
+                define("power cap", 0.6D);
             }}) {
             	double startLeftClicks;
             	double startRightClicks;
             	
                 public void begin (ActionData data) {
+                	pid_power_cap = data.get("power cap");
                 	startLeftClicks = data.data("Left Drive Clicks");
                 	startRightClicks = data.data("Right Drive Clicks");
                     pidLeft.setSetpoint(data.get("left clicks") + startLeftClicks);

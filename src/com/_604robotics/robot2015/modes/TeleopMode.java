@@ -57,7 +57,10 @@ public TeleopMode () {
             	/* Standard Drive */
             	{
             		this.bind(new Binding(modules.getModule("Drive").getAction("Throttled Tank Drive"), new TriggerOr(new TriggerAccess[] {
-                    		modules.getModule("Dashboard").getTrigger("Debugging Off"),
+                    		new TriggerAnd(new TriggerAccess[] {
+                    				modules.getModule("Dashboard").getTrigger("Debugging Off"),
+                    				new TriggerNot(driver.buttons.A)
+                    		}),
                     		new TriggerAnd(new TriggerAccess[] {
                     				modules.getModule("Dashboard").getTrigger("Drive On"),
                     				modules.getModule("Dashboard").getTrigger("Debugging On"),
@@ -71,6 +74,38 @@ public TeleopMode () {
                     	this.bind(new Binding(modules.getModule("Gear").getAction("Upshift"),   driver.buttons.RB));
                         this.bind(new Binding(modules.getModule("Gear").getAction("Downshift"), driver.buttons.LB));
                     }
+            	}
+            	/* Dropping Trash Cans */
+            	{
+            		this.bind(new Binding(modules.getModule("CanMacro").getAction("Active"), driver.buttons.A));
+            		this.fill(new DataWire(modules.getModule("CanMacro").getAction("Active"), "at elevator target",
+            				modules.getModule("Elevator").getTrigger("At Elevator Target")));
+            		this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "power cap",
+            				modules.getModule("Dashboard").getData("Drive Servo Power Cap")));
+            		this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 3"), new TriggerAnd(new TriggerAccess[] {
+            				driver.buttons.A,
+            				modules.getModule("CanMacro").getTrigger("Moving To Start")
+            		})));
+            		this.bind(new Binding(modules.getModule("Elevator").getAction("Trash Can Macro Setpoint"), new TriggerAnd(new TriggerAccess[] {
+            				driver.buttons.A,
+            				modules.getModule("CanMacro").getTrigger("Dropping Can")
+            		})));
+            		this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive"), new TriggerOr(new TriggerAccess[] {
+            				new TriggerAnd(new TriggerAccess[] {
+            						driver.buttons.A,
+            						modules.getModule("CanMacro").getTrigger("Backing Up")
+            				}),
+            				new TriggerAnd(new TriggerAccess[] {
+            						modules.getModule("Dashboard").getTrigger("Drive On"),
+            						modules.getModule("Dashboard").getTrigger("Debugging On"),
+            						modules.getModule("Dashboard").getTrigger("Servo Drive"),
+            						driver.buttons.Back
+            				})
+            		})));
+            		this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2"), new TriggerAnd(new TriggerAccess[] {
+            				driver.buttons.A,
+            				modules.getModule("CanMacro").getTrigger("Backing Up")
+            		})));
             	}
             	/* Debugging and other Movement*/
             	{
@@ -98,12 +133,6 @@ public TeleopMode () {
                     		modules.getModule("Dashboard").getTrigger("Stick Drive")})));
                     this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "throttle", driver.leftStick.Y));
                     this.fill(new DataWire(modules.getModule("Drive").getAction("Stick Drive"), "turn",     driver.leftStick.X));
-                    
-                    this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive"), new TriggerAnd(new TriggerAccess[] {
-                    		modules.getModule("Dashboard").getTrigger("Drive On"),
-                    		modules.getModule("Dashboard").getTrigger("Debugging On"),
-                    		modules.getModule("Dashboard").getTrigger("Servo Drive"),
-                    		driver.buttons.Back})));
             	}
             }
         }
@@ -114,12 +143,13 @@ public TeleopMode () {
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "power",     manipulator.leftStick.Y));
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "force",     manipulator.buttons.RightStick));
                 this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "calibrate", manipulator.buttons.Back));
-                this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "slow mode", manipulator.buttons.LT));
+                this.fill(new DataWire(modules.getModule("Elevator").getAction("Manual"), "slow mode", manipulator.buttons.LeftStick));
             }
             /* Elevator Setpoints */
             {
             	this.bind(new Binding(modules.getModule("Elevator").getAction("Hold"),            manipulator.buttons.X));
             	this.bind(new Binding(modules.getModule("Elevator").getAction("Tessellation Setpoint"), manipulator.buttons.RT));
+            	this.bind(new Binding(modules.getModule("Elevator").getAction("Trash Can Setpoint"), manipulator.buttons.LT));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1"), manipulator.buttons.A));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1.5"), manipulator.dpad.imprecise.DOWN));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2"), manipulator.buttons.B));

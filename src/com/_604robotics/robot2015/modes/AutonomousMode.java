@@ -23,7 +23,11 @@ public class AutonomousMode extends Procedure {
      * Instantiates a new autonomous mode.
      */
     public AutonomousMode () {
-    	super(new Coordinator());
+    	super(new Coordinator() {
+            protected void apply (ModuleManager modules) {
+                this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2")));
+            }
+        });
     }
     
     /* (non-Javadoc)
@@ -34,12 +38,8 @@ public class AutonomousMode extends Procedure {
     	
     	add("Lift", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Drive Only"),
-    			modules.getModule("Elevator").getTrigger("At Elevator Target")
-    	})), new Coordinator() {
-    		protected void apply (ModuleManager modules) {
-    			this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2")));
-    		}
-    	}));
+    			modules.getModule("Elevator").getTrigger("Tote Lifted")
+    	})), new Coordinator()));
     	
     	add("Back", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Drive Only"),
@@ -49,8 +49,8 @@ public class AutonomousMode extends Procedure {
     	})), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks", -30));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks", -30));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks", -45));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks", -45));
     		}
     	}));
     	
@@ -62,8 +62,8 @@ public class AutonomousMode extends Procedure {
     	})), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks", 115));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks", -115));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks", 130));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks", -130));
     		}
     	}));
     	
@@ -71,9 +71,9 @@ public class AutonomousMode extends Procedure {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks",
-    					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 600));
+    					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 700));
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks",
-    					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 600));
+    					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 700));
     		}
     	}));
     }

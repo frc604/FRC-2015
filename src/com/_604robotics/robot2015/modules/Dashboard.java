@@ -24,23 +24,23 @@ public class Dashboard extends Module {
     public Dashboard () {
         this.set(new TriggerMap() {{
             final DashboardTriggerChoice driveMode = new DashboardTriggerChoice("Drive Mode");
-            add("Tank Drive", driveMode.addDefault("Tank Drive"));
             add("Geared Tank Drive", driveMode.add("Geared Tank Drive"));
+            add("Tank Drive", driveMode.addDefault("Tank Drive"));
             add("Arcade Drive", driveMode.add("Arcade Drive"));
             add("Stick Drive", driveMode.add("Stick Drive"));
             add("Servo Drive", driveMode.add("Servo Drive"));
             
             final DashboardTriggerChoice driveOn = new DashboardTriggerChoice("Drive On");
-            add("Drive Off", driveOn.add("Drive Off"));
             add("Drive On", driveOn.add("Drive On"));
+            add("Drive Off", driveOn.add("Drive Off"));
             
             final DashboardTriggerChoice autonOn = new DashboardTriggerChoice("Auton On");
             add("Auton On", autonOn.add("Auton On"));
             add("Auton Off", autonOn.add("Auton Off"));
             
             final DashboardTriggerChoice autonMode = new DashboardTriggerChoice("Auton Mode");
-            add("Drive Only", autonMode.add("Drive Only"));
             add("Full Auton", autonMode.add("Full Auton"));
+            add("Drive Only", autonMode.add("Drive Only"));
             
             final DashboardTriggerChoice debuggingOn = new DashboardTriggerChoice("Debugging On");
             add("Debugging Off", debuggingOn.add("Debugging Off"));
@@ -49,14 +49,17 @@ public class Dashboard extends Module {
         this.set(new DataMap() {{
         	add("Scaling Factor", new DashboardData("Scaling Factor", 0.9D));
         	add("Tessellation Setpoint", new DashboardData("Tessellation Setpoint", 250D));
+        	add("Trash Can Setpoint", new DashboardData("Trash Can Setpoint", 775D));
+        	add("Trash Can Macro Setpoint", new DashboardData("Trash Can Macro Setpoint", 1680D));
         	add("Test Setpoint 1", new DashboardData("Test Setpoint 1", 5D));
         	add("Test Setpoint 1.5", new DashboardData("Test Setpoint 1.5", 500D));
         	add("Test Setpoint 2", new DashboardData("Test Setpoint 2", 1000D));
     		add("Test Setpoint 3", new DashboardData("Test Setpoint 3", 1850D));
         	/* Drive servo testing */
         	{
-        		add("Left Drive Servo", new DashboardData("Left Drive Servo", 0D));
-        		add("Right Drive Servo", new DashboardData("Right Drive Servo", 0D));
+        		add("Left Drive Servo", new DashboardData("Left Drive Servo", -120D));
+        		add("Right Drive Servo", new DashboardData("Right Drive Servo", -120D));
+        		add("Drive Servo Power Cap", new DashboardData("Drive Servo Power Cap", 0.5D));
         	}
     	}});
     }

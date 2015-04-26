@@ -21,6 +21,10 @@ public class DashboardSystem extends Coordinator {
 
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Tessellation Setpoint"),
     			"clicks", modules.getModule("Dashboard").getData("Tessellation Setpoint")));
+    	this.fill(new DataWire(modules.getModule("Elevator").getAction("Trash Can Setpoint"),
+    			"clicks", modules.getModule("Dashboard").getData("Trash Can Setpoint")));
+    	this.fill(new DataWire(modules.getModule("Elevator").getAction("Trash Can Macro Setpoint"),
+    			"clicks", modules.getModule("Dashboard").getData("Trash Can Macro Setpoint")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 1"),
     			"clicks", modules.getModule("Dashboard").getData("Test Setpoint 1")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 1.5"),
@@ -29,7 +33,7 @@ public class DashboardSystem extends Coordinator {
     			"clicks", modules.getModule("Dashboard").getData("Test Setpoint 2")));
     	this.fill(new DataWire(modules.getModule("Elevator").getAction("Test Setpoint 3"),
     			"clicks", modules.getModule("Dashboard").getData("Test Setpoint 3")));
-    	/* Drive servo testing */
+    	/* Drive servo testing and macro*/
     	{
     		this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"),
     				"left clicks", modules.getModule("Dashboard").getData("Left Drive Servo")));

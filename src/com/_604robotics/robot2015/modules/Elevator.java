@@ -32,9 +32,9 @@ public class Elevator extends Module {
 	/* Rate control*/
 	private final double NOMINAL_RATE = 650;
 	private final double SLOW_RATE = 250;
-	private final double MAX_RATE = 1000;
+	private final double MAX_RATE = 1500;
 	private final double TOLERANCE = 50;
-	private final double AUTO_RAMP_RATE = 0.02;
+	private final double AUTO_RAMP_RATE = 0.04;
 	private final double MANUAL_RAMP_RATE = 0.01;
 	private final RateLimitedMotor rateLimitedMotor = new RateLimitedMotor(encoder, NOMINAL_RATE, MAX_RATE, TOLERANCE, motor);
 	
@@ -90,7 +90,7 @@ public class Elevator extends Module {
             
             add("Tote Lifted", new Trigger() {
             	public boolean run () {
-            		if(encoder.get() > 150) return true;
+            		if(encoder.get() > 250) return true;
             		else return false;
             	}
             });
@@ -145,10 +145,13 @@ public class Elevator extends Module {
             });
             
             add("Tessellation Setpoint", new AngleAction());
+            add("Trash Can Setpoint", new AngleAction());
             add("Test Setpoint 1", new AngleAction());
             add("Test Setpoint 1.5", new AngleAction());
             add("Test Setpoint 2", new AngleAction());
             add("Test Setpoint 3", new AngleAction());
+            
+            add("Trash Can Macro Setpoint", new AngleAction());
             
             add("Hold", new Action() {
                 public void begin (ActionData data) {
@@ -238,7 +241,7 @@ public class Elevator extends Module {
 			this.tolerance = tolerance;
 			this.maxPowerUp = 1;
 			this.maxPowerDown = -1;
-			this.rampRate = 0.01;
+			this.rampRate = 0.05;
 		}
 		public void set(double power){
 			if(encoder.getRate() > nominalRate && encoder.getRate() > 0) {
@@ -272,6 +275,7 @@ public class Elevator extends Module {
 		public void stopped(){
 			maxPowerUp = 0.1;
 			maxPowerDown = 0;
+			motor.stopMotor();
 		}
 		public void setRate(double nominalRate){
 			this.nominalRate = nominalRate;
