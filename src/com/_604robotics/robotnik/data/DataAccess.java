@@ -9,7 +9,7 @@ public interface DataAccess {
     /**
      * Gets the data.
      *
-     * @return the double
+     * @return the data of type double
      */
     public abstract double get ();
 }

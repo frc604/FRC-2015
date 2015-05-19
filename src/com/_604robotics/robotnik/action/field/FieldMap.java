@@ -37,7 +37,7 @@ public class FieldMap {
      *
      * @return the enumeration
      */
-    public Enumeration enumerate () {
+    public Enumeration enumerate () { //TODO: figure out if this should replaced by Iterator. Iterator is a more up to date enumeration according to docs.oracle
         return this.fields.elements();
     }
 }

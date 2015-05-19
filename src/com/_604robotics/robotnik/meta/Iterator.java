@@ -4,6 +4,7 @@ import java.util.Enumeration;
 import java.util.Hashtable;
 
 // TODO: Auto-generated Javadoc
+// TODO: figure out why Iterator isn't used. http://docs.oracle.com/javase/6/docs/api/java/util/Iterator.html
 /**
  * The Class Iterator. Iterates through a hashtable. 
  */

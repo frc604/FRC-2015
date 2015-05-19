@@ -64,7 +64,9 @@ public class IndexedTable {
      * @param defaultValue the default value
      * @return the string
      */
-    public String  getString  (String key, String  defaultValue) { return this.table.getString (key,  defaultValue); }
+    public String getString (String key, String defaultValue) { 
+    	return this.table.getString (key, defaultValue); 
+    }
     
     /**
      * Gets the number.
@@ -73,7 +75,9 @@ public class IndexedTable {
      * @param defaultValue the default value
      * @return the number
      */
-    public double  getNumber  (String key, double  defaultValue) { return this.table.getNumber (key,  defaultValue); }
+    public double getNumber (String key, double defaultValue) { 
+    	return this.table.getNumber (key,  defaultValue); 
+    }
     
     /**
      * Gets the boolean.
@@ -82,7 +86,9 @@ public class IndexedTable {
      * @param defaultValue the default value
      * @return the boolean
      */
-    public boolean getBoolean (String key, boolean defaultValue) { return this.table.getBoolean(key, defaultValue); }
+    public boolean getBoolean (String key, boolean defaultValue) { 
+    	return this.table.getBoolean(key, defaultValue); 
+    }
     
     /**
      * Gets the value.
@@ -91,7 +97,9 @@ public class IndexedTable {
      * @return the value
      * @throws TableKeyNotDefinedException the table key not defined exception
      */
-    public Object  getValue   (String key) throws TableKeyNotDefinedException { return this.table.getValue(key); }
+    public Object getValue (String key) throws TableKeyNotDefinedException { 
+    	return this.table.getValue(key);
+    }
     
     /**
      * Put string.
@@ -99,7 +107,10 @@ public class IndexedTable {
      * @param key the key
      * @param value the value
      */
-    public void putString  (String key, String  value) { this.table.putString (key, value); this.addKey(key); }
+    public void putString (String key, String value) { 
+    	this.table.putString (key, value); 
+    	this.addKey(key);
+    }
     
     /**
      * Put number.
@@ -107,7 +118,10 @@ public class IndexedTable {
      * @param key the key
      * @param value the value
      */
-    public void putNumber  (String key, double  value) { this.table.putNumber (key, value); this.addKey(key); }
+    public void putNumber (String key, double value) { 
+    	this.table.putNumber (key, value); 
+    	this.addKey(key); 
+    }
     
     /**
      * Put boolean.
@@ -115,7 +129,10 @@ public class IndexedTable {
      * @param key the key
      * @param value the value
      */
-    public void putBoolean (String key, boolean value) { this.table.putBoolean(key, value); this.addKey(key); }
+    public void putBoolean (String key, boolean value) { 
+    	this.table.putBoolean(key, value); 
+    	this.addKey(key);
+    }
     
     /**
      * Put value.
@@ -123,7 +140,10 @@ public class IndexedTable {
      * @param key the key
      * @param value the value
      */
-    public void putValue   (String key, Object  value) { this.table.putValue  (key, value); this.addKey(key); }
+    public void putValue (String key, Object  value) { 
+    	this.table.putValue (key, value); 
+    	this.addKey(key); 
+    }
     
     /**
      * Adds the key if the key doesn't already exist in the set.
@@ -180,7 +200,9 @@ public class IndexedTable {
          * @param defaultValue the default value
          * @return the string
          */
-        public String  getString  (String  defaultValue) { return this.source.getString (this.key, defaultValue); }
+        public String getString (String defaultValue) { 
+        	return this.source.getString (this.key, defaultValue); 
+        }
         
         /**
          * Gets the number.
@@ -188,7 +210,9 @@ public class IndexedTable {
          * @param defaultValue the default value
          * @return the number
          */
-        public double  getNumber  (double  defaultValue) { return this.source.getNumber (this.key, defaultValue); }
+        public double getNumber (double defaultValue) { 
+        	return this.source.getNumber (this.key, defaultValue); 
+        }
         
         /**
          * Gets the boolean.
@@ -196,7 +220,9 @@ public class IndexedTable {
          * @param defaultValue the default value
          * @return the boolean
          */
-        public boolean getBoolean (boolean defaultValue) { return this.source.getBoolean(this.key, defaultValue); }
+        public boolean getBoolean (boolean defaultValue) { 
+        	return this.source.getBoolean(this.key, defaultValue); 
+        }
         
         /**
          * Gets the value.
@@ -204,34 +230,44 @@ public class IndexedTable {
          * @return the value
          * @throws TableKeyNotDefinedException the table key not defined exception
          */
-        public Object  getValue   () throws TableKeyNotDefinedException { return this.source.getValue(this.key); }
+        public Object getValue () throws TableKeyNotDefinedException { 
+        	return this.source.getValue(this.key); 
+        }
         
         /**
          * Put string.
          *
          * @param value the value
          */
-        public void putString  (String  value) { this.source.putString (this.key, value); }
+        public void putString (String value) { 
+        	this.source.putString (this.key, value);
+        }
         
         /**
          * Put number.
          *
          * @param value the value
          */
-        public void putNumber  (double  value) { this.source.putNumber (this.key, value); }
+        public void putNumber (double value) { 
+        	this.source.putNumber (this.key, value); 
+        }
         
         /**
          * Put boolean.
          *
          * @param value the value
          */
-        public void putBoolean (boolean value) { this.source.putBoolean(this.key, value); }
+        public void putBoolean (boolean value) { 
+        	this.source.putBoolean(this.key, value); 
+        }
         
         /**
          * Put value.
          *
          * @param value the value
          */
-        public void putValue   (Object  value) { this.source.putValue  (this.key, value); }
+        public void putValue (Object value) { 
+        	this.source.putValue (this.key, value);
+        }
     }
 }

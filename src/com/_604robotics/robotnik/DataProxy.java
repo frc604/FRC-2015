@@ -13,9 +13,12 @@ public class DataProxy {
     private static boolean active = true;
     
     /**
-     * Disable.
+     * Disables.
+     *
      */
-    protected static void disable () { active = false; }
+    protected static void disable () { 
+    	active = false; 
+    }
     
     /**
      * Update.
