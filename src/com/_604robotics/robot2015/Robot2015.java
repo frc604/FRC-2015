@@ -14,7 +14,7 @@ import com._604robotics.robot2015.modules.Clamp;
 import com._604robotics.robot2015.modules.CanMacro;
 import com._604robotics.robotnik.Robot;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
-import com._604robotics.robotnik.procedure.ModeMap;
+import com._604robotics.robotnik.coordinator.ModeMap;
 import com._604robotics.robotnik.module.ModuleMap;
 
 

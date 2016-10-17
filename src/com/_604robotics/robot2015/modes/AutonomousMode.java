@@ -6,29 +6,18 @@ package com._604robotics.robot2015.modes;
 import com._604robotics.robotnik.coordinator.Coordinator;
 import com._604robotics.robotnik.coordinator.connectors.Binding;
 import com._604robotics.robotnik.coordinator.connectors.DataWire;
+import com._604robotics.robotnik.coordinator.steps.Step;
 import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.prefabs.measure.TriggerMeasure;
 import com._604robotics.robotnik.prefabs.trigger.TriggerAnd;
 import com._604robotics.robotnik.prefabs.trigger.TriggerOr;
-import com._604robotics.robotnik.procedure.Procedure;
-import com._604robotics.robotnik.procedure.Step;
 import com._604robotics.robotnik.trigger.TriggerAccess;
 
 // TODO: Auto-generated Javadoc
 /**
  * The Class AutonomousMode.
  */
-public class AutonomousMode extends Procedure {
-    /**
-     * Instantiates a new autonomous mode.
-     */
-    public AutonomousMode () {
-    	super(new Coordinator() {
-            protected void apply (ModuleManager modules) {
-                this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2")));
-            }
-        });
-    }
+public class AutonomousMode extends Coordinator {
     
     /* (non-Javadoc)
      * @see com._604robotics.robotnik.procedure.Procedure#apply(com._604robotics.robotnik.module.ModuleManager)
