@@ -1,40 +1,31 @@
 package com._604robotics.robotnik.prefabs.measure;
 
-import com._604robotics.robotnik.procedure.Measure;
+import com._604robotics.robotnik.coordinator.steps.Measure;
+
 import edu.wpi.first.wpilibj.Timer;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class TimeMeasure.
+ * Measures time, reporting completion when a duration has elapsed.
  */
 public class TimeMeasure extends Measure {
-    
-    /** The timer. */
     private final Timer timer = new Timer();
-    
-    /** The seconds. */
     private final double seconds;
 
     /**
-     * Instantiates a new time measure.
-     *
-     * @param seconds the seconds
+     * Creates a time measure.
+     * @param seconds Target elapsed time to measure for.
      */
     public TimeMeasure (double seconds) {
         this.seconds = seconds;
     }
 
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.procedure.Measure#initialize()
-     */
+    @Override
     public void initialize() {
         timer.reset();
         timer.start();
     }
 
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.procedure.Measure#complete()
-     */
+    @Override
     public boolean complete () {
         final boolean complete = timer.get() > seconds;
         if (complete)

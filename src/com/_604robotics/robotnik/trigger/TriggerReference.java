@@ -1,52 +1,22 @@
 package com._604robotics.robotnik.trigger;
 
+import com._604robotics.robotnik.Safety;
 import com._604robotics.robotnik.memory.IndexedTable.Slice;
+import com._604robotics.robotnik.prefabs.trigger.TriggerNot;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class TriggerReference.
+ * A reference to a trigger.
  */
 public class TriggerReference implements TriggerAccess {
-    
-    /** The trigger. */
     private final Trigger trigger;
-    
-    /** The value. */
     private final Slice value;
-    
-    /** The inverse. */
+
     private TriggerAccess inverse = null;
-    
+
     /**
-     * The Class TriggerNot.
-     */
-    private class TriggerNot implements TriggerAccess {
-        
-        /** The source. */
-        private final TriggerAccess source;
-        
-        /**
-         * Instantiates a new trigger not.
-         *
-         * @param source the source
-         */
-        public TriggerNot (TriggerAccess source) {
-            this.source = source;
-        }
-        
-        /* (non-Javadoc)
-         * @see com._604robotics.robotnik.trigger.TriggerAccess#get()
-         */
-        public boolean get () {
-            return !source.get();
-        }
-    }
-    
-    /**
-     * Instantiates a new trigger reference.
-     *
-     * @param trigger the trigger
-     * @param value the value
+     * Creates a trigger reference.
+     * @param trigger Trigger to refer to.
+     * @param value Slice to store the trigger value in.
      */
     public TriggerReference (Trigger trigger, Slice value) {
         this.trigger = trigger;
@@ -54,29 +24,27 @@ public class TriggerReference implements TriggerAccess {
     }
     
     /**
-     * Not.
-     *
-     * @return the trigger access
+     * Gets the inverse of the trigger.
+     * @return The inverse of the trigger.
      */
     public TriggerAccess not () {
-        if (this.inverse == null) {
-            this.inverse = new TriggerNot(this);
+        if (inverse == null) {
+            inverse = new TriggerNot(this);
         }
         
-        return this.inverse;
+        return inverse;
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.trigger.TriggerAccess#get()
-     */
+    @Override
     public boolean get () {
-        return this.value.getBoolean(false);
+        return value.getBoolean(false);
     }
     
     /**
-     * Update.
+     * Updates the trigger.
+     * @param safety Safety mode to operate with.
      */
-    public void update () {
-        this.value.putBoolean(this.trigger.run());
+    public void update (Safety safety) {
+        safety.wrap("updating trigger value", () -> value.putBoolean(trigger.run()));
     }
 }

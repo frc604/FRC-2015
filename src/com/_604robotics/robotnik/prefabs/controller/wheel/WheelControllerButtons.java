@@ -3,55 +3,78 @@ package com._604robotics.robotnik.prefabs.controller.wheel;
 import com._604robotics.robotnik.prefabs.controller.ControllerButton;
 import edu.wpi.first.wpilibj.Joystick;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class WheelControllerButtons.
+ * The buttons of a wheel controller.
  */
 public class WheelControllerButtons {
-    
-    /** The Left pad. */
+    /**
+     * Left Pad.
+     */
     public final ControllerButton LeftPad;
     
-    /** The Right pad. */
+    /**
+     * Right Pad.
+     */
     public final ControllerButton RightPad;
     
-    /** The Triangle. */
+    /**
+     * Triangle.
+     */
     public final ControllerButton Triangle;
     
-    /** The Square. */
+    /**
+     * Square.
+     */
     public final ControllerButton Square;
     
-    /** The Circle. */
+    /**
+     * Circle.
+     */
     public final ControllerButton Circle;
     
-    /** The Cross. */
+    /**
+     * Cross.
+     */
     public final ControllerButton Cross;
     
-    /** The L2. */
+    /**
+     * L2.
+     */
     public final ControllerButton L2;
     
-    /** The R2. */
+    /**
+     * R2.
+     */
     public final ControllerButton R2;
     
-    /** The L3. */
+    /**
+     * L3.
+     */
     public final ControllerButton L3;
     
-    /** The R3. */
+    /**
+     * R3.
+     */
     public final ControllerButton R3;
     
-    /** The Home. */
+    /**
+     * Home.
+     */
     public final ControllerButton Home;
     
-    /** The st. */
+    /**
+     * ST.
+     */
     public final ControllerButton ST;
     
-    /** The se. */
-    public final ControllerButton SE;
-    
     /**
-     * Instantiates a new wheel controller buttons.
-     *
-     * @param joystick the joystick
+     * SE.
+     */
+    public final ControllerButton SE;
+
+    /**
+     * Creates wheel controller buttons.
+     * @param joystick Wheel controller containing the buttons.
      */
     public WheelControllerButtons (Joystick joystick) {
         this.LeftPad  = new ControllerButton(joystick, 5);

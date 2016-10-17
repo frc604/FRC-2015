@@ -3,34 +3,43 @@ package com._604robotics.robotnik.prefabs.controller.xbox;
 import edu.wpi.first.wpilibj.Joystick;
 import com._604robotics.robotnik.prefabs.controller.ControllerRumble;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class XboxController.
+ * A Xbox controller.
  */
 public class XboxController {
-    
-    /** The buttons. */
+    /**
+     * The controller's buttons.
+     */
     public final XboxControllerButtons buttons;
     
-    /** The left stick. */
+    /**
+     * The controller's left stick.
+     */
     public final XboxControllerStick leftStick;
     
-    /** The right stick. */
+    /**
+     * The controller's right stick.
+     */
     public final XboxControllerStick rightStick;
     
+    /**
+     * The controller's triggers.
+     */
     public final XboxControllerTriggers triggers;
     
-    /** The dpad. */
+    /**
+     * The controller's D-pad.
+     */
     public final XboxControllerDpad dpad;
     
-    /** The rumble. */
-    public final ControllerRumble rumble;
-    
-    
     /**
-     * Instantiates a new xbox controller.
-     *
-     * @param port the port
+     * The controller's rumble feature.
+     */
+    public final ControllerRumble rumble;
+
+    /**
+     * Creates an Xbox controller.
+     * @param port Port of the controller.
      */
     public XboxController (int port) {
         final Joystick joystick = new Joystick(port);

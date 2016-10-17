@@ -1,93 +1,78 @@
 package com._604robotics.robotnik.action;
 
-import com._604robotics.robotnik.meta.Iterator;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ActionController.
+ * Contains a set of actions, controlling which to run at a given time.
  */
-public abstract class ActionController {
-    
-    /** The action table. */
-    private final Hashtable actionTable = new Hashtable();
-    
-    /** The default action. */
+public abstract class ActionController implements Iterable<Map.Entry<String, Action>> {
+    private final Map<String, Action> actionTable = new HashMap<String, Action>();
     private String defaultAction = "";
-    
+
     /**
-     * Pick action.
-     *
-     * @param lastAction the last action
-     * @param triggeredAction the triggered action
-     * @return the string
+     * Picks an action to run.
+     * @param lastAction The name of the last action that ran.
+     * @param triggeredAction The name of the current triggered action.
+     * @return The name of the action to run.
      */
     protected abstract String pickAction (String lastAction, String triggeredAction);
-    
+
     /**
-     * Adds the.
-     *
-     * @param name the name
-     * @param action the action
+     * Adds an action.
+     * @param name Name of the action.
+     * @param action Action to add.
      */
     public void add (String name, Action action) {
         this.actionTable.put(name, action);
     }
-    
+
     /**
-     * Adds the.
-     *
-     * @param name the name
+     * Adds an empty action.
+     * @param name Name of the action.
      */
     public void add (String name) {
         this.add(name, new Action());
     }
-    
+
     /**
-     * Adds the default.
-     *
-     * @param name the name
-     * @param action the action
+     * Adds an action, setting it as the default.
+     * @param name Name of the action.
+     * @param action Action to add.
      */
     public void addDefault (String name, Action action) {
         this.add(name, action);
         this.defaultAction = name;
     }
-    
+
     /**
-     * Adds the default.
-     *
-     * @param name the name
+     * Adds an empty action, setting it as the default.
+     * @param name Name of the action.
      */
     public void addDefault (String name) {
         this.addDefault(name, new Action());
     }
-    
+
     /**
-     * Gets the default action.
-     *
-     * @return the default action
+     * Gets the name of the default action.
+     * @return The name of the default action.
      */
     protected String getDefaultAction () {
         return this.defaultAction;
     }
-    
+
     /**
-     * Gets the action.
-     *
-     * @param name the name
-     * @return the action
+     * Gets an action by its name.
+     * @param name Name of the action.
+     * @return The action with the given name.
      */
     protected Action getAction (String name) {
-        return (Action) this.actionTable.get(name);
+        return this.actionTable.get(name);
     }
-    
-    /**
-     * Iterate.
-     *
-     * @return the iterator
-     */
-    protected Iterator iterate () {
-        return new Iterator(this.actionTable);
+
+    @Override
+    public Iterator<Map.Entry<String, Action>> iterator () {
+        return this.actionTable.entrySet().iterator();
     }
 }

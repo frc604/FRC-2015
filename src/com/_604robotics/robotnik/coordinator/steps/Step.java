@@ -1,24 +1,18 @@
-package com._604robotics.robotnik.procedure;
+package com._604robotics.robotnik.coordinator.steps;
 
 import com._604robotics.robotnik.coordinator.Coordinator;
 import com._604robotics.robotnik.module.ModuleManager;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Step.
+ * A step to execute.
  */
 public class Step {
-    
-    /** The measure. */
     private final Measure measure;
-    
-    /** The coordinator. */
     private final Coordinator coordinator;
 
     /**
-     * Instantiates a new step.
-     *
-     * @param measure the measure
+     * Creates a step with no contents.
+     * @param measure Measure indicating completion.
      */
     public Step (Measure measure) {
         this.measure = measure;
@@ -26,9 +20,8 @@ public class Step {
     }
 
     /**
-     * Instantiates a new step.
-     *
-     * @param coordinator the coordinator
+     * Creates an unmeasured step.
+     * @param coordinator Coordinator driving the step.
      */
     public Step (Coordinator coordinator) {
         this.measure = null;
@@ -36,10 +29,9 @@ public class Step {
     }
 
     /**
-     * Instantiates a new step.
-     *
-     * @param measure the measure
-     * @param coordinator the coordinator
+     * Creates a step.
+     * @param measure Measure indicating completion.
+     * @param coordinator Coordinator driving the step.
      */
     public Step (Measure measure, Coordinator coordinator) {
         this.measure = measure;
@@ -47,38 +39,49 @@ public class Step {
     }
     
     /**
-     * Initialize.
+     * Initializes the step.
      */
     public void initialize () {
-        if (measure != null)
+        if (measure != null) {
             measure.initialize();
+        }
     }
     
     /**
-     * Complete.
-     *
-     * @return true, if successful
+     * Gets whether the step is complete.
+     * @return Whether the step is complete.
      */
     public boolean complete () {
-        if (measure != null)
-            return measure.complete();
-        else
+        if (measure != null && !measure.complete()) {
             return false;
+        }
+        
+        if (!coordinator.complete()) {
+            return false;
+        }
+
+        return true;
     }
     
     /**
-     * Attach.
-     *
-     * @param modules the modules
+     * Attaches the step to a set of modules.
+     * @param modules Modules to attach to.
      */
     public void attach (ModuleManager modules) {
         coordinator.attach(modules);
     }
     
     /**
-     * Update.
+     * Updates the step.
      */
     public void update () {
         coordinator.update();
+    }
+    
+    /**
+     * Resets the step.
+     */
+    public void reset () {
+        coordinator.stop();
     }
 }

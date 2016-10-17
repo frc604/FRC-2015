@@ -3,27 +3,21 @@ package com._604robotics.robotnik.data.sources;
 import com._604robotics.robotnik.data.DataAccess;
 import com._604robotics.robotnik.trigger.TriggerAccess;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DataTriggerAdaptor.
+ * Data supplied by a trigger.
  */
 public class DataTriggerAdaptor implements DataAccess {
-    
-    /** The trigger. */
     private final TriggerAccess trigger;
     
     /**
-     * Instantiates a new data trigger adaptor.
-     *
-     * @param trigger the trigger
+     * Creates a data trigger adaptor.
+     * @param trigger Trigger to supply data with.
      */
     public DataTriggerAdaptor (TriggerAccess trigger) {
         this.trigger = trigger;
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.data.DataAccess#get()
-     */
+    @Override
     public double get () {
         return this.trigger.get() ? 1D : 0D;
     }

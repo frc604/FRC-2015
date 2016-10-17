@@ -3,57 +3,44 @@ package com._604robotics.robotnik.prefabs.controller;
 import com._604robotics.robotnik.data.DataAccess;
 import edu.wpi.first.wpilibj.Joystick;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ControllerAxis.
+ * An axis on a controller.
  */
 public class ControllerAxis implements DataAccess {
-    
-    /** The joystick. */
     private final Joystick joystick;
-    
-    /** The axis. */
     private final int axis;
-    
-    /** The deadband. */
+
     private double deadband = 0D;
-    
-    /** The factor. */
     private double factor = 1D;
-    
+
     /**
-     * Instantiates a new controller axis.
-     *
-     * @param joystick the joystick
-     * @param axis the axis
+     * Creates a controller axis.
+     * @param joystick Joystick containing the axis.
+     * @param axis Axis to represent.
      */
     public ControllerAxis (Joystick joystick, int axis) {
         this.joystick = joystick;
         this.axis = axis;
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.data.DataAccess#get()
-     */
+    @Override
     public double get () {
         final double value = this.joystick.getRawAxis(this.axis) * this.factor;
         
         return Math.abs(value) < this.deadband ? 0D : value;
     }
-    
+
     /**
-     * Sets the deadband.
-     *
-     * @param deadband the new deadband
+     * Sets the deadband of the axis.
+     * @param deadband Deadband to set.
      */
     public void setDeadband (double deadband) {
         this.deadband = deadband;
     }
-    
+
     /**
-     * Sets the factor.
-     *
-     * @param factor the new factor
+     * Sets the multiplication factor of the axis.
+     * @param factor Factor to set.
      */
     public void setFactor (double factor) {
         this.factor = factor;

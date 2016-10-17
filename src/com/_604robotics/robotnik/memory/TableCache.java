@@ -2,47 +2,38 @@ package com._604robotics.robotnik.memory;
 
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
-import java.util.Hashtable;
 
-// TODO: Auto-generated Javadoc
+import java.util.HashMap;
+import java.util.Map;
+
 /**
- * The Class TableCache.
+ * A cache of tables.
  */
 public class TableCache {
-    
-    /** The Constant cache. */
-    private static final Hashtable cache = new Hashtable();
-    
+    private static final Map<ITable, IndexedTable> cache = new HashMap<ITable, IndexedTable>();
+
     /**
-     * Gets the table.
-     *
-     * @param key the key
-     * @return the table
+     * Gets a table.
+     * @param key Key of the table.
+     * @return The retrieved table.
      */
     protected static IndexedTable getTable (String key) {
         return getTable(NetworkTable.getTable(key));
     }
-    
+
     /**
-     * Gets the sub table.
-     *
-     * @param parent the parent
-     * @param key the key
-     * @return the sub table
+     * Gets a sub table.
+     * @param parent Parent table of the sub table.
+     * @param key Key of the sub table.
+     * @return The retrieved sub table.
      */
     protected static IndexedTable getSubTable(ITable parent, String key) {
         return getTable(parent.getSubTable(key));
     }
-    
-    /**
-     * Gets the table.
-     *
-     * @param table the table
-     * @return the table
-     */
+
     private static IndexedTable getTable (ITable table) {
         if (cache.containsKey(table)) {
-            return (IndexedTable) cache.get(table);
+            return cache.get(table);
         } else {
             final IndexedTable result = new IndexedTable(table);
             cache.put(table, result);

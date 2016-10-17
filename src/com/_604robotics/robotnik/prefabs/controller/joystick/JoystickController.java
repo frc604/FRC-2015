@@ -3,28 +3,33 @@ package com._604robotics.robotnik.prefabs.controller.joystick;
 import com._604robotics.robotnik.prefabs.controller.ControllerAxis;
 import edu.wpi.first.wpilibj.Joystick;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class JoystickController.
+ * A joystick controller.
  */
 public class JoystickController {
-    
-    /** The buttons. */
+    /**
+     * The joystick's buttons.
+     */
     public final JoystickControllerButtons buttons;
     
-    /** The axis x. */
+    /**
+     * The joystick's X axis.
+     */
     public final ControllerAxis axisX;
     
-    /** The axis y. */
+    /**
+     * The joystick's Y axis.
+     */
     public final ControllerAxis axisY;
     
-    /** The axis adjust. */
-    public final ControllerAxis axisAdjust;
-    
     /**
-     * Instantiates a new joystick controller.
-     *
-     * @param port the port
+     * The joystick's adjust axis.
+     */
+    public final ControllerAxis axisAdjust;
+
+    /**
+     * Creates a joystick controller.
+     * @param port Port of the controller.
      */
     public JoystickController (int port) {
         final Joystick joystick = new Joystick(port);

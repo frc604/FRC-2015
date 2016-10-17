@@ -1,29 +1,24 @@
 package com._604robotics.robotnik.prefabs.measure;
 
-import com._604robotics.robotnik.procedure.Measure;
+import com._604robotics.robotnik.coordinator.steps.Measure;
+
 import edu.wpi.first.wpilibj.DriverStation;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class MatchTimeMeasure.
+ * Measures match time, reporting completion when a duration has elapsed.
  */
 public class MatchTimeMeasure extends Measure {
-    
-    /** The seconds. */
     private final double seconds;
 
     /**
-     * Instantiates a new match time measure.
-     *
-     * @param seconds the seconds
+     * Creates a match time measure.
+     * @param seconds Target elapsed time to measure for.
      */
     public MatchTimeMeasure (double seconds) {
         this.seconds = seconds;
     }
 
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.procedure.Measure#complete()
-     */
+    @Override
     public boolean complete () {
         return DriverStation.getInstance().getMatchTime() >= seconds;
     }

@@ -1,78 +1,78 @@
 package com._604robotics.robotnik.module;
 
-import com._604robotics.robotnik.meta.Iterator;
-import com._604robotics.robotnik.meta.Repackager;
+import java.util.HashMap;
+import java.util.Map;
+
+import com._604robotics.robotnik.Safety;
+import com._604robotics.robotnik.logging.Logger;
 import com._604robotics.robotnik.memory.IndexedTable;
-import com._604robotics.robotnik.logging.InternalLogger;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-import java.util.Hashtable;
-
-// TODO: Auto-generated Javadoc
 /**
- * The Class ModuleManager.
+ * Manages modules.
  */
 public class ModuleManager {
-    
-    /** The module table. */
-    private final Hashtable moduleTable;
-    
+    private final Map<String, ModuleReference> moduleTable;
+
     /**
-     * Instantiates a new module manager.
-     *
-     * @param moduleMap the module map
-     * @param table the table
+     * Creates a module manager.
+     * @param moduleMap Map of modules to manage.
+     * @param table Table to store module data in.
      */
     public ModuleManager (ModuleMap moduleMap, final IndexedTable table) {
-        this.moduleTable = Repackager.repackage(moduleMap.iterate(), new Repackager() {
-            public Object wrap (Object key, Object value) {
-                return new ModuleReference((String) key, (Module) value, table.getSubTable((String) key));
-            }
-        });
+        this.moduleTable = new HashMap<String, ModuleReference>();
+        for (Map.Entry<String, Module> entry : moduleMap) {
+            this.moduleTable.put(entry.getKey(), new ModuleReference(entry.getKey(), entry.getValue(), table.getSubTable(entry.getKey())));
+        }
     }
-    
+
     /**
-     * Gets the module.
-     *
-     * @param name the name
-     * @return the module
+     * Gets a reference to a module.
+     * @param name Name of the module.
+     * @return The retrieved module reference.
      */
     public ModuleReference getModule (String name) {
-        ModuleReference ref = (ModuleReference) this.moduleTable.get(name);
-        if (ref == null) InternalLogger.missing("ModuleReference", name);
+        ModuleReference ref = this.moduleTable.get(name);
+        if (ref == null) Logger.missing("ModuleReference", name);
         return ref;
     }
-    
+
     /**
-     * Start.
+     * Starts all modules.
+     * @param safety Safety mode to operate under.
      */
-    public void start () {
-        final Iterator i = new Iterator(this.moduleTable);
-        while (i.next()) ((ModuleReference) i.value).start();
+    public void start (Safety safety) {
+        for (ModuleReference ref : this.moduleTable.values()) {
+            ref.start(safety);
+        }
     }
-    
+
     /**
-     * Update.
+     * Updates all modules.
+     * @param safety Safety mode to operate under.
      */
-    public void update () {
-        final Iterator i = new Iterator(this.moduleTable);
-        while (i.next()) ((ModuleReference) i.value).update();
+    public void update (Safety safety) {
+        for (ModuleReference ref : this.moduleTable.values()) {
+            ref.update(safety);
+        }
     }
-    
+
     /**
-     * Execute.
+     * Executes all modules.
+     * @param safety Safety mode to operate under.
      */
-    public void execute () {
-        final Iterator i = new Iterator(this.moduleTable);
-        while (i.next()) ((ModuleReference) i.value).execute();
+    public void execute (Safety safety) {
+        for (ModuleReference ref : this.moduleTable.values()) {
+            ref.execute(safety);
+        }
     }
-    
+
     /**
-     * End.
+     * Stops all modules.
+     * @param safety Safety mode to operate under.
      */
-    public void end () {
-        final Iterator i = new Iterator(this.moduleTable);
-        while (i.next()) ((ModuleReference) i.value).end();
+    public void stop (Safety safety) {
+        for (ModuleReference ref : this.moduleTable.values()) {
+            ref.stop(safety);
+        }
     }
 }

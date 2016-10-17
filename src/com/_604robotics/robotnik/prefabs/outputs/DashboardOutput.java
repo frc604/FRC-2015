@@ -3,64 +3,75 @@ package com._604robotics.robotnik.prefabs.outputs;
 import com._604robotics.robotnik.data.DataRecipient;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DashboardOutput.
+ * A data recipient outputting data on the smart dashboard.
  */
-public class DashboardOutput implements DataRecipient {
+public class DashboardOutput {
+    private static DoubleDashboardOutput doubleInstance = null;
+    private static BooleanDashboardOutput booleanInstance = null;
     
-    /** The double instance. */
-    private static DashboardOutput doubleInstance = null;
-    
-    /** The boolean instance. */
-    private static DashboardOutput booleanInstance = null;
-    
-    /** The as boolean. */
-    private final boolean asBoolean;
+    private DashboardOutput () {}
     
     /**
-     * As double.
-     *
-     * @return the dashboard output
+     * Gets an output for double data.
+     * @return An output for double data.
      */
-    public static DashboardOutput asDouble () {
+    public static DataRecipient asDouble () {
         if (doubleInstance == null) {
-            doubleInstance = new DashboardOutput(false);
+            doubleInstance = new DoubleDashboardOutput();
         }
         
         return doubleInstance;
     }
     
     /**
-     * As boolean.
-     *
-     * @return the dashboard output
+     * Gets an output for boolean data.
+     * @return An output for boolean data.
      */
-    public static DashboardOutput asBoolean () {
+    public static DataRecipient asBoolean () {
         if (booleanInstance == null) {
-            booleanInstance = new DashboardOutput(true);
+            booleanInstance = new BooleanDashboardOutput();
         }
         
         return booleanInstance;
     }
     
     /**
-     * Instantiates a new dashboard output.
-     *
-     * @param asBoolean the as boolean
+     * Gets an output for boolean data, displaying certain text for false and true values.
+     * @param falseText Text to display when the value is false.
+     * @param trueText Text to display when the value is true.
+     * @return An output for boolean data.
      */
-    private DashboardOutput (boolean asBoolean) {
-        this.asBoolean = asBoolean;
+    public static DataRecipient asBoolean (String falseText, String trueText) {
+        return new FancyBooleanDashboardOutput(falseText, trueText);
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.data.DataRecipient#sendData(java.lang.String, double)
-     */
-    public void sendData (String fieldName, double dataValue) {
-        if (this.asBoolean) {
-            SmartDashboard.putBoolean(fieldName, dataValue > 0);
-        } else {
+    private static class DoubleDashboardOutput implements DataRecipient {
+        @Override
+        public void sendData (String fieldName, double dataValue) {
             SmartDashboard.putNumber(fieldName, dataValue);
+        }
+    }
+
+    private static class BooleanDashboardOutput implements DataRecipient {
+        @Override
+        public void sendData (String fieldName, double dataValue) {
+            SmartDashboard.putBoolean(fieldName, dataValue > 0);
+        }
+    }
+
+    private static class FancyBooleanDashboardOutput implements DataRecipient {
+        private final String falseText;
+        private final String trueText;
+        
+        private FancyBooleanDashboardOutput (String falseText, String trueText) {
+            this.falseText = falseText;
+            this.trueText = trueText;
+        }
+
+        @Override
+        public void sendData (String fieldName, double dataValue) {
+            SmartDashboard.putString(fieldName, dataValue > 0 ? this.trueText : this.falseText);
         }
     }
 }

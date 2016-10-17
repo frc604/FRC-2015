@@ -1,16 +1,13 @@
 package com._604robotics.robotnik.data;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Interface DataRecipient.
+ * A recipient of data.
  */
 public interface DataRecipient {
-    
     /**
-     * Send data.
-     *
-     * @param fieldName the field name
-     * @param dataValue the data value
+     * Sends data to this recipient.
+     * @param fieldName Name of the data field.
+     * @param dataValue Value of the data.
      */
-    public abstract void sendData (String fieldName, double dataValue);
+    public void sendData (String fieldName, double dataValue);
 }

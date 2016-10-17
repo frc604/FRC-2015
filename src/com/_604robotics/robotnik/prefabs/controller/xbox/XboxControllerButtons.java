@@ -4,49 +4,68 @@ import com._604robotics.robotnik.prefabs.controller.ControllerAxisButton;
 import com._604robotics.robotnik.prefabs.controller.ControllerButton;
 import edu.wpi.first.wpilibj.Joystick;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class XboxControllerButtons.
+ * The buttons of an Xbox controller.
  */
 public class XboxControllerButtons {
-    
-    /** The a. */
+    /**
+     * A.
+     */
     public final ControllerButton A;
     
-    /** The b. */
+    /**
+     * B.
+     */
     public final ControllerButton B;
     
-    /** The x. */
+    /**
+     * X.
+     */
     public final ControllerButton X;
     
-    /** The y. */
+    /**
+     * Y.
+     */
     public final ControllerButton Y;
     
-    /** The lb. */
+    /**
+     * LB.
+     */
     public final ControllerButton LB;
     
-    /** The rb. */
+    /**
+     * RB.
+     */
     public final ControllerButton RB;
     
-    /** The Back. */
+    /**
+     * Back.
+     */
     public final ControllerButton Back;
     
-    /** The Left stick. */
+    /**
+     * Left Stick.
+     */
     public final ControllerButton LeftStick;
     
-    /** The Right stick. */
+    /**
+     * Right Stick.
+     */
     public final ControllerButton RightStick;
     
-    /** The lt. */
+    /**
+     * LT.
+     */
     public final ControllerAxisButton LT;
     
-    /** The rt. */
-    public final ControllerAxisButton RT;
-    
     /**
-     * Instantiates a new xbox controller buttons.
-     *
-     * @param joystick the joystick
+     * RT.
+     */
+    public final ControllerAxisButton RT;
+
+    /**
+     * Creates Xbox controller buttons.
+     * @param joystick Xbox controller containing the buttons.
      */
     public XboxControllerButtons (Joystick joystick) {
         this.A    = new ControllerButton(joystick, 1);

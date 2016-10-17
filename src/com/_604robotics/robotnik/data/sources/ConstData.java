@@ -2,27 +2,21 @@ package com._604robotics.robotnik.data.sources;
 
 import com._604robotics.robotnik.data.DataAccess;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ConstData.
+ * Data with a constant value.
  */
 public class ConstData implements DataAccess {
-    
-    /** The value. */
     private final double value;
 
     /**
-     * Instantiates a new const data.
-     *
-     * @param value the value
+     * Creates constant data.
+     * @param value Constant value to contain.
      */
     public ConstData (double value) {
         this.value = value;
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.data.DataAccess#get()
-     */
+    @Override
     public double get() {
         return value;
     }

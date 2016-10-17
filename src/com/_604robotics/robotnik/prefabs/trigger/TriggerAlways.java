@@ -2,32 +2,23 @@ package com._604robotics.robotnik.prefabs.trigger;
 
 import com._604robotics.robotnik.trigger.TriggerAccess;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class TriggerAlways.
+ * An always-active trigger.
  */
 public class TriggerAlways implements TriggerAccess {
-    
-    /**
-     * Instantiates a new trigger always.
-     */
     private TriggerAlways () {}
-    
-    /** The Constant instance. */
-    private static final TriggerAccess instance = new TriggerAlways();
-    
+
+    private static final TriggerAccess INSTANCE = new TriggerAlways();
+
     /**
-     * Gets the single instance of TriggerAlways.
-     *
-     * @return single instance of TriggerAlways
+     * Gets the TriggerAlways instance.
+     * @return The TriggerAlways instance.
      */
     public static TriggerAccess getInstance () {
-        return instance;
+        return INSTANCE;
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.trigger.TriggerAccess#get()
-     */
+    @Override
     public boolean get () {
         return true;
     }

@@ -1,15 +1,12 @@
 package com._604robotics.robotnik.trigger;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Interface TriggerRecipient.
+ * A recipient of a trigger.
  */
 public interface TriggerRecipient {
-    
     /**
-     * Send trigger.
-     *
-     * @param precedence the precedence
+     * Sends a trigger value to this recipient.
+     * @param precedence The trigger's value, greater if its precedence is higher.
      */
-    public abstract void sendTrigger (double precedence);
+    public void sendTrigger (double precedence);
 }

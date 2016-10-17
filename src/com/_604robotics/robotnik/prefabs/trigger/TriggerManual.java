@@ -2,35 +2,28 @@ package com._604robotics.robotnik.prefabs.trigger;
 
 import com._604robotics.robotnik.trigger.TriggerAccess;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class TriggerManual.
+ * A manual trigger.
  */
 public class TriggerManual implements TriggerAccess {
-    
-    /** The triggered. */
     private boolean triggered;
-    
+
     /**
-     * Instantiates a new trigger manual.
-     *
-     * @param defaultValue the default value
+     * Creates a trigger manual.
+     * @param defaultValue Default value of the trigger.
      */
     public TriggerManual (boolean defaultValue) {
         this.triggered = defaultValue;
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.trigger.TriggerAccess#get()
-     */
+    @Override
     public boolean get () {
         return this.triggered;
     }
-    
+
     /**
-     * Sets the.
-     *
-     * @param triggered the triggered
+     * Sets the trigger's value.
+     * @param triggered Whether the trigger is triggered.
      */
     public void set (boolean triggered) {
         this.triggered = triggered;

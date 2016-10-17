@@ -1,43 +1,35 @@
 package com._604robotics.robotnik.action.field;
 
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class FieldMap.
+ * A map of action data fields.
  */
-public class FieldMap {
-    
-    /** The fields. */
-    private final Vector fields = new Vector();
-    
+public class FieldMap implements Iterable<Field> {
+    private final List<Field> fields = new ArrayList<Field>();
+
     /**
-     * Define.
-     *
-     * @param name the name
-     * @param value the value
+     * Defines a double field.
+     * @param name Name of the field.
+     * @param defaultValue Default value of the field.
      */
-    public void define (String name, double value) {
-        this.fields.addElement(new Field(name, value));
+    public void define (String name, double defaultValue) {
+        this.fields.add(new Field(name, defaultValue));
     }
-    
+
     /**
-     * Define.
-     *
-     * @param name the name
-     * @param value the value
+     * Defines a boolean field.
+     * @param name Name of the field.
+     * @param defaultValue Default value of the field.
      */
-    public void define (String name, boolean value) {
-        this.fields.addElement(new Field(name, value ? 1D : 0D));
+    public void define (String name, boolean defaultValue) {
+        this.fields.add(new Field(name, defaultValue ? 1 : 0));
     }
-    
-    /**
-     * Enumerate.
-     *
-     * @return the enumeration
-     */
-    public Enumeration enumerate () {
-        return this.fields.elements();
+
+    @Override
+    public Iterator<Field> iterator () {
+        return this.fields.iterator();
     }
 }

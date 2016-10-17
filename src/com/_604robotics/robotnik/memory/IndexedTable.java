@@ -1,135 +1,133 @@
 package com._604robotics.robotnik.memory;
 
-import edu.wpi.first.wpilibj.networktables2.util.Set;
+import java.util.HashSet;
+import java.util.Set;
 import edu.wpi.first.wpilibj.tables.ITable;
-import edu.wpi.first.wpilibj.tables.TableKeyNotDefinedException;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class IndexedTable.
+ * An indexed table of values.
  */
 public class IndexedTable {
-    
     /**
-     * Gets the table.
-     *
-     * @param key the key
-     * @return the table
+     * Gets a table.
+     * @param key Key of the table.
+     * @return The received table.
      */
     public static IndexedTable getTable (String key) {
         return TableCache.getTable(key);
     }
-    
-    /** The keys. */
-    private final Set keys = new Set();
-    
-    /** The table. */
+
+    private final Set<String> keys = new HashSet<String>();
     private final ITable table;
-    
+
     /**
-     * Knows about.
-     *
-     * @param key the key
-     * @return true, if successful
+     * Gets whether the table knows about a key.
+     * @param key Key to check.
+     * @return Whether the table knows about the key.
      */
     public boolean knowsAbout (String key) {
         return this.keys.contains(key);
     }
-    
+
     /**
-     * Gets the slice.
-     *
-     * @param key the key
-     * @return the slice
+     * Gets a slice from the table.
+     * @param key Key of the slice.
+     * @return The retrieved slice.
      */
     public Slice getSlice (String key) {
         return new Slice(this, key);
     }
-    
+
     /**
-     * Gets the sub table.
-     *
-     * @param key the key
-     * @return the sub table
+     * Gets a sub table of the table.
+     * @param key Key of the sub table.
+     * @return The retrieved sub table.
      */
     public IndexedTable getSubTable(String key) {
         this.addKey(key);
         return TableCache.getSubTable(this.table, key);
     }
-    
+
     /**
-     * Gets the string.
-     *
-     * @param key the key
-     * @param defaultValue the default value
-     * @return the string
+     * Gets a string from the table.
+     * @param key Key of the string.
+     * @param defaultValue Default value to use if the key is not found.
+     * @return The retrieved string.
      */
-    public String  getString  (String key, String  defaultValue) { return this.table.getString (key,  defaultValue); }
-    
+    public String getString (String key, String  defaultValue) {
+        return this.table.getString(key,  defaultValue);
+    }
+
     /**
-     * Gets the number.
-     *
-     * @param key the key
-     * @param defaultValue the default value
-     * @return the number
+     * Gets a number from the table.
+     * @param key Key of the number.
+     * @param defaultValue Default value to use if the key is not found.
+     * @return The retrieved number.
      */
-    public double  getNumber  (String key, double  defaultValue) { return this.table.getNumber (key,  defaultValue); }
-    
+    public double getNumber (String key, double defaultValue) {
+        return this.table.getNumber(key,  defaultValue);
+    }
+
     /**
-     * Gets the boolean.
-     *
-     * @param key the key
-     * @param defaultValue the default value
-     * @return the boolean
+     * Gets a boolean from the table.
+     * @param key Key of the boolean.
+     * @param defaultValue Default value to use if the key is not found.
+     * @return The retrieved boolean.
      */
-    public boolean getBoolean (String key, boolean defaultValue) { return this.table.getBoolean(key, defaultValue); }
-    
+    public boolean getBoolean (String key, boolean defaultValue) {
+        return this.table.getBoolean(key, defaultValue);
+    }
+
     /**
-     * Gets the value.
-     *
-     * @param key the key
-     * @return the value
-     * @throws TableKeyNotDefinedException the table key not defined exception
+     * Gets a raw value from the table.
+     * @param key Key of the raw value.
+     * @param defaultValue Default value to use if the key is not found.
+     * @return The retrieved raw value.
      */
-    public Object  getValue   (String key) throws TableKeyNotDefinedException { return this.table.getValue(key); }
-    
+    public Object getValue (String key, Object defaultValue) {
+        return this.table.getValue(key, defaultValue);
+    }
+
     /**
-     * Put string.
-     *
-     * @param key the key
-     * @param value the value
+     * Puts a string in the table.
+     * @param key Key of the string.
+     * @param value Value to put.
      */
-    public void putString  (String key, String  value) { this.table.putString (key, value); this.addKey(key); }
-    
+    public void putString (String key, String value) {
+        this.table.putString(key, value);
+        this.addKey(key);
+    }
+
     /**
-     * Put number.
-     *
-     * @param key the key
-     * @param value the value
+     * Puts a number in the table.
+     * @param key Key of the number.
+     * @param value Value to put.
      */
-    public void putNumber  (String key, double  value) { this.table.putNumber (key, value); this.addKey(key); }
-    
+    public void putNumber (String key, double value) {
+        this.table.putNumber(key, value);
+        this.addKey(key);
+    }
+
     /**
-     * Put boolean.
-     *
-     * @param key the key
-     * @param value the value
+     * Puts a boolean in the table.
+     * @param key Key of the boolean.
+     * @param value Value to put.
      */
-    public void putBoolean (String key, boolean value) { this.table.putBoolean(key, value); this.addKey(key); }
-    
+    public void putBoolean (String key, boolean value) {
+        this.table.putBoolean(key, value);
+        this.addKey(key);
+    }
+
     /**
-     * Put value.
-     *
-     * @param key the key
-     * @param value the value
+     * Puts a raw value in the table.
+     * @param key Key of the raw value.
+     * @param value Value to put.
      */
-    public void putValue   (String key, Object  value) { this.table.putValue  (key, value); this.addKey(key); }
-    
-    /**
-     * Adds the key.
-     *
-     * @param key the key
-     */
+    public void putValue (String key, Object value) {
+        this.table.putValue(key, value);
+        this.addKey(key);
+    }
+
     private void addKey (String key) {
         if (!this.keys.contains(key)) {
             this.keys.add(key);
@@ -142,96 +140,93 @@ public class IndexedTable {
             }
         }
     }
-    
+
     /**
-     * Instantiates a new indexed table.
-     *
-     * @param table the table
+     * Creates a table.
+     * @param table The backing ITable to use.
      */
     protected IndexedTable (ITable table) {
         this.table = table;
     }
-    
+
     /**
-     * The Class Slice.
+     * A slice of a table.
      */
     public class Slice {
-        
-        /** The source. */
         private final IndexedTable source;
-        
-        /** The key. */
         private final String key;
-        
-        /**
-         * Instantiates a new slice.
-         *
-         * @param source the source
-         * @param key the key
-         */
+
         private Slice (IndexedTable source, String key) {
             this.source = source;
             this.key = key;
         }
-        
+
         /**
-         * Gets the string.
-         *
-         * @param defaultValue the default value
-         * @return the string
+         * Gets the slice's string value.
+         * @param defaultValue Default value to use if the slice is empty.
+         * @return The slice's string value.
          */
-        public String  getString  (String  defaultValue) { return this.source.getString (this.key, defaultValue); }
-        
+        public String getString (String defaultValue) {
+            return this.source.getString(this.key, defaultValue);
+        }
+
         /**
-         * Gets the number.
-         *
-         * @param defaultValue the default value
-         * @return the number
+         * Gets the slice's number value.
+         * @param defaultValue Default value to use if the slice is empty.
+         * @return The slice's number value.
          */
-        public double  getNumber  (double  defaultValue) { return this.source.getNumber (this.key, defaultValue); }
-        
+        public double getNumber (double defaultValue) {
+            return this.source.getNumber(this.key, defaultValue);
+        }
+
         /**
-         * Gets the boolean.
-         *
-         * @param defaultValue the default value
-         * @return the boolean
+         * Gets the slice's boolean value.
+         * @param defaultValue Default value to use if the slice is empty.
+         * @return The slice's boolean value.
          */
-        public boolean getBoolean (boolean defaultValue) { return this.source.getBoolean(this.key, defaultValue); }
-        
+        public boolean getBoolean (boolean defaultValue) {
+            return this.source.getBoolean(this.key, defaultValue);
+        }
+
         /**
-         * Gets the value.
-         *
-         * @return the value
-         * @throws TableKeyNotDefinedException the table key not defined exception
+         * Gets the slice's raw value.
+         * @param defaultValue Default value to use if the slice is empty.
+         * @return The slice's raw value.
          */
-        public Object  getValue   () throws TableKeyNotDefinedException { return this.source.getValue(this.key); }
-        
+        public Object getValue (Object defaultValue) {
+            return this.source.getValue(this.key, defaultValue);
+        }
+
         /**
-         * Put string.
-         *
-         * @param value the value
+         * Puts a string in the slice.
+         * @param value Value to put.
          */
-        public void putString  (String  value) { this.source.putString (this.key, value); }
-        
+        public void putString (String value) {
+            this.source.putString(this.key, value);
+        }
+
         /**
-         * Put number.
-         *
-         * @param value the value
+         * Puts a number in the slice.
+         * @param value Value to put.
          */
-        public void putNumber  (double  value) { this.source.putNumber (this.key, value); }
-        
+        public void putNumber (double value) {
+            this.source.putNumber(this.key, value);
+        }
+
         /**
-         * Put boolean.
-         *
-         * @param value the value
+         * Puts a boolean in the slice.
+         * @param value Value to put.
          */
-        public void putBoolean (boolean value) { this.source.putBoolean(this.key, value); }
-        
+        public void putBoolean (boolean value) {
+            this.source.putBoolean(this.key, value);
+        }
+
         /**
-         * Put value.
-         *
-         * @param value the value
+         * Puts a raw value in the slice.
+         * @param value Value to put.
          */
-        public void putValue   (Object  value) { this.source.putValue  (this.key, value); }
+        public void putValue (Object value) {
+            this.source.putValue(this.key, value);
+        }
     }
 }

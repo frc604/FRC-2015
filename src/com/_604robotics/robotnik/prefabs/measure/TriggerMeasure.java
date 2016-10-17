@@ -1,29 +1,23 @@
 package com._604robotics.robotnik.prefabs.measure;
 
-import com._604robotics.robotnik.procedure.Measure;
+import com._604robotics.robotnik.coordinator.steps.Measure;
 import com._604robotics.robotnik.trigger.TriggerAccess;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class TriggerMeasure.
+ * Measures a trigger, reporting completion when triggered.
  */
 public class TriggerMeasure extends Measure {
-    
-    /** The trigger. */
     private final TriggerAccess trigger;
 
     /**
-     * Instantiates a new trigger measure.
-     *
-     * @param trigger the trigger
+     * Creates a trigger measure.
+     * @param trigger Trigger to measure.
      */
     public TriggerMeasure(TriggerAccess trigger) {
         this.trigger = trigger;
     }
 
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.procedure.Measure#complete()
-     */
+    @Override
     public boolean complete () {
         return trigger.get();
     }

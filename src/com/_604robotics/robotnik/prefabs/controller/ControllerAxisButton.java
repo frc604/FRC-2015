@@ -3,27 +3,19 @@ package com._604robotics.robotnik.prefabs.controller;
 import com._604robotics.robotnik.trigger.TriggerAccess;
 import edu.wpi.first.wpilibj.Joystick;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ControllerAxisButton.
+ * A button representing whether an axis has been pushed in a direction.
  */
 public class ControllerAxisButton implements TriggerAccess {
-    
-    /** The joystick. */
     private final Joystick joystick;
-    
-    /** The axis. */
     private final int axis;
-    
-    /** The direction. */
     private final int direction;
-    
+
     /**
-     * Instantiates a new controller axis button.
-     *
-     * @param joystick the joystick
-     * @param axis the axis
-     * @param direction the direction
+     * Creates a controller axis button.
+     * @param joystick Joystick containing the axis.
+     * @param axis Axis to represent.
+     * @param direction Direction to check for.
      */
     public ControllerAxisButton (Joystick joystick, int axis, int direction) {
         this.joystick = joystick;
@@ -32,9 +24,7 @@ public class ControllerAxisButton implements TriggerAccess {
         this.direction = direction;
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.trigger.TriggerAccess#get()
-     */
+    @Override
     public boolean get () {
         return Math.round(this.joystick.getRawAxis(this.axis)) == this.direction;
     }
