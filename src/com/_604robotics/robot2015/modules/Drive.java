@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.PIDSource.PIDSourceParameter;
+import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // TODO: Auto-generated Javadoc
@@ -66,8 +66,8 @@ public class Drive extends Module {
      * Instantiates a new drive.
      */
     public Drive () {
-        encoderLeft.setPIDSourceParameter(PIDSourceParameter.kDistance);
-        encoderRight.setPIDSourceParameter(PIDSourceParameter.kDistance);
+        encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
+        encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
         
         pidLeft.setAbsoluteTolerance(20);
         pidRight.setAbsoluteTolerance(20);
