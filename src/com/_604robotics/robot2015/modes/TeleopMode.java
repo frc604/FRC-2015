@@ -54,6 +54,32 @@ public TeleopMode () {
         {
             /* Drive */
             {
+            	/* Dynamic Drive */
+            	{
+            		this.bind(new Binding(modules.getModule("Drive").getAction("Dynamic Drive"), new TriggerAnd(new TriggerAccess[] {
+                    		modules.getModule("Dashboard").getTrigger("Drive On"),
+                    		modules.getModule("Dashboard").getTrigger("Debugging On"),
+                    		modules.getModule("Dashboard").getTrigger("Dynamic Drive")})));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Dynamic Drive"), "leftY", driver.leftStick.Y));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Dynamic Drive"), "leftX", driver.leftStick.X));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Dynamic Drive"), "rightY", driver.rightStick.Y));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Dynamic Drive"), "rightX", driver.rightStick.X));
+            	}
+            	/* Dynamic Toggle Module */
+            	{
+                	this.bind(new Binding(modules.getModule("DynamicToggle").getAction("Check"), new TriggerAnd(new TriggerAccess[] {
+                		modules.getModule("Dashboard").getTrigger("Dynamic On"),
+                		modules.getModule("Dashboard").getTrigger("Drive On")
+                	})));
+                	this.fill(new DataWire(modules.getModule("DynamicToggle").getAction("Check"), "rightY", driver.rightStick.Y));
+                	this.fill(new DataWire(modules.getModule("DynamicToggle").getAction("Check"), "rightX", driver.rightStick.X));
+            	}
+            	/* Dynamic Toggle Drive */
+            	/* {
+            		final TriggerToggle dynamicToggle = new TriggerToggle(driver.buttons.LB, false);
+                	this.bind(new Binding(modules.getModule("Drive").getAction("Tank Drive"), dynamicToggle.on));
+                	this.bind(new Binding(modules.getModule("Drive").getAction("Arcade Drive"), dynamicToggle.off));
+            	} */
             	/* Standard Drive */
             	{
             		this.bind(new Binding(modules.getModule("Drive").getAction("Throttled Tank Drive"), new TriggerOr(new TriggerAccess[] {

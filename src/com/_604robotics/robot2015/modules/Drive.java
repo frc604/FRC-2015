@@ -1,5 +1,6 @@
 package com._604robotics.robot2015.modules;
 
+import com._604robotics.robot2015.GlobalVariables;
 import com._604robotics.robotnik.action.Action;
 import com._604robotics.robotnik.action.ActionData;
 import com._604robotics.robotnik.action.controllers.ElasticController;
@@ -18,6 +19,9 @@ import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+import com._604robotics.robotnik.module.ModuleManager;
+
 
 // TODO: Auto-generated Javadoc
 /**
@@ -182,6 +186,28 @@ public class Drive extends Module {
             }}) {
                 public void run (ActionData data) {
                     drive.tankDrive(data.get("left"), data.get("right"));
+                }
+                
+                public void end (ActionData data) {
+                    drive.stopMotor();
+                }
+            });
+            
+            add("Dynamic Drive", new Action(new FieldMap () {{
+                define("leftY", 0D);
+                define("leftX", 0D);
+                define("rightY", 0D);
+                define("rightX", 0D);
+            }}) {
+                public void run (ActionData data) {
+                    if( GlobalVariables.tankLast )
+                    {
+                    	drive.tankDrive(data.get("leftY"), data.get("rightY"));
+                    }
+                    if( GlobalVariables.arcadeLast )
+                    {
+                    	drive.arcadeDrive(data.get("leftY"), data.get("rightX"));
+                    }
                 }
                 
                 public void end (ActionData data) {

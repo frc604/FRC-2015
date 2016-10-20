@@ -30,6 +30,14 @@ public class Dashboard extends Module {
             add("Stick Drive", driveMode.add("Stick Drive"));
             add("Servo Drive", driveMode.add("Servo Drive"));
             
+            final DashboardTriggerChoice dynamicOn = new DashboardTriggerChoice("Dynamic On");
+            add("Dynamic On", dynamicOn.addDefault("Dynamic On"));
+            add("Dynamic Off", dynamicOn.add("Dynamic Off"));
+            
+            final DashboardTriggerChoice dynamicLast = new DashboardTriggerChoice("Dynamic Last");
+            add("Tank Last", dynamicLast.addDefault("Tank Last"));
+            add("Arcade Last", dynamicLast.add("Arcade Last"));
+            
             final DashboardTriggerChoice driveOn = new DashboardTriggerChoice("Drive On");
             add("Drive On", driveOn.add("Drive On"));
             add("Drive Off", driveOn.add("Drive Off"));
