@@ -2,27 +2,21 @@ package com._604robotics.robotnik.prefabs.trigger;
 
 import com._604robotics.robotnik.trigger.TriggerAccess;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class TriggerAnd.
+ * A trigger based on whether all of multiple triggers are active.
  */
 public class TriggerAnd implements TriggerAccess {
-    
-    /** The triggers. */
     private final TriggerAccess[] triggers;
-    
+
     /**
-     * Instantiates a new trigger and.
-     *
-     * @param triggers the triggers
+     * Creates a trigger and.
+     * @param triggers Triggers to use.
      */
-    public TriggerAnd (TriggerAccess[] triggers) {
+    public TriggerAnd (TriggerAccess... triggers) {
         this.triggers = triggers;
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.trigger.TriggerAccess#get()
-     */
+    @Override
     public boolean get () {
         boolean value = true;
         

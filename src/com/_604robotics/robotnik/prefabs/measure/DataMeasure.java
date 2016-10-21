@@ -1,41 +1,37 @@
 package com._604robotics.robotnik.prefabs.measure;
 
+import com._604robotics.robotnik.coordinator.steps.Measure;
 import com._604robotics.robotnik.data.DataAccess;
-import com._604robotics.robotnik.procedure.Measure;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DataMeasure.
+ * Measures data, reporting completion based on its value.
  */
 public class DataMeasure extends Measure {
-    
-    /** The Constant DELTA. */
+    /**
+     * Measure if the value has changed by a target amount.
+     */
     public static final int DELTA       = 1024;
     
-    /** The Constant LOWER_BOUND. */
+    /**
+     * Measure if the value is has gone below its lower bound.
+     */
     public static final int LOWER_BOUND = 1;
     
-    /** The Constant UPPER_BOUND. */
-    public static final int UPPER_BOUND = 2;
-    
-    /** The data. */
-    private final DataAccess data;
-    
-    /** The mode. */
-    private final int mode;
-    
-    /** The target. */
-    private final double target;
-    
-    /** The initial value. */
-    private double initialValue;
-    
     /**
-     * Instantiates a new data measure.
-     *
-     * @param data the data
-     * @param mode the mode
-     * @param target the target
+     * Measure if the value is has gone above its upper bound.
+     */
+    public static final int UPPER_BOUND = 2;
+
+    private final DataAccess data;
+    private final int mode;
+    private final double target;
+    private double initialValue;
+
+    /**
+     * Creates a data measure.
+     * @param data Data to measure.
+     * @param mode Mode of the data measure.
+     * @param target Target value to measure for.
      */
     public DataMeasure (DataAccess data, int mode, double target) {
         this.data = data;
@@ -43,26 +39,24 @@ public class DataMeasure extends Measure {
         this.target = target;
     }
 
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.procedure.Measure#initialize()
-     */
+    @Override
     public void initialize () {
-        initialValue = data.get();
+        this.initialValue = this.data.get();
     }
 
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.procedure.Measure#complete()
-     */
+    @Override
     public boolean complete () {
         double value = data.get();
-        if ((mode & DELTA) == DELTA)
-            value -= initialValue;
+        if ((this.mode & DELTA) == DELTA) {
+            value -= this.initialValue;
+        }
         
-        if ((mode & LOWER_BOUND) == LOWER_BOUND)
-            return value <= target;
-        else if ((mode & UPPER_BOUND) == UPPER_BOUND)
-            return value >= target;
-        else
+        if ((this.mode & LOWER_BOUND) == LOWER_BOUND) {
+            return value <= this.target;
+        } else if ((this.mode & UPPER_BOUND) == UPPER_BOUND) {
+            return value >= this.target;
+        } else {
             return false;
+        }
     }
 }

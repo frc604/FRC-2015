@@ -111,7 +111,7 @@ public class Drive extends Module {
                 private boolean timing = false;
                 
                 public boolean run () {
-                    if (pidLeft.isEnable() && pidLeft.onTarget()) {
+                    if (pidLeft.isEnabled() && pidLeft.onTarget()) {
                         if (!timing) {
                             timing = true;
                             timer.start();
@@ -135,7 +135,7 @@ public class Drive extends Module {
                 private boolean timing = false;
                 
                 public boolean run () {
-                    if (pidRight.isEnable() && pidRight.onTarget()) {
+                    if (pidRight.isEnabled() && pidRight.onTarget()) {
                         if (!timing) {
                             timing = true;
                             timer.start();

@@ -1,22 +1,16 @@
 package com._604robotics.robotnik.action.field;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Field.
+ * An action data field.
  */
 public class Field {
-    
-    /** The name. */
     private final String name;
-    
-    /** The default value. */
     private final double defaultValue;
-    
+
     /**
-     * Instantiates a new field.
-     *
-     * @param name the name
-     * @param defaultValue the default value
+     * Creates a field.
+     * @param name Name of the field.
+     * @param defaultValue Default value of the field.
      */
     public Field (String name, double defaultValue) {
         this.name = name;
@@ -24,18 +18,16 @@ public class Field {
     }
 
     /**
-     * Gets the name.
-     *
-     * @return the name
+     * Gets the name of the field.
+     * @return The field's name.
      */
     public String getName() {
         return this.name;
     }
 
     /**
-     * Gets the default value.
-     *
-     * @return the default value
+     * Gets the default value of the field.
+     * @return The field's default value.
      */
     public double getDefaultValue() {
         return this.defaultValue;

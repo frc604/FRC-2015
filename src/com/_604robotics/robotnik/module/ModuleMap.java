@@ -1,43 +1,35 @@
 package com._604robotics.robotnik.module;
 
-import com._604robotics.robotnik.meta.Iterator;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ModuleMap.
+ * A map containing modules.
  */
-public class ModuleMap {
-    
-    /** The module table. */
-    private final Hashtable moduleTable = new Hashtable();
-    
+public class ModuleMap implements Iterable<Map.Entry<String, Module>> {
+    private final Map<String, Module> moduleTable = new HashMap<String, Module>();
+
     /**
-     * Adds the.
-     *
-     * @param name the name
-     * @param module the module
+     * Adds a module.
+     * @param name Name of the module.
+     * @param module Module to add.
      */
     protected void add (String name, Module module) {
         this.moduleTable.put(name, module);
     }
-    
+
     /**
-     * Gets the module.
-     *
-     * @param name the name
-     * @return the module
+     * Gets a module.
+     * @param name Name of the module.
+     * @return The retrieved module.
      */
     protected Module getModule (String name) {
-        return (Module) this.moduleTable.get(name);
+        return this.moduleTable.get(name);
     }
-    
-    /**
-     * Iterate.
-     *
-     * @return the iterator
-     */
-    protected Iterator iterate () {
-        return new Iterator(this.moduleTable);
+
+    @Override
+    public Iterator<Map.Entry<String, Module>> iterator () {
+        return this.moduleTable.entrySet().iterator();
     }
 }

@@ -1,15 +1,12 @@
 package com._604robotics.robotnik.trigger;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Interface TriggerAccess.
+ * Provides access to a trigger.
  */
 public interface TriggerAccess {
-    
     /**
-     * Gets the.
-     *
-     * @return true, if successful
+     * Gets the current trigger value.
+     * @return The current trigger value.
      */
-    public abstract boolean get ();
+    public boolean get ();
 }

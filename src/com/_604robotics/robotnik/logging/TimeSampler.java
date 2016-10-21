@@ -3,45 +3,35 @@ package com._604robotics.robotnik.logging;
 import com._604robotics.robotnik.logging.Logger;
 import edu.wpi.first.wpilibj.Timer;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class TimeSampler.
+ * Samples operation time, logging it to the console.
  */
 public class TimeSampler {
-    
-    /** The timer. */
     private final Timer timer = new Timer();
-    
-    /** The name. */
     private final String name;
-    
-    /** The time. */
     private final double time;
-    
-    /** The samples. */
     private int samples;
-    
+
     /**
-     * Instantiates a new time sampler.
-     *
-     * @param name the name
-     * @param time the time
+     * Creates a time sampler.
+     * @param name Name of the sampler.
+     * @param time Time between each line of console output.
      */
     public TimeSampler (String name, double time) {
         this.name = name;
         this.time = time;
     }
-    
+
     /**
-     * Start.
+     * Starts sampling.
      */
     public void start () {
         this.samples = 0;
         this.timer.start();
     }
-    
+
     /**
-     * Sample.
+     * Samples time.
      */
     public void sample () {
         this.samples++;
@@ -53,9 +43,9 @@ public class TimeSampler {
             this.timer.reset();
         }
     }
-    
+
     /**
-     * Stop.
+     * Stops sampling.
      */
     public void stop () {
         this.timer.stop();

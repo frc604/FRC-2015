@@ -5,27 +5,19 @@ import java.util.StringTokenizer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class NetworkTrigger.
+ * A trigger from the network.
  */
-public class NetworkTrigger extends Trigger {
-    
-    /** The table. */
+public class NetworkTrigger implements Trigger {
     private final ITable table;
-    
-    /** The key. */
     private final String key;
-    
-    /** The default value. */
     private final boolean defaultValue;
-    
+
     /**
-     * Instantiates a new network trigger.
-     *
-     * @param namespace the namespace
-     * @param key the key
-     * @param defaultValue the default value
+     * Creates a network trigger.
+     * @param namespace Namespace of the trigger.
+     * @param key Key of the trigger.
+     * @param defaultValue Default value of the trigger.
      */
     public NetworkTrigger (String namespace, String key, boolean defaultValue) {
         this.key = key;
@@ -42,9 +34,7 @@ public class NetworkTrigger extends Trigger {
         this.table = workingTable;
     }
 
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.trigger.Trigger#run()
-     */
+    @Override
     public boolean run () {
         return this.table.getBoolean(this.key, this.defaultValue);
     }

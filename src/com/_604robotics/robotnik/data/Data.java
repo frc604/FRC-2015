@@ -1,15 +1,12 @@
 package com._604robotics.robotnik.data;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Data.
+ * Provides data.
  */
-public abstract class Data {
-    
+public interface Data {
     /**
-     * Run.
-     *
-     * @return the double
+     * Retrieves the contained data.
+     * @return The retrieved data.
      */
-    public abstract double run ();
+    public double run ();
 }

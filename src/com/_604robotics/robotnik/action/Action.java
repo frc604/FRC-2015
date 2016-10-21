@@ -1,58 +1,49 @@
 package com._604robotics.robotnik.action;
 
 import com._604robotics.robotnik.action.field.FieldMap;
-import com._604robotics.robotnik.module.ModuleReference;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Action.
+ * An action that a robot can perform.
  */
 public class Action {
-    
-    /** The field map. */
     private final FieldMap fieldMap;
-    
+
     /**
-     * Instantiates a new action.
+     * Creates an action.
      */
     public Action () {
         this.fieldMap = new FieldMap();
     }
-    
+
     /**
-     * Instantiates a new action.
-     *
-     * @param fieldMap the field map
+     * Creates an action.
+     * @param fieldMap Data fields to provide to the action.
      */
     public Action (FieldMap fieldMap) {
         this.fieldMap = fieldMap;
     }
-    
+
     /**
-     * Begin.
-     *
-     * @param data the data
+     * Called when the action has begun.
+     * @param data Data provided to the action.
      */
     public void begin (ActionData data) {}
-    
+
     /**
-     * Run.
-     *
-     * @param data the data
+     * Called when the action is running.
+     * @param data Data provided to the action.
      */
     public void run (ActionData data) {}
-    
+
     /**
-     * End.
-     *
-     * @param data the data
+     * Called when the action has ended.
+     * @param data Data provided to the action.
      */
     public void end (ActionData data) {}
-    
+
     /**
-     * Gets the field map.
-     *
-     * @return the field map
+     * Gets a map of action data fields.
+     * @return A map of action data fields.
      */
     protected FieldMap getFieldMap () {
         return this.fieldMap;

@@ -1,15 +1,12 @@
 package com._604robotics.robotnik.trigger;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Trigger.
+ * A general-purpose trigger.
  */
-public abstract class Trigger {
-    
+public interface Trigger {
     /**
-     * Run.
-     *
-     * @return true, if successful
+     * Retrieves the current value of the trigger.
+     * @return The trigger's current value.
      */
-    public abstract boolean run ();
+    public boolean run ();
 }

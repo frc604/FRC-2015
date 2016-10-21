@@ -5,22 +5,16 @@ import java.util.StringTokenizer;
 import edu.wpi.first.wpilibj.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.tables.ITable;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class NetworkOutput.
+ * A data recipient for outputting data to the network.
  */
 public class NetworkOutput {
-    
-    /** The double recipient. */
     private final DataRecipient doubleRecipient;
-    
-    /** The boolean recipient. */
     private final DataRecipient booleanRecipient;
-    
+
     /**
-     * Instantiates a new network output.
-     *
-     * @param namespace the namespace
+     * Creates a network output.
+     * @param namespace Namespace to output data to.
      */
     public NetworkOutput (String namespace) {
         final StringTokenizer tokens = new StringTokenizer(namespace, ".");
@@ -34,52 +28,33 @@ public class NetworkOutput {
         this.doubleRecipient  = new NetworkOutputDataRecipient(table, false);
         this.booleanRecipient = new NetworkOutputDataRecipient(table, true);
     }
-    
+
     /**
-     * As double.
-     *
-     * @param name the name
-     * @return the data recipient
+     * Gets an output for double data.
+     * @return An output for double data.
      */
-    public DataRecipient asDouble (String name) {
+    public DataRecipient asDouble () {
         return this.doubleRecipient;
     }
-    
+
     /**
-     * As boolean.
-     *
-     * @param name the name
-     * @return the data recipient
+     * Gets an output for boolean data.
+     * @return An output for boolean data.
      */
-    public DataRecipient asBoolean (String name) {
+    public DataRecipient asBoolean () {
         return this.booleanRecipient;
     }
-    
-    /**
-     * The Class NetworkOutputDataRecipient.
-     */
+
     private class NetworkOutputDataRecipient implements DataRecipient {
-        
-        /** The table. */
         private final ITable table;
-        
-        /** The as boolean. */
         private final boolean asBoolean;
-        
-        /**
-         * Instantiates a new network output data recipient.
-         *
-         * @param table the table
-         * @param asBoolean the as boolean
-         */
-        public NetworkOutputDataRecipient (ITable table, boolean asBoolean) {
+
+        private NetworkOutputDataRecipient (ITable table, boolean asBoolean) {
             this.table = table;
             this.asBoolean = asBoolean;
         }
 
-        /* (non-Javadoc)
-         * @see com._604robotics.robotnik.data.DataRecipient#sendData(java.lang.String, double)
-         */
+        @Override
         public void sendData (String fieldName, double dataValue) {
             if (this.asBoolean) {
                 this.table.putBoolean(fieldName, dataValue > 0);

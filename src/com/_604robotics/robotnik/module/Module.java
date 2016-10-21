@@ -5,80 +5,67 @@ import com._604robotics.robotnik.action.controllers.DummyController;
 import com._604robotics.robotnik.data.DataMap;
 import com._604robotics.robotnik.trigger.TriggerMap;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Module.
+ * A module of a robot.
  */
 public abstract class Module {
-    
-    /** The data map. */
     private DataMap dataMap = new DataMap();
-    
-    /** The trigger map. */
     private TriggerMap triggerMap = new TriggerMap();
-    
-    /** The action controller. */
     private ActionController actionController = new DummyController();
-    
+
     /**
-     * Start.
+     * Called when the module's life cycle begins.
      */
-    protected void start () {}
-    
+    protected void begin () {}
+
     /**
-     * End.
+     * Called when the module's life cycle ends.
      */
     protected void end () {}
-    
+
     /**
-     * Sets the.
-     *
-     * @param dataMap the data map
+     * Sets the data map of the module.
+     * @param dataMap The module's data map.
      */
     protected void set (DataMap dataMap) {
         this.dataMap = dataMap;
     }
-    
+
     /**
-     * Sets the.
-     *
-     * @param triggerMap the trigger map
+     * Sets the trigger map of the module.
+     * @param triggerMap The module's trigger map.
      */
     protected void set (TriggerMap triggerMap) {
         this.triggerMap = triggerMap;
     }
-    
+
     /**
-     * Sets the.
-     *
-     * @param actionController the action controller
+     * Sets the action controller of the module.
+     * @param actionController The module's action controller.
      */
     protected void set (ActionController actionController) {
         this.actionController = actionController;
     }
-    
+
     /**
-     * Gets the data map.
-     *
-     * @return the data map
+     * Gets the module's data map.
+     * @return The module's data map.
      */
     protected DataMap getDataMap () {
         return this.dataMap;
     }
-    
+
     /**
-     * Gets the trigger map.
-     *
-     * @return the trigger map
+     * Gets the module's trigger map.
+     * @return The module's trigger map.
      */
     protected TriggerMap getTriggerMap () {
         return this.triggerMap;
     }
-    
+
     /**
-     * Gets the action controller.
-     *
-     * @return the action controller
+     * Gets the module's action controller.
+     * @return The module's action controller.
      */
     protected ActionController getActionController () {
         return this.actionController;

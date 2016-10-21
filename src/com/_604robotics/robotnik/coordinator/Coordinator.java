@@ -1,89 +1,111 @@
 package com._604robotics.robotnik.coordinator;
 
-import com._604robotics.robotnik.ConnectorProxy;
+import java.util.ArrayList;
+import java.util.List;
+
 import com._604robotics.robotnik.coordinator.connectors.Binding;
 import com._604robotics.robotnik.coordinator.connectors.DataWire;
-import com._604robotics.robotnik.coordinator.connectors.Group;
+import com._604robotics.robotnik.coordinator.groups.Group;
+import com._604robotics.robotnik.coordinator.groups.GroupManager;
+import com._604robotics.robotnik.coordinator.steps.Step;
+import com._604robotics.robotnik.coordinator.steps.StepManager;
 import com._604robotics.robotnik.module.ModuleManager;
-import java.util.Enumeration;
-import java.util.Vector;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class Coordinator.
+ * Coordinates the flow of data and bindings, and the execution of groups and steps.
  */
 public class Coordinator {
+    private final List<Binding> triggerBindings = new ArrayList<Binding>();
+    private final List<DataWire> dataWires = new ArrayList<DataWire>();
     
-    /** The trigger bindings. */
-    private final Vector triggerBindings = new Vector();
-    
-    /** The data wires. */
-    private final Vector dataWires = new Vector();
-    
-    /** The sub groups. */
-    private final Vector subGroups = new Vector();
+    private final GroupManager groups = new GroupManager();
+    private final StepManager steps = new StepManager();
     
     /**
-     * Apply.
-     *
-     * @param modules the modules
+     * Applies the coordinator to a set of modules.
+     * @param modules Modules to apply to.
      */
     protected void apply (ModuleManager modules) {}
     
     /**
-     * Attach.
-     *
-     * @param modules the modules
+     * Attaches the coordinator to a set of modules.
+     * @param modules Modules to attach to.
      */
     public void attach (ModuleManager modules) {
-        this.triggerBindings.removeAllElements();
-        this.dataWires.removeAllElements();
-        this.subGroups.removeAllElements();
+        this.triggerBindings.clear();
+        this.dataWires.clear();
+
+        this.groups.clear();
+        this.steps.clear();
         
         this.apply(modules);
-        
-        final Enumeration i = this.subGroups.elements();
-        while (i.hasMoreElements()) ((Group) i.nextElement()).attach(modules);
+
+        this.groups.attach(modules);
+        this.steps.attach(modules);
     }
     
     /**
-     * Bind.
-     *
-     * @param binding the binding
+     * Adds a binding to the coordinator.
+     * @param binding Binding to add.
      */
     protected void bind (Binding binding) {
-        this.triggerBindings.addElement(binding);
+        this.triggerBindings.add(binding);
     }
     
     /**
-     * Fill.
-     *
-     * @param dataWire the data wire
+     * Adds a data wire to the coordinator.
+     * @param dataWire Data wire to add.
      */
     protected void fill (DataWire dataWire) {
-        this.dataWires.addElement(dataWire);
+        this.dataWires.add(dataWire);
     }
     
     /**
-     * Group.
-     *
-     * @param group the group
+     * Adds a group to the coordinator.
+     * @param group Group to add.
      */
     protected void group (Group group) {
-        this.subGroups.addElement(group);
+        this.groups.add(group);
     }
     
     /**
-     * Update.
+     * Adds a step to the coordinator.
+     * @param name Name of the step.
+     * @param step Step to add.
+     */
+    protected void step (String name, Step step) {
+        this.steps.add(name, step);
+    }
+    
+    /**
+     * Updates the coordinator.
      */
     public void update () {
-        final Enumeration wires = this.dataWires.elements();
-        while (wires.hasMoreElements()) ConnectorProxy.pipe((DataWire) wires.nextElement());
+        for (DataWire wire : this.dataWires) {
+            wire.conduct();
+        }
         
-        final Enumeration bindings = this.triggerBindings.elements();
-        while (bindings.hasMoreElements()) ConnectorProxy.pipe((Binding) bindings.nextElement());
-        
-        final Enumeration groups = this.subGroups.elements();
-        while (groups.hasMoreElements()) ((Group) groups.nextElement()).update();
+        for (Binding binding : this.triggerBindings) {
+            binding.conduct();
+        }
+
+        this.groups.update();
+        this.steps.update();
+    }
+
+    /**
+     * Stops the coordinator's execution.
+     */
+    public void stop () {
+        this.groups.stop();
+        this.steps.stop();
+    }
+    
+    /**
+     * Gets whether the coordinator has completed execution.
+     * @return Whether the coordinator is complete.
+     */
+    public boolean complete () {
+        return this.steps.complete() && this.groups.complete();
     }
 }

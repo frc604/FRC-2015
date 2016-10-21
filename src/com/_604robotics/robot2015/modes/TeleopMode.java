@@ -177,10 +177,10 @@ public TeleopMode () {
             	this.bind(new Binding(modules.getModule("Elevator").getAction("Tessellation Setpoint"), manipulator.buttons.RT));
             	this.bind(new Binding(modules.getModule("Elevator").getAction("Trash Can Setpoint"), manipulator.buttons.LT));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1"), manipulator.buttons.A));
-                this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1.5"), manipulator.dpad.imprecise.DOWN));
+                this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 1.5"), manipulator.dpad.imprecise.Down));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 2"), manipulator.buttons.B));
                 this.bind(new Binding(modules.getModule("Elevator").getAction("Test Setpoint 3"), new TriggerOr(new TriggerAccess[] {
-                		manipulator.buttons.Y, manipulator.dpad.imprecise.UP
+                		manipulator.buttons.Y, manipulator.dpad.imprecise.Up
                 })));
             }
             /* Intake */

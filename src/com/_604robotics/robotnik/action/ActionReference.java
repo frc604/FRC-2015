@@ -1,5 +1,6 @@
 package com._604robotics.robotnik.action;
 
+import com._604robotics.robotnik.Safety;
 import com._604robotics.robotnik.data.DataRecipient;
 import com._604robotics.robotnik.memory.IndexedTable;
 import com._604robotics.robotnik.memory.IndexedTable.Slice;
@@ -8,34 +9,22 @@ import com._604robotics.robotnik.prefabs.trigger.TriggerManual;
 import com._604robotics.robotnik.trigger.TriggerAccess;
 import com._604robotics.robotnik.trigger.TriggerRecipient;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class ActionReference.
+ * A reference to an action.
  */
 public class ActionReference implements DataRecipient, TriggerRecipient {
-    
-    /** The action. */
     private final Action action;
-    
-    /** The trigger. */
     private final Slice trigger;
-    
-    /** The data table. */
     private final IndexedTable dataTable;
-    
-    /** The action data. */
     private final ActionData actionData;
-    
-    /** The active trigger. */
     private final TriggerManual activeTrigger = new TriggerManual(false);
-    
+
     /**
-     * Instantiates a new action reference.
-     *
-     * @param module the module
-     * @param action the action
-     * @param triggered the triggered
-     * @param dataTable the data table
+     * Creates an action reference.
+     * @param module Reference to the module this reference belongs to.
+     * @param action Action this reference refers to.
+     * @param triggered The data slice to contain whether this action has been triggered.
+     * @param dataTable Data table to retrieve action data from.
      */
     public ActionReference (ModuleReference module, Action action, Slice triggered, IndexedTable dataTable) {
         this.action = action;
@@ -44,18 +33,16 @@ public class ActionReference implements DataRecipient, TriggerRecipient {
         this.dataTable = dataTable;        
         this.actionData = new ActionData(this.action.getFieldMap(), this.dataTable, module);
     }
-    
+
     /**
-     * Reset.
+     * Resets the action reference.
      */
     public void reset () {
         this.trigger.putNumber(0D);
         this.actionData.reset();
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.trigger.TriggerRecipient#sendTrigger(double)
-     */
+    @Override
     public void sendTrigger (double precedence) {
         final double current = this.trigger.getNumber(0D);
         
@@ -64,40 +51,40 @@ public class ActionReference implements DataRecipient, TriggerRecipient {
         }
     }
     
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.data.DataRecipient#sendData(java.lang.String, double)
-     */
+    @Override
     public void sendData (String fieldName, double dataValue) {
         this.dataTable.putNumber(fieldName, dataValue);
     }
-    
+
     /**
-     * Begin.
+     * Begins the action.
+     * @param safety Safety mode to operate with.
      */
-    public void begin () {
-        this.action.begin(this.actionData);
+    public void begin (Safety safety) {
+        safety.wrap("action begin phase", () -> action.begin(actionData));
         this.activeTrigger.set(true);
     }
-    
+
     /**
-     * Run.
+     * Runs the action.
+     * @param safety Safety mode to operate with.
      */
-    public void run () {
-        this.action.run(this.actionData);
+    public void run (Safety safety) {
+        safety.wrap("action run phase", () -> action.run(actionData));
     }
-    
+
     /**
-     * End.
+     * Ends the action.
+     * @param safety Safety mode to operate with.
      */
-    public void end () {
-        this.action.end(this.actionData);
+    public void end (Safety safety) {
+        safety.wrap("action end phase", () -> action.end(actionData));
         this.activeTrigger.set(false);
     }
-    
+
     /**
-     * Active.
-     *
-     * @return the trigger access
+     * Gets a trigger fired when the reference's action is active.
+     * @return The action's trigger.
      */
     public TriggerAccess active () {
         return (TriggerAccess) this.activeTrigger;

@@ -1,24 +1,21 @@
 package com._604robotics.robotnik.data.sources;
 
 import com._604robotics.robotnik.data.Data;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class DashboardDataChoice.
+ * A choice of data from the smart dashboard.
  */
-public class DashboardDataChoice extends Data {
-    
-    /** The chooser. */
+public class DashboardDataChoice implements Data {
     private final SendableChooser chooser = new SendableChooser();
     
     /**
-     * Instantiates a new dashboard data choice.
-     *
-     * @param key the key
-     * @param defaultName the default name
-     * @param defaultValue the default value
+     * Creates a dashboard data choice.
+     * @param key Key of the data in smart dashboard.
+     * @param defaultName Name of the data choice.
+     * @param defaultValue Default value of the data.
      */
     public DashboardDataChoice (String key, String defaultName, double defaultValue) {
         this.chooser.addDefault(defaultName, Double.valueOf(defaultValue));
@@ -26,18 +23,15 @@ public class DashboardDataChoice extends Data {
     }
     
     /**
-     * Adds the.
-     *
-     * @param name the name
-     * @param value the value
+     * Adds a choice to the data chooser.
+     * @param name Name of the choise.
+     * @param defaultValue Default value of the choice.
      */
-    public void add (String name, double value) {
-        this.chooser.addObject(name, Double.valueOf(value));
+    public void add (String name, double defaultValue) {
+        this.chooser.addObject(name, Double.valueOf(defaultValue));
     }
 
-    /* (non-Javadoc)
-     * @see com._604robotics.robotnik.data.Data#run()
-     */
+    @Override
     public double run () {
         return ((Double) this.chooser.getSelected()).doubleValue();
     }

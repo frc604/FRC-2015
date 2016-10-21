@@ -1,58 +1,48 @@
 package com._604robotics.robotnik.data;
 
-import com._604robotics.robotnik.DataProxy;
-import com._604robotics.robotnik.meta.Iterator;
-import com._604robotics.robotnik.meta.Repackager;
-import com._604robotics.robotnik.memory.IndexedTable;
-import com._604robotics.robotnik.logging.InternalLogger;
-import java.util.Hashtable;
+import java.util.HashMap;
+import java.util.Map;
 
-// TODO: Auto-generated Javadoc
+import com._604robotics.robotnik.Safety;
+import com._604robotics.robotnik.logging.Logger;
+import com._604robotics.robotnik.memory.IndexedTable;
+
 /**
- * The Class DataManager.
+ * Manages data.
  */
 public class DataManager {
-    
-    /** The module name. */
-    private final String moduleName;
-    
-    /** The data table. */
-    private final Hashtable dataTable;
-    
+    private final Map<String, DataReference> dataTable;
+
     /**
-     * Instantiates a new data manager.
-     *
-     * @param moduleName the module name
-     * @param dataMap the data map
-     * @param table the table
+     * Creates a data manager.
+     * @param dataMap Map of data to manage.
+     * @param table Table to contain the data values.
      */
-    public DataManager (String moduleName, DataMap dataMap, final IndexedTable table) {
-        this.moduleName = moduleName;
-        
-        this.dataTable = Repackager.repackage(dataMap.iterate(), new Repackager() {
-           public Object wrap (Object key, Object value) {
-               return new DataReference((Data) value, table.getSlice((String) key));
-           }
-        });
+    public DataManager (DataMap dataMap, final IndexedTable table) {
+        this.dataTable = new HashMap<String, DataReference>();
+        for (Map.Entry<String, Data> entry : dataMap) {
+            this.dataTable.put(entry.getKey(), new DataReference(entry.getValue(), table.getSlice(entry.getKey())));
+        }
     }
-    
+
     /**
-     * Gets the data.
-     *
-     * @param name the name
-     * @return the data
+     * Gets a reference to data.
+     * @param name Name of the data.
+     * @return The retrieved data reference.
      */
     public DataReference getData (String name) {
-        final DataReference ref = (DataReference) this.dataTable.get(name);
-        if (ref == null) InternalLogger.missing("DataReference", name);
+        final DataReference ref = this.dataTable.get(name);
+        if (ref == null) Logger.missing("DataReference", name);
         return ref;
     }
-    
+
     /**
-     * Update.
+     * Updates the data manager.
+     * @param safety Safety mode to operate with.
      */
-    public void update () {
-        final Iterator i = new Iterator(this.dataTable);
-        while (i.next()) DataProxy.update(moduleName, (String) i.key, (DataReference) i.value);
+    public void update (Safety safety) {
+        for (DataReference ref : this.dataTable.values()) {
+            ref.update(safety);
+        }
     }
 }

@@ -1,15 +1,12 @@
 package com._604robotics.robotnik.data;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Interface DataAccess.
+ * Provides access to data.
  */
 public interface DataAccess {
-    
     /**
-     * Gets the.
-     *
-     * @return the double
+     * Gets the current data value.
+     * @return The current data value.
      */
-    public abstract double get ();
+    public double get ();
 }

@@ -1,42 +1,40 @@
 package com._604robotics.robotnik.coordinator;
 
-import com._604robotics.robotnik.module.ModuleManager;
-import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
-// TODO: Auto-generated Javadoc
+import com._604robotics.robotnik.module.ModuleManager;
+
 /**
- * The Class CoordinatorList.
+ * Contains a list of coordinators.
  */
 public class CoordinatorList {
-    
-    /** The coordinators. */
-    private final Vector coordinators = new Vector();
+    private final List<Coordinator> coordinators = new ArrayList<Coordinator>();
     
     /**
-     * Adds the.
-     *
-     * @param coordinator the coordinator
+     * Adds a coordinator.
+     * @param coordinator Coordinator to add.
      */
     protected void add (Coordinator coordinator) {
-        this.coordinators.addElement(coordinator);
+        this.coordinators.add(coordinator);
     }
     
     /**
-     * Attach.
-     *
-     * @param modules the modules
+     * Attaches the list's coordinators to a set of modules.
+     * @param modules Modules to attach to.
      */
     public void attach (ModuleManager modules) {
-        final Enumeration i = this.coordinators.elements();
-        while (i.hasMoreElements()) ((Coordinator) i.nextElement()).attach(modules);
+        for (Coordinator coordinator : this.coordinators) {
+            coordinator.attach(modules);
+        }
     }
     
     /**
-     * Update.
+     * Updates the list's coordinators.
      */
     public void update () {
-        final Enumeration i = this.coordinators.elements();
-        while (i.hasMoreElements()) ((Coordinator) i.nextElement()).update();
+        for (Coordinator coordinator : this.coordinators) {
+            coordinator.update();
+        }
     }
 }

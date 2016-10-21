@@ -3,49 +3,68 @@ package com._604robotics.robotnik.prefabs.controller.joystick;
 import com._604robotics.robotnik.prefabs.controller.ControllerButton;
 import edu.wpi.first.wpilibj.Joystick;
 
-// TODO: Auto-generated Javadoc
 /**
- * The Class JoystickControllerButtons.
+ * The buttons of a joystick controller.
  */
 public class JoystickControllerButtons {
-    
-    /** The Button1. */
+    /**
+     * Button 1.
+     */
     public final ControllerButton Button1;
     
-    /** The Button2. */
+    /**
+     * Button 2.
+     */
     public final ControllerButton Button2;
     
-    /** The Button3. */
+    /**
+     * Button 3.
+     */
     public final ControllerButton Button3;
     
-    /** The Button4. */
+    /**
+     * Button 4.
+     */
     public final ControllerButton Button4;
     
-    /** The Button5. */
+    /**
+     * Button 5.
+     */
     public final ControllerButton Button5;
     
-    /** The Button6. */
+    /**
+     * Button 6.
+     */
     public final ControllerButton Button6;
     
-    /** The Button7. */
+    /**
+     * Button 7.
+     */
     public final ControllerButton Button7;
     
-    /** The Button8. */
+    /**
+     * Button 8.
+     */
     public final ControllerButton Button8;
     
-    /** The Button9. */
+    /**
+     * Button 9.
+     */
     public final ControllerButton Button9;
     
-    /** The Button10. */
+    /**
+     * Button 10.
+     */
     public final ControllerButton Button10;
     
-    /** The Button11. */
-    public final ControllerButton Button11;
-    
     /**
-     * Instantiates a new joystick controller buttons.
-     *
-     * @param joystick the joystick
+     * Button 11.
+     */
+    public final ControllerButton Button11;
+
+    /**
+     * Creates joystick controller buttons.
+     * @param joystick Joystick containing the buttons.
      */
     public JoystickControllerButtons (Joystick joystick) {
         this.Button1  = new ControllerButton(joystick, 1);
