@@ -23,7 +23,8 @@ public class AutonomousMode extends Coordinator {
      * @see com._604robotics.robotnik.procedure.Procedure#apply(com._604robotics.robotnik.module.ModuleManager)
      */
     protected void apply (ModuleManager modules) {
-    	add("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
+    	/* This is the old code */
+/*    	add("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
     	
     	add("Lift", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Drive Only"),
@@ -64,6 +65,6 @@ public class AutonomousMode extends Coordinator {
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks",
     					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 700));
     		}
-    	}));
+    	}));*/
     }
 }
