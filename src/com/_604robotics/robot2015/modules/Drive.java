@@ -198,12 +198,16 @@ public class Drive extends Module {
                 define("leftX", 0D);
                 define("rightY", 0D);
                 define("rightX", 0D);
+                //define (link trigger for drive over here);
             }}) {
                 public void run (ActionData data) {
+                	//if triggerstuff.get("isTank")
                     if( GlobalVariables.tankLast )
                     {
                     	drive.tankDrive(data.get("leftY"), data.get("rightY"));
                     }
+                    //else
+                    //if triggerstuff.get("isArcade")
                     if( GlobalVariables.arcadeLast )
                     {
                     	drive.arcadeDrive(data.get("leftY"), data.get("rightX"));
