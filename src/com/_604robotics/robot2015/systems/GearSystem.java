@@ -18,7 +18,5 @@ public class GearSystem extends Coordinator {
                 "throttle", modules.getModule("Gear").getData("Current Multiplier")));
     	this.fill(new DataWire(modules.getModule("Drive").getAction("Dynamic Drive"),
     			"doArcade", modules.getModule("DynamicToggle").getData("inArcadeData")));
-    	this.fill(new DataWire(modules.getModule("Drive").getAction("Dynamic Drive"),
-    			"doTank", modules.getModule("DynamicToggle").getData("inTankData")));
     }
 }

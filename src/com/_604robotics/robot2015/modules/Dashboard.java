@@ -1,16 +1,10 @@
 package com._604robotics.robot2015.modules;
 
-import com._604robotics.robotnik.action.Action;
-import com._604robotics.robotnik.action.ActionData;
-import com._604robotics.robotnik.action.controllers.ElasticController;
 import com._604robotics.robotnik.data.DataMap;
 import com._604robotics.robotnik.data.sources.DashboardData;
 import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.TriggerMap;
 import com._604robotics.robotnik.trigger.sources.DashboardTriggerChoice;
-import com._604robotics.robotnik.action.field.FieldMap;
-
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 // TODO: Auto-generated Javadoc
 /**
@@ -34,9 +28,9 @@ public class Dashboard extends Module {
             add("Dynamic On", dynamicOn.addDefault("Dynamic On"));
             add("Dynamic Off", dynamicOn.add("Dynamic Off"));
             
-            final DashboardTriggerChoice dynamicLast = new DashboardTriggerChoice("Dynamic Last");
+            /*final DashboardTriggerChoice dynamicLast = new DashboardTriggerChoice("Dynamic Last");
             add("Tank Last", dynamicLast.addDefault("Tank Last"));
-            add("Arcade Last", dynamicLast.add("Arcade Last"));
+            add("Arcade Last", dynamicLast.add("Arcade Last"));*/
             
             final DashboardTriggerChoice driveOn = new DashboardTriggerChoice("Drive On");
             add("Drive On", driveOn.add("Drive On"));

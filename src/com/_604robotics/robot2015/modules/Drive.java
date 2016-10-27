@@ -1,12 +1,12 @@
 package com._604robotics.robot2015.modules;
 
-import com._604robotics.robot2015.GlobalVariables;
 import com._604robotics.robotnik.action.Action;
 import com._604robotics.robotnik.action.ActionData;
 import com._604robotics.robotnik.action.controllers.ElasticController;
 import com._604robotics.robotnik.action.field.FieldMap;
 import com._604robotics.robotnik.data.Data;
 import com._604robotics.robotnik.data.DataMap;
+import com._604robotics.robotnik.logging.Logger;
 import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
@@ -20,7 +20,7 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import com._604robotics.robotnik.module.ModuleManager;
+//import com._604robotics.robotnik.module.ModuleManager;
 
 
 // TODO: Auto-generated Javadoc
@@ -38,6 +38,9 @@ public class Drive extends Module {
 	
     /** The drive. */
     private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
+    
+    /*TEMP*/
+    private int i=0;
     
     /** The encoder left. */
     private final Encoder encoderLeft = new Encoder(0, 1, true, CounterBase.EncodingType.k4X);
@@ -198,25 +201,35 @@ public class Drive extends Module {
                 define("leftX", 0D);
                 define("rightY", 0D);
                 define("rightX", 0D);
+                define("doTank", 1D);
                 define("doArcade",0D);
                 //define (link trigger for drive over here);
             }}) {
                 public void run (ActionData data) {
+                	i++;
+                	boolean pr=(i%100)==0;
                 	//if triggerstuff.get("isTank")
                     if( data.get("doTank")==1 )
                     {
                     	drive.tankDrive(data.get("leftY"), data.get("rightY"));
+                    	if(pr) {
+                    		Logger.log("Tank");
+                    	}
                     }
                     //else
                     //if triggerstuff.get("isArcade")
                     if( data.get("doArcade")==1 )
                     {
                     	drive.arcadeDrive(data.get("leftY"), data.get("rightX"));
+                    	if(pr) {
+                    		Logger.log("Arcade");
+                    	}
                     }
                 }
                 
                 public void end (ActionData data) {
                     drive.stopMotor();
+                    i=0;
                 }
             });
             

@@ -63,7 +63,9 @@ public class DashboardSystem extends Coordinator {
         		 modules.getModule("Drive").getTrigger("At Left Servo Target")));
          this.fill(new DataWire(DashboardOutput.asBoolean(), "right drive on target",
         		 modules.getModule("Drive").getTrigger("At Right Servo Target")));
-         this.fill(new DataWire(DashboardOutput.asBoolean("Arcade","Tank"), "Drive Mode",
+         this.fill(new DataWire(DashboardOutput.asBoolean("Tank","Arcade"), "Drive Mode",
         		 modules.getModule("DynamicToggle").getTrigger("inArcade")));
+         this.fill(new DataWire(DashboardOutput.asBoolean("Arcade","Tank"), "Drive Mode2",
+        		 modules.getModule("DynamicToggle").getTrigger("inTank")));
     }
 }
