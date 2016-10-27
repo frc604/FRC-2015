@@ -5,6 +5,8 @@ import com._604robotics.robotnik.action.Action;
 import com._604robotics.robotnik.action.ActionData;
 import com._604robotics.robotnik.action.controllers.ElasticController;
 import com._604robotics.robotnik.action.field.FieldMap;
+import com._604robotics.robotnik.data.Data;
+import com._604robotics.robotnik.data.DataMap;
 import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
@@ -22,6 +24,28 @@ public class DynamicToggle extends Module {
     		add("inArcade", new Trigger() {
     			public boolean run() {
     				return driveChange==DriveSwitch.ARCADE;
+    			}
+    		});
+    	}});
+    	this.set(new DataMap() {{
+    		add("inTankData",new Data() {
+    			public double run() {
+    				if (driveChange==DriveSwitch.TANK) {
+    					return 1;
+    				}
+    				else {
+    					return 0;
+    				}
+    			}
+    		});
+    		add("inArcadeData",new Data() {
+    			public double run() {
+    				if (driveChange==DriveSwitch.ARCADE) {
+    					return 1;
+    				}
+    				else {
+    					return 0;
+    				}
     			}
     		});
     	}});

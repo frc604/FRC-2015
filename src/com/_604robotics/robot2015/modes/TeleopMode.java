@@ -59,7 +59,7 @@ public TeleopMode () {
             		this.bind(new Binding(modules.getModule("Drive").getAction("Dynamic Drive"), new TriggerAnd(new TriggerAccess[] {
                     		modules.getModule("Dashboard").getTrigger("Drive On"),
                     		modules.getModule("Dashboard").getTrigger("Debugging On"),
-                    		modules.getModule("Dashboard").getTrigger("Dynamic Drive")})));
+                    		modules.getModule("Dashboard").getTrigger("Dynamic On")})));
                     this.fill(new DataWire(modules.getModule("Drive").getAction("Dynamic Drive"), "leftY", driver.leftStick.Y));
                     this.fill(new DataWire(modules.getModule("Drive").getAction("Dynamic Drive"), "leftX", driver.leftStick.X));
                     this.fill(new DataWire(modules.getModule("Drive").getAction("Dynamic Drive"), "rightY", driver.rightStick.Y));
@@ -185,9 +185,9 @@ public TeleopMode () {
             }
             /* Intake */
         	{	
-                this.bind(new Binding(modules.getModule("Clamp").getAction("Open"),  manipulator.buttons.LB));
+                /*this.bind(new Binding(modules.getModule("Clamp").getAction("Open"),  manipulator.buttons.LB));
                 this.bind(new Binding(modules.getModule("Clamp").getAction("Close"), manipulator.buttons.RB));
-                
+                */
                 
                 this.bind(new Binding(modules.getModule("Intake").getAction("Run")));
                 this.fill(new DataWire(modules.getModule("Intake").getAction("Run"), "power", driver.rightStick.Y));

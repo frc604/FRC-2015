@@ -6,11 +6,11 @@ import com._604robotics.robot2015.systems.IntakeElevatorSystem;
 import com._604robotics.robot2015.modes.AutonomousMode;
 import com._604robotics.robot2015.modes.TeleopMode;
 import com._604robotics.robot2015.modules.Drive;
+import com._604robotics.robot2015.modules.DynamicToggle;
 import com._604robotics.robot2015.modules.Dashboard;
 import com._604robotics.robot2015.modules.Elevator;
 import com._604robotics.robot2015.modules.Gear;
 import com._604robotics.robot2015.modules.Intake;
-import com._604robotics.robot2015.modules.Clamp;
 import com._604robotics.robot2015.modules.CanMacro;
 import com._604robotics.robotnik.Robot;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
@@ -34,10 +34,10 @@ public class Robot2015 extends Robot {
         this.set(new ModuleMap() {{ //creates a module map containing all of the modules
             add("Drive", new Drive());
             add("Dashboard", new Dashboard());
+            add("DynamicToggle", new DynamicToggle());
             add("Elevator", new Elevator());
             add("Gear", new Gear());
             add("Intake", new Intake());
-            add("Clamp", new Clamp());
             add("CanMacro", new CanMacro());
         }});
         
