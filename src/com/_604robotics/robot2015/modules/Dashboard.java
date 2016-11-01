@@ -19,18 +19,15 @@ public class Dashboard extends Module {
         this.set(new TriggerMap() {{
             final DashboardTriggerChoice driveMode = new DashboardTriggerChoice("Drive Mode");
             add("Geared Tank Drive", driveMode.add("Geared Tank Drive"));
-            add("Tank Drive", driveMode.addDefault("Tank Drive"));
+            add("Tank Drive", driveMode.add("Tank Drive"));
             add("Arcade Drive", driveMode.add("Arcade Drive"));
-            add("Stick Drive", driveMode.add("Stick Drive"));
-            add("Servo Drive", driveMode.add("Servo Drive"));
+            add("Dynamic Drive", driveMode.addDefault("Dynamic Drive"));
+            //add("Stick Drive", driveMode.add("Stick Drive"));
+            //add("Servo Drive", driveMode.add("Servo Drive"));
             
-            final DashboardTriggerChoice dynamicOn = new DashboardTriggerChoice("Dynamic On");
+            /*final DashboardTriggerChoice dynamicOn = new DashboardTriggerChoice("Dynamic On");
             add("Dynamic On", dynamicOn.addDefault("Dynamic On"));
-            add("Dynamic Off", dynamicOn.add("Dynamic Off"));
-            
-            /*final DashboardTriggerChoice dynamicLast = new DashboardTriggerChoice("Dynamic Last");
-            add("Tank Last", dynamicLast.addDefault("Tank Last"));
-            add("Arcade Last", dynamicLast.add("Arcade Last"));*/
+            add("Dynamic Off", dynamicOn.add("Dynamic Off"));*/
             
             final DashboardTriggerChoice driveOn = new DashboardTriggerChoice("Drive On");
             add("Drive On", driveOn.add("Drive On"));
