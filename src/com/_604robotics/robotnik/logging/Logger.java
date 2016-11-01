@@ -24,7 +24,7 @@ public class Logger {
 	static {
 		try {
 			String fileName = "robotnik_" + LOG_FILE_DATE_FORMAT.format(new Date()) + ".log";
-			File file = new File(fileName);
+			File file = new File("/home/lvuser/"+fileName);
 			if(!file.exists() && !file.createNewFile()) {
 				warn("Could not create log file.");
 			}
