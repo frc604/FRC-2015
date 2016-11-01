@@ -203,27 +203,19 @@ public class Drive extends Module {
                 define("rightX", 0D);
                 define("doTank", 1D);
                 define("doArcade",0D);
-                //define (link trigger for drive over here);
             }}) {
                 public void run (ActionData data) {
                 	i++;
-                	boolean pr=(i%100)==0;
                 	//if triggerstuff.get("isTank")
                     if( data.get("doTank")==1 )
                     {
                     	drive.tankDrive(data.get("leftY"), data.get("rightY"));
-                    	if(pr) {
-                    		Logger.log("Tank");
-                    	}
                     }
                     //else
                     //if triggerstuff.get("isArcade")
                     if( data.get("doArcade")==1 )
                     {
                     	drive.arcadeDrive(data.get("leftY"), data.get("rightX"));
-                    	if(pr) {
-                    		Logger.log("Arcade");
-                    	}
                     }
                 }
                 

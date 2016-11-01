@@ -41,9 +41,9 @@ public class Dashboard extends Module {
             add("Full Auton", autonMode.add("Full Auton"));
             add("Drive Only", autonMode.add("Drive Only"));
             
-            final DashboardTriggerChoice debuggingOn = new DashboardTriggerChoice("Debugging On");
+            /*final DashboardTriggerChoice debuggingOn = new DashboardTriggerChoice("Debugging On");
             add("Debugging Off", debuggingOn.add("Debugging Off"));
-            add("Debugging On", debuggingOn.add("Debugging On"));
+            add("Debugging On", debuggingOn.add("Debugging On"));*/
         }});
         this.set(new DataMap() {{
         	add("Scaling Factor", new DashboardData("Scaling Factor", 0.9D));
