@@ -234,7 +234,7 @@ public class Drive extends Module {
                 define("turn", 0D);
             }}) {
                 public void run (ActionData data) {
-                    drive.arcadeDrive(data.get("throttle"), data.get("turn"));
+                    drive.arcadeDrive(data.get("throttle"), data.get("turn")*0.5);
                 }
                 
                 public void end (ActionData data) {
