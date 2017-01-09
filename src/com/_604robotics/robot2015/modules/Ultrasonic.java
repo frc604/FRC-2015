@@ -7,31 +7,31 @@ import com._604robotics.robotnik.action.field.FieldMap;
 import com._604robotics.robotnik.module.Module;
 
 import edu.wpi.first.wpilibj.AnalogInput;
-import edu.wpi.first.wpilibj.Timer;
 
 public class Ultrasonic extends Module {
 	private AnalogInput ai = new AnalogInput(0);
-	private Timer t = new Timer();
-	private boolean done = false;
 	
 	public Ultrasonic()
 	{
+		ai.setOversampleBits(64);
 		this.set(new ElasticController() {{
             addDefault("Off", new Action() {
                 public void run(ActionData data) {
-                	done = false;
+                	
                 }
             });
 
             add("Ping", new Action(new FieldMap() {{
             }}) {
                 public void run(ActionData data) {
-                	int raw = ai.getValue();
-                	if( !done )
+                	int total = 0;
+                	for( int f=0; f<64; f++ )
                 	{
-                    	System.out.println(raw);
+                		total += ai.getValue();
                 	}
-                	done = true;
+                	
+                	int avRaw = (int) total/64;
+                	System.out.println(avRaw);
                 }
             });
         }});
