@@ -8,6 +8,11 @@ import com._604robotics.robotnik.module.Module;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 
+// Raw Value: 20 rv = 1 inch
+// Effective Range: ~11.8" - 16.5"
+// Accuracy: +- rv (0.25")
+// Set sensors 5.2" behind the bumper.
+
 public class Ultrasonic extends Module {
 	private AnalogInput ai = new AnalogInput(0);
 	
