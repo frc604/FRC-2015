@@ -16,6 +16,7 @@ import com._604robotics.robotnik.Robot;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
 import com._604robotics.robotnik.coordinator.ModeMap;
 import com._604robotics.robotnik.module.ModuleMap;
+import com._604robotics.robot2015.modules.Ultrasonic;
 
 
 // TODO: Auto-generated Javadoc
@@ -39,6 +40,7 @@ public class Robot2015 extends Robot {
             add("Gear", new Gear());
             add("Intake", new Intake());
             add("CanMacro", new CanMacro());
+            add("Ultrasonic", new Ultrasonic());
         }});
         
         this.set(new ModeMap() {{
