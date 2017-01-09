@@ -101,6 +101,10 @@ public TeleopMode () {
                         this.bind(new Binding(modules.getModule("Gear").getAction("Downshift"), driver.buttons.LB));
                     }
             	}
+            	/* Ultrasonic Testing */
+            	{
+            		this.bind(new Binding(modules.getModule("UltrasonicTest").getAction("Ping"), driver.buttons.LeftStick));
+            	}
             	/* Dropping Trash Cans */
             	{
             		this.bind(new Binding(modules.getModule("CanMacro").getAction("Active"), driver.buttons.A));
