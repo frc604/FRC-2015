@@ -4,6 +4,8 @@ import com._604robotics.robotnik.action.Action;
 import com._604robotics.robotnik.action.ActionData;
 import com._604robotics.robotnik.action.controllers.ElasticController;
 import com._604robotics.robotnik.action.field.FieldMap;
+import com._604robotics.robotnik.data.Data;
+import com._604robotics.robotnik.data.DataMap;
 import com._604robotics.robotnik.module.Module;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -15,10 +17,17 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Ultrasonic extends Module {
 	private AnalogInput ai = new AnalogInput(0);
+	private int inches = 0;
 	
 	public Ultrasonic()
 	{
-		ai.setOversampleBits(64);
+		this.set(new DataMap()  {{
+			add("Inches", new Data() {
+                public double run () {
+                    return inches;
+                }
+            });
+		}});
 		this.set(new ElasticController() {{
             addDefault("Off", new Action() {
                 public void run(ActionData data) {
@@ -37,6 +46,7 @@ public class Ultrasonic extends Module {
                 	
                 	int avRaw = (int) total/64;
                 	System.out.println(avRaw);
+                	inches = avRaw/20;
                 }
             });
         }});
