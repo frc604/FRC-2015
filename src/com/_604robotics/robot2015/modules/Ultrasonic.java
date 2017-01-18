@@ -17,7 +17,9 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 public class Ultrasonic extends Module {
 	private AnalogInput ai = new AnalogInput(0);
-	private int inches = 0;
+	private double inches = 0;
+	private double VpI = 5.0/512;
+	private boolean convert = false;
 	
 	public Ultrasonic()
 	{
@@ -34,21 +36,50 @@ public class Ultrasonic extends Module {
                 	
                 }
             });
-
-            add("Ping", new Action(new FieldMap() {{
+            add("Average", new Action(new FieldMap() {{
+            }}) {
+            	public void run(ActionData data) {
+            		double total = 0;
+            		for( int f=0; f<128; f++ )
+            		{
+            			total += ai.getVoltage();
+            		}
+            		double aV = total/128;
+            		inches = aV;
+            		if( convert )
+            		{
+            			inches = aV/VpI;
+            		}
+            		System.out.println(inches);
+            	}
+            });
+            add("Norm", new Action(new FieldMap() {{            	
+            }}) {
+            	public void run(ActionData data) {
+            		double mV = ai.getVoltage();
+            		inches = mV;
+            		if( convert )
+            		{
+            			inches = mV/VpI;
+            		}
+            		System.out.println(inches);
+            }});
+            add("Analog", new Action(new FieldMap() {{            	
+            }}) {
+            	public void run(ActionData data) {
+            		inches = ai.getAverageValue();
+            		System.out.println(inches);
+            }});
+            add("Weird", new Action(new FieldMap() {{
             }}) {
                 public void run(ActionData data) {
-                	int total = 0;
-                	for( int f=0; f<64; f++ )
-                	{
-                		total += ai.getValue();
-                	}
-                	
-                	int avRaw = (int) total/64;
-                	System.out.println(avRaw);
-                	inches = avRaw/20;
+                  	ai.setAverageBits(10);
+                  	ai.setOversampleBits(10);
+                	inches = ai.getAverageValue()* 5 * 0.0393701;
+               		System.out.println(inches);
                 }
             });
         }});
+		
 	}
 }

@@ -175,7 +175,7 @@ public class Drive extends Module {
                 define("turn", 0D);
             }}) {
                 public void run (ActionData data) {
-                    drive.arcadeDrive(data.get("throttle"), data.get("turn"));
+                    drive.arcadeDrive(data.get("throttle")*-1, data.get("turn")*-1);
                 }
                 
                 public void end (ActionData data) {
@@ -188,7 +188,7 @@ public class Drive extends Module {
                 define("right", 0D);
             }}) {
                 public void run (ActionData data) {
-                    drive.tankDrive(data.get("left"), data.get("right"));
+                    drive.tankDrive(data.get("left")*-1, data.get("right")*-1);
                 }
                 
                 public void end (ActionData data) {
@@ -209,13 +209,13 @@ public class Drive extends Module {
                 	//if triggerstuff.get("isTank")
                     if( data.get("doTank")==1 )
                     {
-                    	drive.tankDrive(data.get("leftY"), data.get("rightY"));
+                    	drive.tankDrive(data.get("leftY")*-1, data.get("rightY")*-1);
                     }
                     //else
                     //if triggerstuff.get("isArcade")
                     if( data.get("doArcade")==1 )
                     {
-                    	drive.arcadeDrive(data.get("leftY"), data.get("rightX"));
+                    	drive.arcadeDrive(data.get("leftY")*-1, data.get("rightX")*-1);
                     }
                 }
                 
@@ -231,7 +231,7 @@ public class Drive extends Module {
                 define("throttle", 1D);
             }}) {
                 public void run (ActionData data) {
-                    drive.tankDrive(data.get("left")*data.get("throttle"), data.get("right")*data.get("throttle"));
+                    drive.tankDrive(data.get("left")*data.get("throttle")*-1, data.get("right")*data.get("throttle")*-1);
                 }
                 
                 public void end (ActionData data) {
@@ -244,7 +244,7 @@ public class Drive extends Module {
                 define("turn", 0D);
             }}) {
                 public void run (ActionData data) {
-                    drive.arcadeDrive(data.get("throttle"), data.get("turn"));
+                    drive.arcadeDrive(data.get("throttle")*-1, data.get("turn")*-1);
                 }
                 
                 public void end (ActionData data) {
