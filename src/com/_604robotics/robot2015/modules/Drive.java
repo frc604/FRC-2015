@@ -90,6 +90,7 @@ public class Drive extends Module {
         
         pidLeft.setAbsoluteTolerance(20);
         pidRight.setAbsoluteTolerance(20);
+        // FIGURE OUT WHAT THIS IS
         pidUltra.setAbsoluteTolerance(20);
         
         SmartDashboard.putData("Left Drive PID", pidLeft);

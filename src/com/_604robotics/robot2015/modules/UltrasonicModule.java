@@ -9,19 +9,27 @@ import com._604robotics.robotnik.data.DataMap;
 import com._604robotics.robotnik.module.Module;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.RobotDrive;
+import edu.wpi.first.wpilibj.Ultrasonic;
 
+
+// hahahaha ignore the next four lines we have since updated
 // Raw Value: 20 rv = 1 inch
 // Effective Range: ~11.8" - 16.5"
 // Accuracy: +- rv (0.25")
 // Set sensors 5.2" behind the bumper.
 
-public class Ultrasonic extends Module {
-	private AnalogInput ai = new AnalogInput(0);
+public class UltrasonicModule extends Module {
+	//private AnalogInput ai = new AnalogInput(0);
 	private double inches = 0;
-	private double VpI = 5.0/512;
-	private boolean convert = false;
+	//private double VpI = 5.0/512;
+	//private boolean convert = false;
 	
-	public Ultrasonic()
+    private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
+
+	private Ultrasonic ultra = new Ultrasonic(0, 0);
+	
+	public UltrasonicModule()
 	{
 		this.set(new DataMap()  {{
 			add("Inches", new Data() {
@@ -33,9 +41,47 @@ public class Ultrasonic extends Module {
 		this.set(new ElasticController() {{
             addDefault("Off", new Action() {
                 public void run(ActionData data) {
-                	
+                	ultra.setAutomaticMode(false);
                 }
             });
+            add("Measure", new Action() {
+            	public void begin(ActionData data)
+            	{
+            		ultra.setAutomaticMode(true);
+            	}
+            	public void run(ActionData data) {
+            		inches = ultra.getRangeInches();
+            		System.out.println(inches);
+            	}
+            });
+            // I'll-do-PID-later-drive
+            add( "Setpoint", new Action(new FieldMap() {{
+            	// set to a range later to prevent oscillation
+            	// and pain in general
+            	define("distance", 0D);
+            }}) {
+            	public void begin(ActionData data)
+            	{
+            		ultra.setAutomaticMode(true);
+            	}
+            	public void run(ActionData data)
+            	{
+            		inches = ultra.getRangeInches();
+            		while( inches > data.get("distance") )
+            		{
+            			drive.tankDrive(0.1, 0.1);
+            		}
+            		while( inches < data.get("distance") )
+            		{
+            			drive.tankDrive(-0.1, -0.1);
+            		}
+            	}
+            	public void end(ActionData data)
+            	{
+            		drive.stopMotor();
+            	}
+            });
+            /* oops
             add("Average", new Action(new FieldMap() {{
             }}) {
             	public void run(ActionData data) {
@@ -79,6 +125,7 @@ public class Ultrasonic extends Module {
                		System.out.println(inches);
                 }
             });
+            */
         }});
 		
 	}
