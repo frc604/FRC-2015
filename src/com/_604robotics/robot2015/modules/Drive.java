@@ -18,6 +18,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -49,13 +50,16 @@ public class Drive extends Module {
     /** The encoder right. */
     private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
     
-    private final AnalogInput ai = new AnalogInput(0);
+    //private final AnalogInput ai = new AnalogInput(0);
+    private final Ultrasonic ai = new Ultrasonic(0, 0);
     
     private double PIDLeftOut = 0D;
     private double PIDRightOut = 0D;
     private double PIDUltraOut = 0D;
     
     private double pid_power_cap = 0.6;
+    
+    private double inches = 0;
     
     /** The pid left. */
     private final PIDController pidLeft = new PIDController(0.020, 0D, 0.005, encoderLeft, new PIDOutput () {
@@ -119,6 +123,11 @@ public class Drive extends Module {
             add("Right Drive Rate", new Data() {
                 public double run () {
                     return encoderRight.getRate();
+                }
+            });
+            add("Inches", new Data() {
+                public double run () {
+                    return inches;
                 }
             });
         }});
@@ -193,6 +202,50 @@ public class Drive extends Module {
             			}
             			return false;
             		}
+            	}
+            });
+        }});
+        this.set(new ElasticController() {{
+        	addDefault("Off", new Action() {
+        		public void run(ActionData data)
+        		{
+        			ai.setAutomaticMode(false);
+        		}
+        	});
+        	add("Measure", new Action() {
+        		public void begin(ActionData data)
+        		{
+        			ai.setAutomaticMode(true);
+        		}
+        		public void run(ActionData data)
+        		{
+        			inches = ai.getRangeInches();
+        		}
+        	});
+        	add( "Setpoint", new Action(new FieldMap() {{
+            	// set to a range later to prevent oscillation
+            	// and pain in general
+            	define("distance", 0D);
+            }}) {
+            	public void begin(ActionData data)
+            	{
+            		ai.setAutomaticMode(true);
+            	}
+            	public void run(ActionData data)
+            	{
+            		inches = ai.getRangeInches();
+            		while( inches > data.get("distance") )
+            		{
+            			drive.tankDrive(0.1, 0.1);
+            		}
+            		while( inches < data.get("distance") )
+            		{
+            			drive.tankDrive(-0.1, -0.1);
+            		}
+            	}
+            	public void end(ActionData data)
+            	{
+            		drive.stopMotor();
             	}
             });
         }});

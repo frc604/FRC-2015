@@ -56,9 +56,9 @@ public TeleopMode () {
             {
             	/* Ultrasonic */
             	{
-            		this.bind(new Binding(modules.getModule("UltrasonicModule").getAction("Measure"), driver.buttons.A));
-            		this.bind(new Binding(modules.getModule("UltrasonicModule").getAction("Setpoint"), driver.buttons.B));
-            		this.fill(new DataWire(modules.getModule("UltrasonicModule").getAction("Setpoint"), "distance", 7));
+            		this.bind(new Binding(modules.getModule("Drive").getAction("Measure"), driver.buttons.A));
+            		this.bind(new Binding(modules.getModule("Drive").getAction("Setpoint"), driver.buttons.B));
+            		this.fill(new DataWire(modules.getModule("Drive").getAction("Setpoint"), "distance", 7));
             	}
             	/* Dynamic Drive */
             	{
