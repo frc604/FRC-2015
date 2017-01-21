@@ -57,6 +57,7 @@ public class Drive extends Module {
     private double PIDUltraOut = 0D;
     
     private double pid_power_cap = 0.6;
+    private double inches = 0D;
     
     /** The pid left. */
     private final PIDController pidLeft = new PIDController(0.020, 0D, 0.005, encoderLeft, new PIDOutput () {
@@ -118,6 +119,11 @@ public class Drive extends Module {
                 public double run () {
                     return encoderRight.getRate();
                 }
+            });
+            add("Inches", new Data() {
+            	public double run() {
+            		return inches;
+            	}
             });
         }});
         
@@ -194,6 +200,28 @@ public class Drive extends Module {
                     }
                 }
             });
+        }});
+        
+        this.set(new ElasticController() {{
+        	addDefault("Off", new Action() {
+        		public void begin(ActionData data)
+        		{
+        			
+        		}
+        	});
+        	 add("Average", new Action(new FieldMap() {{
+             }}) {
+             	public void run(ActionData data) {
+             		double total = 0;
+             		for( int f=0; f<128; f++ )
+             		{
+             			total += ultra.getVoltage();
+             		}
+             		double aV = total/128;
+             		inches = aV;
+             		System.out.println(inches);
+             	}
+             });
         }});
         
         this.set(new ElasticController() {{
