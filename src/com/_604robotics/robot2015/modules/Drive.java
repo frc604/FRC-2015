@@ -57,7 +57,6 @@ public class Drive extends Module {
     private double PIDUltraOut = 0D;
     
     private double pid_power_cap = 0.6;
-    private double inches = 0D;
     
     /** The pid left. */
     private final PIDController pidLeft = new PIDController(0.020, 0D, 0.005, encoderLeft, new PIDOutput () {
@@ -95,6 +94,7 @@ public class Drive extends Module {
         
         SmartDashboard.putData("Left Drive PID", pidLeft);
         SmartDashboard.putData("Right Drive PID", pidRight);
+        SmartDashboard.putData("Ultra PID", pidUltra);
         
         this.set(new DataMap() {{
             add("Left Drive Clicks", new Data() {
@@ -128,7 +128,7 @@ public class Drive extends Module {
              			total += ultra.getVoltage();
              		}
              		double aV = total/128;
-             		System.out.println(inches);
+             		System.out.println(aV);
              		return aV;
             	}
             });
