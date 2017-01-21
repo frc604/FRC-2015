@@ -11,6 +11,7 @@ import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -49,10 +50,11 @@ public class Drive extends Module {
     /** The encoder right. */
     private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
     
-    private final Ultrasonic ultra = new Ultrasonic(0, 0);
+    private final AnalogInput ultra = new AnalogInput(0);
     
     private double PIDLeftOut = 0D;
     private double PIDRightOut = 0D;
+    private double PIDUltraOut = 0D;
     
     private double pid_power_cap = 0.6;
     
@@ -72,6 +74,13 @@ public class Drive extends Module {
         }
     });
     
+    private final PIDController pidUltra = new PIDController(0.020, 0D, 0.005, ultra, new PIDOutput () {
+        public void pidWrite (double output) {
+        	if (output > 0) PIDUltraOut = (output > pid_power_cap) ? pid_power_cap : output;
+        	else PIDUltraOut = (output < -pid_power_cap) ? -pid_power_cap : output;
+        }
+    });
+    
     /**
      * Instantiates a new drive.
      */
@@ -81,6 +90,7 @@ public class Drive extends Module {
         
         pidLeft.setAbsoluteTolerance(20);
         pidRight.setAbsoluteTolerance(20);
+        pidUltra.setAbsoluteTolerance(20);
         
         SmartDashboard.putData("Left Drive PID", pidLeft);
         SmartDashboard.putData("Right Drive PID", pidRight);
@@ -142,6 +152,30 @@ public class Drive extends Module {
                 
                 public boolean run () {
                     if (pidRight.isEnabled() && pidRight.onTarget()) {
+                        if (!timing) {
+                            timing = true;
+                            timer.start();
+                        }
+                        
+                        return timer.get() >= 0.5;
+                    } else {
+                        if (timing) {
+                            timing = false;
+                            
+                            timer.stop();
+                            timer.reset();
+                        }
+                        
+                        return false;
+                    }
+                }
+            });
+            add("At Ultra Target", new Trigger() {
+                private final Timer timer = new Timer();
+                private boolean timing = false;
+                
+                public boolean run () {
+                    if (pidUltra.isEnabled() && pidUltra.onTarget()) {
                         if (!timing) {
                             timing = true;
                             timer.start();
@@ -288,6 +322,29 @@ public class Drive extends Module {
                     pidRight.reset();
                     pidLeft.disable();
                     pidRight.disable();
+                }
+            });
+            add("Ultra Drive", new Action(new FieldMap() {{
+                define("raw", 0D);
+                define("power cap", 0.6D);
+            }}) {
+            	
+                public void begin (ActionData data) {
+                	pid_power_cap = data.get("power cap");
+                    pidUltra.setSetpoint(data.get("raw"));
+                    pidUltra.enable();
+                }
+                
+                public void run (ActionData data){
+                	if(pidUltra.getSetpoint() != data.get("raw")){
+                		pidUltra.setSetpoint(data.get("raw"));
+                	}
+                	drive.tankDrive(PIDUltraOut, PIDUltraOut);
+                }
+                
+                public void end (ActionData data) {
+                    pidUltra.reset();
+                    pidUltra.disable();
                 }
             });
         }});
