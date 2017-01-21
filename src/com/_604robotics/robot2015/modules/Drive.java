@@ -129,7 +129,6 @@ public class Drive extends Module {
              		}
              		double aV = total/256;
              		aV *= 42.56;
-             		aV -= 1.864;
              		//System.out.println(inches);
              		return aV;
             	}
