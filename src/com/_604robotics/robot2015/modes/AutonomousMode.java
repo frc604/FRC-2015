@@ -24,14 +24,14 @@ public class AutonomousMode extends Coordinator {
      */
     protected void apply (ModuleManager modules) {
     	/* This is the old code */
-/*    	add("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
+    	step("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
     	
-    	add("Lift", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    	/*step("Lift", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Drive Only"),
     			modules.getModule("Elevator").getTrigger("Tote Lifted")
     	})), new Coordinator()));
     	
-    	add("Back", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    	step("Back", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Drive Only"),
     				new TriggerAnd(new TriggerAccess[] {
     						modules.getModule("Drive").getTrigger("At Left Servo Target"),
@@ -44,7 +44,7 @@ public class AutonomousMode extends Coordinator {
     		}
     	}));
     	
-    	add("Turn", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    	step("Turn", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Drive Only"),
     				new TriggerAnd(new TriggerAccess[] {
     						modules.getModule("Drive").getTrigger("At Left Servo Target"),
@@ -55,9 +55,9 @@ public class AutonomousMode extends Coordinator {
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks", 130));
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks", -130));
     		}
-    	}));
+    	}));*/
     	
-    	add("Drive", new Step(new Coordinator() {
+    	step("Drive", new Step(new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks",
@@ -65,6 +65,6 @@ public class AutonomousMode extends Coordinator {
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks",
     					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 700));
     		}
-    	}));*/
+    	}));
     }
 }
