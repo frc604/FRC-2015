@@ -123,12 +123,12 @@ public class Drive extends Module {
             add("Inches", new Data() {
             	public double run() {
             		double total = 0;
-             		for( int f=0; f<128; f++ )
+             		for( int f=0; f<256; f++ )
              		{
              			total += ultra.getVoltage();
              		}
-             		double aV = total/128;
-             		System.out.println(aV);
+             		double aV = total/256;
+             		//System.out.println(inches);
              		return aV;
             	}
             });
