@@ -122,7 +122,14 @@ public class Drive extends Module {
             });
             add("Inches", new Data() {
             	public double run() {
-            		return inches;
+            		double total = 0;
+             		for( int f=0; f<128; f++ )
+             		{
+             			total += ultra.getVoltage();
+             		}
+             		double aV = total/128;
+             		System.out.println(inches);
+             		return aV;
             	}
             });
         }});
@@ -209,19 +216,6 @@ public class Drive extends Module {
         			
         		}
         	});
-        	 add("Average", new Action(new FieldMap() {{
-             }}) {
-             	public void run(ActionData data) {
-             		double total = 0;
-             		for( int f=0; f<128; f++ )
-             		{
-             			total += ultra.getVoltage();
-             		}
-             		double aV = total/128;
-             		inches = aV;
-             		System.out.println(inches);
-             	}
-             });
         }});
         
         this.set(new ElasticController() {{
