@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -47,6 +48,8 @@ public class Drive extends Module {
     
     /** The encoder right. */
     private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
+    
+    private final Ultrasonic ultra = new Ultrasonic(0, 0);
     
     private double PIDLeftOut = 0D;
     private double PIDRightOut = 0D;
