@@ -128,6 +128,7 @@ public class Drive extends Module {
              			total += ultra.getVoltage();
              		}
              		double aV = total/256;
+             		aV *= 42.56;
              		//System.out.println(inches);
              		return aV;
             	}
