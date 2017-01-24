@@ -23,47 +23,17 @@ public class AutonomousMode extends Coordinator {
      * @see com._604robotics.robotnik.procedure.Procedure#apply(com._604robotics.robotnik.module.ModuleManager)
      */
     protected void apply (ModuleManager modules) {
-    	/* This is the old code */
+    	
     	step("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
     	
-    	/*step("Lift", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
-    			modules.getModule("Dashboard").getTrigger("Drive Only"),
-    			modules.getModule("Elevator").getTrigger("Tote Lifted")
-    	})), new Coordinator()));
-    	
-    	step("Back", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    	step("Moth", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Drive Only"),
     				new TriggerAnd(new TriggerAccess[] {
-    						modules.getModule("Drive").getTrigger("At Left Servo Target"),
-    						modules.getModule("Drive").getTrigger("At Right Servo Target")})
+    						modules.getModule("Drive").getTrigger("At Ultra Target")})
     	})), new Coordinator() {
     		protected void apply (ModuleManager modules) {
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks", -45));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks", -45));
-    		}
-    	}));
-    	
-    	step("Turn", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
-    			modules.getModule("Dashboard").getTrigger("Drive Only"),
-    				new TriggerAnd(new TriggerAccess[] {
-    						modules.getModule("Drive").getTrigger("At Left Servo Target"),
-    						modules.getModule("Drive").getTrigger("At Right Servo Target")})
-    	})), new Coordinator() {
-    		protected void apply (ModuleManager modules) {
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks", 130));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks", -130));
-    		}
-    	}));*/
-    	
-    	step("Drive", new Step(new Coordinator() {
-    		protected void apply (ModuleManager modules) {
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Servo Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "left clicks",
-    					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 700));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"), "right clicks",
-    					(modules.getModule("Dashboard").getTrigger("Drive Only").get()) ? 300 : 700));
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive")));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive"), "raw", 678.9));
     		}
     	}));
     }

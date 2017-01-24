@@ -87,6 +87,7 @@ public class Drive extends Module {
     public Drive () {
         encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
         encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
+        ultra.setPIDSourceType(PIDSourceType.kDisplacement);
         
         pidLeft.setAbsoluteTolerance(20);
         pidRight.setAbsoluteTolerance(20);
@@ -131,6 +132,18 @@ public class Drive extends Module {
              		aV *= 42.56;
              		//System.out.println(inches);
              		return aV;
+            	}
+            });
+            add("Raw", new Data() {
+            	public double run() {
+            		double total = 0;
+             		for( int f=0; f<256; f++ )
+             		{
+             			total += ultra.getValue();
+             		}
+             		double aT = total/256;
+             		System.out.println(aT);
+             		return aT;
             	}
             });
         }});
@@ -208,15 +221,6 @@ public class Drive extends Module {
                     }
                 }
             });
-        }});
-        
-        this.set(new ElasticController() {{
-        	addDefault("Off", new Action() {
-        		public void begin(ActionData data)
-        		{
-        			
-        		}
-        	});
         }});
         
         this.set(new ElasticController() {{
