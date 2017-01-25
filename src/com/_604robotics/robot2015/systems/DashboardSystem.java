@@ -71,6 +71,8 @@ public class DashboardSystem extends Coordinator {
          
          this.fill(new DataWire(DashboardOutput.asDouble(), "Inches",
         		 modules.getModule("Drive").getData("Inches")));
+         this.fill(new DataWire(DashboardOutput.asDouble(), "Voltage",
+        		 modules.getModule("Drive").getData("Voltage")));
          this.fill(new DataWire(DashboardOutput.asDouble(), "Raw",
         		 modules.getModule("Drive").getData("Raw")));
          this.fill(new DataWire(DashboardOutput.asDouble(), "PID Data",

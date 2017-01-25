@@ -129,6 +129,12 @@ public class Drive extends Module {
              		return aV;
             	}
             });
+            add("Voltage", new Data() {
+            	public double run() {
+            		double aV = ultra.getVoltage();
+            		return aV;
+            	}
+            });
             add("Raw", new Data() {
             	public double run() {
             		double aT = ultra.getValue();
