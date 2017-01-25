@@ -33,7 +33,7 @@ public class AutonomousMode extends Coordinator {
     	})), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive Raw")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Raw"), "raw", -0.564));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Raw"), "raw", -0.845));
     		}
     	}));
     	step("Moth Inches", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
@@ -43,7 +43,7 @@ public class AutonomousMode extends Coordinator {
     	})), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive Inches")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Inches"), "inches", 24));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Inches"), "inches", 36));
     		}
     	}));
     }

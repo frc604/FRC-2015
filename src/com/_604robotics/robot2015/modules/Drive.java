@@ -382,13 +382,13 @@ public class Drive extends Module {
             	
                 public void begin (ActionData data) {
                 	pid_power_cap = data.get("power cap");
-                    pidUltra.setSetpoint(data.get("inches")*-42.56);
+                    pidUltra.setSetpoint(data.get("inches")/-42.56);
                     pidUltra.enable();
                 }
                 
                 public void run (ActionData data){
-                	if(pidUltra.getSetpoint() != data.get("inches")*-42.56){
-                		pidUltra.setSetpoint(data.get("inches")*-42.56);
+                	if(pidUltra.getSetpoint() != data.get("inches")/-42.56){
+                		pidUltra.setSetpoint(data.get("inches")/-42.56);
                 	}
                 	drive.tankDrive(PIDUltraOut, PIDUltraOut);
                 }
