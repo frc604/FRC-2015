@@ -146,6 +146,11 @@ public class Drive extends Module {
              		return aT;
             	}
             });
+            add("PID Data", new Data() {
+            	public double run() {
+            		return ultra.pidGet();
+            	}
+            });
         }});
         
         this.set(new TriggerMap() {{
