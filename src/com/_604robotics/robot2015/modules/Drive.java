@@ -346,7 +346,7 @@ public class Drive extends Module {
                     pidRight.disable();
                 }
             });
-            add("Ultra Drive", new Action(new FieldMap() {{
+            add("Ultra Drive Raw", new Action(new FieldMap() {{
                 define("raw", 0D);
                 define("power cap", 0.6D);
             }}) {
@@ -360,6 +360,29 @@ public class Drive extends Module {
                 public void run (ActionData data){
                 	if(pidUltra.getSetpoint() != data.get("raw")){
                 		pidUltra.setSetpoint(data.get("raw"));
+                	}
+                	drive.tankDrive(PIDUltraOut, PIDUltraOut);
+                }
+                
+                public void end (ActionData data) {
+                    pidUltra.reset();
+                    pidUltra.disable();
+                }
+            });
+            add("Ultra Drive Inches", new Action(new FieldMap() {{
+                define("inches", 0D);
+                define("power cap", 0.6D);
+            }}) {
+            	
+                public void begin (ActionData data) {
+                	pid_power_cap = data.get("power cap");
+                    pidUltra.setSetpoint(data.get("inches")*-42.56);
+                    pidUltra.enable();
+                }
+                
+                public void run (ActionData data){
+                	if(pidUltra.getSetpoint() != data.get("inches")*-42.56){
+                		pidUltra.setSetpoint(data.get("inches")*-42.56);
                 	}
                 	drive.tankDrive(PIDUltraOut, PIDUltraOut);
                 }

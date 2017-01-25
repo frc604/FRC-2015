@@ -26,14 +26,24 @@ public class AutonomousMode extends Coordinator {
     	
     	step("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
     	
-    	step("Moth", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
-    			modules.getModule("Dashboard").getTrigger("Drive Only"),
+    	step("Moth Raw", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    			modules.getModule("Dashboard").getTrigger("Raw"),
     				new TriggerAnd(new TriggerAccess[] {
     						modules.getModule("Drive").getTrigger("At Ultra Target")})
     	})), new Coordinator() {
     		protected void apply (ModuleManager modules) {
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive"), "raw", -500));
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive Raw")));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Raw"), "raw", -500));
+    		}
+    	}));
+    	step("Moth Inches", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    			modules.getModule("Dashboard").getTrigger("Inches"),
+    				new TriggerAnd(new TriggerAccess[] {
+    						modules.getModule("Drive").getTrigger("At Ultra Target")})
+    	})), new Coordinator() {
+    		protected void apply (ModuleManager modules) {
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive Inches")));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Inches"), "inches", 15));
     		}
     	}));
     }
