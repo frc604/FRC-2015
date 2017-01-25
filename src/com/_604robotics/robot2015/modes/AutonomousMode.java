@@ -33,7 +33,7 @@ public class AutonomousMode extends Coordinator {
     	})), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive"), "raw", 678.9));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive"), "raw", -500));
     		}
     	}));
     }
