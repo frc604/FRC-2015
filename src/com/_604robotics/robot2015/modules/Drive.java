@@ -1,5 +1,6 @@
 package com._604robotics.robot2015.modules;
 
+import com._604robotics.robotnew.sensor.ReverseAnalogInput;
 import com._604robotics.robotnik.action.Action;
 import com._604robotics.robotnik.action.ActionData;
 import com._604robotics.robotnik.action.controllers.ElasticController;
@@ -50,7 +51,7 @@ public class Drive extends Module {
     /** The encoder right. */
     private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
     
-    private final AnalogInput ultra = new AnalogInput(0);
+    private final ReverseAnalogInput ultra = new ReverseAnalogInput(0);
     
     private double PIDLeftOut = 0D;
     private double PIDRightOut = 0D;
