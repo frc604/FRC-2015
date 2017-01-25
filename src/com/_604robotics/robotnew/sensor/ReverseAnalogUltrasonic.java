@@ -70,6 +70,14 @@ public class ReverseAnalogUltrasonic extends ReverseAnalogInput {
 	{
 		return (double) getValue(sample) * this.INCHES_PER_VOLT;
 	}
+	public double pidGet()
+	{
+		return getVoltage();
+	}
+	public double pidGet(int sample)
+	{
+		return getVoltage(sample);
+	}
 	public int getPort()
 	{
 		return this.m_port; 

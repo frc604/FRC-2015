@@ -1,6 +1,7 @@
 package com._604robotics.robot2015.modules;
 
 import com._604robotics.robotnew.sensor.ReverseAnalogInput;
+import com._604robotics.robotnew.sensor.ReverseAnalogUltrasonic;
 import com._604robotics.robotnik.action.Action;
 import com._604robotics.robotnik.action.ActionData;
 import com._604robotics.robotnik.action.controllers.ElasticController;
@@ -51,7 +52,7 @@ public class Drive extends Module {
     /** The encoder right. */
     private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
     
-    private final ReverseAnalogInput ultra = new ReverseAnalogInput(0);
+    private final ReverseAnalogUltrasonic ultra = new ReverseAnalogUltrasonic(0);
     
     private double PIDLeftOut = 0D;
     private double PIDRightOut = 0D;
@@ -124,24 +125,13 @@ public class Drive extends Module {
             });
             add("Inches", new Data() {
             	public double run() {
-            		double total = 0;
-             		for( int f=0; f<256; f++ )
-             		{
-             			total += ultra.getVoltage();
-             		}
-             		double aV = total/256;
-             		aV *= 42.56;
+            		double aV = ultra.getInches();
              		return aV;
             	}
             });
             add("Raw", new Data() {
             	public double run() {
-            		double total = 0;
-             		for( int f=0; f<256; f++ )
-             		{
-             			total += ultra.getValue();
-             		}
-             		double aT = total/256;
+            		double aT = ultra.getValue();
              		System.out.println(aT);
              		return aT;
             	}
