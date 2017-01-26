@@ -4,7 +4,6 @@ import edu.wpi.first.wpilibj.AnalogInput;
 
 // a more intuitive method of using ultrasonic sensors plugged into analog ports
 // overwrites and overloads getValue and getVoltage to return more accurate values
-// this one returns the value, except negative, to help PIDs.
 public class ReverseAnalogUltrasonic extends ReverseAnalogInput {
 
 	private int m_port = 0;
@@ -20,11 +19,11 @@ public class ReverseAnalogUltrasonic extends ReverseAnalogInput {
 	{
 		int averageValue = 0;
 		int total = 0;
-		for( int f=0; f<256; f++ )
+		for( int f=0; f<64; f++ )
 		{
 			total += super.getValue();
 		}
-		averageValue = total / 256;
+		averageValue = total / 64;
 		return averageValue;
 	}
 	// getValue except with custom sample size
@@ -44,11 +43,11 @@ public class ReverseAnalogUltrasonic extends ReverseAnalogInput {
 	{
 		double averageVoltage = 0;
 		double total = 0;
-		for( int f=0; f<256; f++ )
+		for( int f=0; f<64; f++ )
 		{
 			total += super.getVoltage();
 		}
-		averageVoltage = total/256;
+		averageVoltage = total/64;
 		return averageVoltage;
 	}
 	public double getVoltage(int sample)
@@ -64,19 +63,19 @@ public class ReverseAnalogUltrasonic extends ReverseAnalogInput {
 	}
 	public double getInches()
 	{
-		return (double) getVoltage() * this.INCHES_PER_VOLT;
+		return (double) getValue() * this.INCHES_PER_VOLT;
 	}
 	public double getInches(int sample)
 	{
-		return (double) getVoltage(sample) * this.INCHES_PER_VOLT;
+		return (double) getValue(sample) * this.INCHES_PER_VOLT;
 	}
 	public double pidGet()
 	{
-		return getVoltage();
+		return (double) getVoltage();
 	}
 	public double pidGet(int sample)
 	{
-		return getVoltage(sample);
+		return (double) getVoltage(sample);
 	}
 	public int getPort()
 	{

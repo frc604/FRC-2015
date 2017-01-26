@@ -46,5 +46,16 @@ public class AutonomousMode extends Coordinator {
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Inches"), "inches", 36));
     		}
     	}));
+    	step("Moth Manual", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
+    			modules.getModule("Dashboard").getTrigger("Manual"),
+    				new TriggerAnd(new TriggerAccess[] {
+    						modules.getModule("Drive").getTrigger("Past Ultra Target")})
+    	})), new Coordinator() {
+    		protected void apply (ModuleManager modules) {
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Arcade Drive")));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "throttle", 0.5));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "turn", 0D));
+    		}
+    	}));
     }
 }

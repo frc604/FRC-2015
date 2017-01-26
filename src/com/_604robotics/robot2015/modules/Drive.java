@@ -222,6 +222,12 @@ public class Drive extends Module {
                     }
                 }
             });
+            add("Past Ultra Target", new Trigger() {
+            	public boolean run()
+            	{
+            		return ultra.getVoltage() > -0.845;
+            	}
+            });
         }});
         
         this.set(new ElasticController() {{

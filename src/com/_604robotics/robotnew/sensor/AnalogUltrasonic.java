@@ -19,11 +19,11 @@ public class AnalogUltrasonic extends AnalogInput {
 	{
 		int averageValue = 0;
 		int total = 0;
-		for( int f=0; f<256; f++ )
+		for( int f=0; f<64; f++ )
 		{
 			total += super.getValue();
 		}
-		averageValue = total / 256;
+		averageValue = total / 64;
 		return averageValue;
 	}
 	// getValue except with custom sample size
@@ -43,11 +43,11 @@ public class AnalogUltrasonic extends AnalogInput {
 	{
 		double averageVoltage = 0;
 		double total = 0;
-		for( int f=0; f<256; f++ )
+		for( int f=0; f<64; f++ )
 		{
 			total += super.getVoltage();
 		}
-		averageVoltage = total/256;
+		averageVoltage = total/64;
 		return averageVoltage;
 	}
 	public double getVoltage(int sample)
@@ -68,6 +68,14 @@ public class AnalogUltrasonic extends AnalogInput {
 	public double getInches(int sample)
 	{
 		return (double) getValue(sample) * this.INCHES_PER_VOLT;
+	}
+	public double pidGet()
+	{
+		return (double) getVoltage();
+	}
+	public double pidGet(int sample)
+	{
+		return (double) getVoltage(sample);
 	}
 	public int getPort()
 	{
