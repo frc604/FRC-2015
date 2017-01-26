@@ -22,6 +22,7 @@ public class Dashboard extends Module {
             add("Tank Drive", driveMode.add("Tank Drive"));
             add("Arcade Drive", driveMode.add("Arcade Drive"));
             add("Dynamic Drive", driveMode.addDefault("Dynamic Drive"));
+            add("Ultra Testing", driveMode.add("Ultra Testing"));
             //add("Stick Drive", driveMode.add("Stick Drive"));
             //add("Servo Drive", driveMode.add("Servo Drive"));
             

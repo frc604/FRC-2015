@@ -3,6 +3,9 @@
  *  - implement higher D constant
  *  - try stopping before setpoint and measure precision
  *  - please god be a precision thing
+ *  - also maybe try not turning off PID loop for a whi- ohh that's
+ *  	what the timer is for.
+ *  - try testing in teleop with dashboard controls first.
  */
 
 package com._604robotics.robot2015.modules;
@@ -96,7 +99,8 @@ public class Drive extends Module {
         
         pidLeft.setAbsoluteTolerance(20);
         pidRight.setAbsoluteTolerance(20);
-        pidUltra.setAbsoluteTolerance(20);
+        // Play around with this value
+        pidUltra.setPercentTolerance(5);
         
         SmartDashboard.putData("Left Drive PID", pidLeft);
         SmartDashboard.putData("Right Drive PID", pidRight);
@@ -141,13 +145,7 @@ public class Drive extends Module {
             add("Raw", new Data() {
             	public double run() {
             		double aT = ultra.getValue();
-             		System.out.println(aT);
              		return aT;
-            	}
-            });
-            add("PID Data", new Data() {
-            	public double run() {
-            		return ultra.pidGet();
             	}
             });
         }});
@@ -211,7 +209,13 @@ public class Drive extends Module {
                             timing = true;
                             timer.start();
                         }
-                        
+                        // change values for timer maybe
+                        // the timer represents how long it stays set
+                        if( timer.get() >= 0.5 )
+                        {
+                        	System.out.println("Setpoint met");
+                        	System.out.println(ultra.getInches());
+                        }
                         return timer.get() >= 0.5;
                     } else {
                         if (timing) {

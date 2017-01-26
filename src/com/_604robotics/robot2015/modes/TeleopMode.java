@@ -56,7 +56,12 @@ public TeleopMode () {
             {
             	/* Ultrasonic */
             	{
-            		this.bind(new Binding(modules.getModule("Drive").getAction("Measure"), driver.buttons.A));
+            		this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive Inches"), new TriggerAnd(new TriggerAccess[] {
+            				modules.getModule("Dashboard").getTrigger("Ultra Testing"),
+            				driver.buttons.A
+            		})));
+            		this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Inches"), "power cap", driver.leftStick.Y));
+            		this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Inches"), "inches", 36));
             	}
             	/* Dynamic Drive */
             	{
