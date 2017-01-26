@@ -148,6 +148,11 @@ public class Drive extends Module {
              		return aT;
             	}
             });
+            add("Error", new Data() {
+            	public double run() {
+            		return pidUltra.getError();
+            	}
+            });
         }});
         
         this.set(new TriggerMap() {{
