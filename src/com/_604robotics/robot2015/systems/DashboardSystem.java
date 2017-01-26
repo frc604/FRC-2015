@@ -79,5 +79,7 @@ public class DashboardSystem extends Coordinator {
         		 modules.getModule("Drive").getData("PID Data")));
          this.fill(new DataWire(DashboardOutput.asBoolean(), "ultra drive on target",
         		 modules.getModule("Drive").getTrigger("At Ultra Target")));
+         this.fill(new DataWire(DashboardOutput.asBoolean(), "ultra drive past target",
+        		 modules.getModule("Drive").getTrigger("Past Ultra Target")));
     }
 }

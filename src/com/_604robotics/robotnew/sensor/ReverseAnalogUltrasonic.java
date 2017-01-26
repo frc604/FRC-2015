@@ -63,11 +63,11 @@ public class ReverseAnalogUltrasonic extends ReverseAnalogInput {
 	}
 	public double getInches()
 	{
-		return (double) getValue() * this.INCHES_PER_VOLT;
+		return (double) getVoltage() * this.INCHES_PER_VOLT;
 	}
 	public double getInches(int sample)
 	{
-		return (double) getValue(sample) * this.INCHES_PER_VOLT;
+		return (double) getVoltage(sample) * this.INCHES_PER_VOLT;
 	}
 	public double pidGet()
 	{
