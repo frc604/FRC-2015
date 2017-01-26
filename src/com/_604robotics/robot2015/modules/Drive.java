@@ -377,6 +377,7 @@ public class Drive extends Module {
                 }
                 
                 public void end (ActionData data) {
+                	drive.stopMotor();
                     pidUltra.reset();
                     pidUltra.disable();
                 }
@@ -400,6 +401,7 @@ public class Drive extends Module {
                 }
                 
                 public void end (ActionData data) {
+                	drive.stopMotor();
                     pidUltra.reset();
                     pidUltra.disable();
                 }
