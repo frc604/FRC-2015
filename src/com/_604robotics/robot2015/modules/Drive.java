@@ -1,6 +1,12 @@
+/*
+ *  TODO:
+ *  - implement higher D constant
+ *  - try stopping before setpoint and measure precision
+ *  - please god be a precision thing
+ */
+
 package com._604robotics.robot2015.modules;
 
-import com._604robotics.robotnew.sensor.ReverseAnalogInput;
 import com._604robotics.robotnew.sensor.ReverseAnalogUltrasonic;
 import com._604robotics.robotnik.action.Action;
 import com._604robotics.robotnik.action.ActionData;
@@ -8,19 +14,16 @@ import com._604robotics.robotnik.action.controllers.ElasticController;
 import com._604robotics.robotnik.action.field.FieldMap;
 import com._604robotics.robotnik.data.Data;
 import com._604robotics.robotnik.data.DataMap;
-import com._604robotics.robotnik.logging.Logger;
 import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
