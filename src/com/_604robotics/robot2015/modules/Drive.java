@@ -1,6 +1,5 @@
 package com._604robotics.robot2015.modules;
 
-import com._604robotics.robotnew.sensor.ReverseAnalogInput;
 import com._604robotics.robotnew.sensor.ReverseAnalogUltrasonic;
 import com._604robotics.robotnik.action.Action;
 import com._604robotics.robotnik.action.ActionData;
@@ -8,24 +7,18 @@ import com._604robotics.robotnik.action.controllers.ElasticController;
 import com._604robotics.robotnik.action.field.FieldMap;
 import com._604robotics.robotnik.data.Data;
 import com._604robotics.robotnik.data.DataMap;
-import com._604robotics.robotnik.logging.Logger;
 import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
 import edu.wpi.first.wpilibj.RobotDrive;
 import edu.wpi.first.wpilibj.Timer;
-import edu.wpi.first.wpilibj.Ultrasonic;
 import edu.wpi.first.wpilibj.PIDSourceType;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
-//import com._604robotics.robotnik.module.ModuleManager;
-
 
 // TODO: Auto-generated Javadoc
 /**
@@ -142,9 +135,9 @@ public class Drive extends Module {
              		return aT;
             	}
             });
-            add("PID Data", new Data() {
+            add("Error", new Data() {
             	public double run() {
-            		return ultra.pidGet();
+            		return pidUltra.getError();
             	}
             });
         }});
@@ -198,34 +191,16 @@ public class Drive extends Module {
                     }
                 }
             });
-            add("At Ultra Target", new Trigger() {
-                private final Timer timer = new Timer();
-                private boolean timing = false;
+            add("Not At Ultra Target", new Trigger() {
                 
                 public boolean run () {
-                    if (pidUltra.isEnabled() && pidUltra.onTarget()) {
-                        if (!timing) {
-                            timing = true;
-                            timer.start();
-                        }
-                        
-                        return timer.get() >= 0.5;
-                    } else {
-                        if (timing) {
-                            timing = false;
-                            
-                            timer.stop();
-                            timer.reset();
-                        }
-                        
-                        return false;
-                    }
+                	return pidUltra.isEnabled() && pidUltra.onTarget();
                 }
             });
-            add("Past Ultra Target", new Trigger() {
+            add("Not Past Ultra Target", new Trigger() {
             	public boolean run()
             	{
-            		return ultra.getVoltage() > -0.845;
+            		return ultra.getVoltage() < -0.845;
             	}
             });
         }});
@@ -358,31 +333,7 @@ public class Drive extends Module {
                     pidRight.disable();
                 }
             });
-            add("Ultra Drive Raw", new Action(new FieldMap() {{
-                define("raw", 0D);
-                define("power cap", 0.6D);
-            }}) {
-            	
-                public void begin (ActionData data) {
-                	pid_power_cap = data.get("power cap");
-                    pidUltra.setSetpoint(data.get("raw"));
-                    pidUltra.enable();
-                }
-                
-                public void run (ActionData data){
-                	if(pidUltra.getSetpoint() != data.get("raw")){
-                		pidUltra.setSetpoint(data.get("raw"));
-                	}
-                	drive.tankDrive(PIDUltraOut, PIDUltraOut);
-                }
-                
-                public void end (ActionData data) {
-                	drive.stopMotor();
-                    pidUltra.reset();
-                    pidUltra.disable();
-                }
-            });
-            add("Ultra Drive Inches", new Action(new FieldMap() {{
+            add("Ultra Drive", new Action(new FieldMap() {{
                 define("inches", 0D);
                 define("power cap", 0.6D);
             }}) {

@@ -22,6 +22,7 @@ public class Dashboard extends Module {
             add("Tank Drive", driveMode.add("Tank Drive"));
             add("Arcade Drive", driveMode.add("Arcade Drive"));
             add("Dynamic Drive", driveMode.addDefault("Dynamic Drive"));
+            add("Ultra Drive", driveMode.add("Ultra Drive"));
             //add("Stick Drive", driveMode.add("Stick Drive"));
             //add("Servo Drive", driveMode.add("Servo Drive"));
             
@@ -38,9 +39,8 @@ public class Dashboard extends Module {
             add("Auton Off", autonOn.add("Auton Off"));
             
             final DashboardTriggerChoice mothMode = new DashboardTriggerChoice("Moth Mode");
-            add("Raw", mothMode.add("Raw"));
-            add("Inches", mothMode.add("Inches"));
-            add("Manual", mothMode.add("Manual"));
+            add("Moth PID", mothMode.addDefault("Moth PID"));
+            add("Moth Drive", mothMode.add("Moth Drive"));
             
             /*final DashboardTriggerChoice debuggingOn = new DashboardTriggerChoice("Debugging On");
             add("Debugging Off", debuggingOn.add("Debugging Off"));

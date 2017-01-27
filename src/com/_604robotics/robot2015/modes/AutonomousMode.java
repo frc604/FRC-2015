@@ -26,31 +26,19 @@ public class AutonomousMode extends Coordinator {
     	
     	step("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
     	
-    	step("Moth Raw", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
-    			modules.getModule("Dashboard").getTrigger("Raw"),
-    				new TriggerAnd(new TriggerAccess[] {
-    						modules.getModule("Drive").getTrigger("At Ultra Target")})
-    	})), new Coordinator() {
+    	step("Moth PID", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
+    			modules.getModule("Dashboard").getTrigger("Moth PID"),
+    			modules.getModule("Drive").getTrigger("Not At Ultra Target")})
+    	), new Coordinator() {
     		protected void apply (ModuleManager modules) {
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive Raw")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Raw"), "raw", -0.845));
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive")));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive"), "inches", 36));
     		}
     	}));
-    	step("Moth Inches", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
-    			modules.getModule("Dashboard").getTrigger("Inches"),
-    				new TriggerAnd(new TriggerAccess[] {
-    						modules.getModule("Drive").getTrigger("At Ultra Target")})
-    	})), new Coordinator() {
-    		protected void apply (ModuleManager modules) {
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive Inches")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive Inches"), "inches", 36));
-    		}
-    	}));
-    	step("Moth Manual", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
-    			modules.getModule("Dashboard").getTrigger("Manual"),
-    				new TriggerAnd(new TriggerAccess[] {
-    						modules.getModule("Drive").getTrigger("Past Ultra Target")})
-    	})), new Coordinator() {
+    	step("Moth Drive", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
+    			modules.getModule("Dashboard").getTrigger("Moth Drive"),
+    			modules.getModule("Drive").getTrigger("Not Past Ultra Target")})
+    	), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Arcade Drive")));
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Arcade Drive"), "throttle", 0.5));
