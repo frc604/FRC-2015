@@ -56,7 +56,12 @@ public TeleopMode () {
             {
             	/* Ultrasonic */
             	{
-            		
+            		this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Oscil"), new TriggerAnd(new TriggerAccess[] {
+                    		modules.getModule("Dashboard").getTrigger("Drive On"),
+                    		driver.buttons.A,
+                    		modules.getModule("Dashboard").getTrigger("Ultra Oscil")})));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "inches",  72D));
+                    this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "tolerance", 1D));
             	}
             	/* Dynamic Drive */
             	{

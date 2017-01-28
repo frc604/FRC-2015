@@ -81,5 +81,8 @@ public class DashboardSystem extends Coordinator {
         		 modules.getModule("Drive").getTrigger("At Ultra Target")));
          this.fill(new DataWire(DashboardOutput.asBoolean(), "ultra drive past target",
         		 modules.getModule("Drive").getTrigger("Past Ultra Target")));
+         this.fill(new DataWire(DashboardOutput.asBoolean(), "Always False",
+        		 modules.getModule("Drive").getTrigger("Always False")));
+         
     }
 }

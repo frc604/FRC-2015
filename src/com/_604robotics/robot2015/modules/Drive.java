@@ -222,6 +222,12 @@ public class Drive extends Module {
             		return ultra.getVoltage() > -0.845;
             	}
             });
+            add("Always False", new Trigger() {
+            	public boolean run()
+            	{
+            		return false;
+            	}
+            });
         }});
         
         this.set(new ElasticController() {{
@@ -314,6 +320,27 @@ public class Drive extends Module {
                 
                 public void end (ActionData data) {
                     drive.stopMotor();
+                }
+            });
+            
+            add("Ultra Oscil", new Action(new FieldMap() {{
+                define("inches", 0D);
+                define("tolerance", 0D);
+            }}) {
+                
+                public void run (ActionData data){
+                	if( ultra.getVoltage() < (data.get("inches")-data.get("tolerance"))/-42.56 )
+                	{
+                		drive.tankDrive(0.2, 0.2);
+                	}
+                	if( ultra.getVoltage() > (data.get("inches")+data.get("tolerance"))/-42.56 )
+                	{
+                		drive.tankDrive(-0.2, -0.2);
+                	}
+                }
+                
+                public void end (ActionData data) {
+                	drive.stopMotor();
                 }
             });
             
