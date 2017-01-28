@@ -123,11 +123,7 @@ public class Drive extends Module {
             add("Distance", new Data() {
             	public double run() {
             		double aV = 0;
-            		for( int f=0; f<64; f++ )
-            		{
-            			aV += ultra.getVoltage();
-            		}
-            		aV /= 64;
+            		aV = ultra.getVoltage();
             		aV *= 42.56;
             		return aV;
             	}
@@ -290,12 +286,7 @@ public class Drive extends Module {
             }}) {
                 
                 public void run (ActionData data){
-                	double aV = 0D;
-                	for( int f=0; f<64; f++ )
-                	{
-                		aV += ultra.getVoltage();
-                	}
-                	aV /= 64;
+                	double aV = ultra.getVoltage();
                 	double distance = aV * 42.56;
                 	if( distance < data.get("inches") - data.get("tolerance") )
                 	{

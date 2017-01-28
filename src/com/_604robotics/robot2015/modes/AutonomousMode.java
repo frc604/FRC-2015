@@ -25,7 +25,7 @@ public class AutonomousMode extends Coordinator {
     protected void apply (ModuleManager modules) {
     	
     	step("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
-    	
+    	/*
     	step("Moth Oscil", new Step(new TriggerMeasure(new TriggerOr(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Moth Oscil"),
     				new TriggerAnd(new TriggerAccess[] {
@@ -37,7 +37,7 @@ public class AutonomousMode extends Coordinator {
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "tolerance", 1.0));
     		}
     	}));
-    	
+    	*/
     	/*
     	step("Moth PID", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Moth PID"),
