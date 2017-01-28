@@ -191,16 +191,35 @@ public class Drive extends Module {
                     }
                 }
             });
-            add("Not At Ultra Target", new Trigger() {
-                
+            add("At Ultra Target", new Trigger() {
+                private final Timer timer = new Timer();
+                private boolean timing = false;
                 public boolean run () {
-                	return pidUltra.isEnabled() && pidUltra.onTarget();
+                	if( pidUltra.isEnabled() && pidUltra.onTarget() )
+                	{
+                		if( !timing )
+                		{
+                			timing = true;
+                			timer.start();
+                		}
+                		return timer.get() >= 1;
+                	}
+                	else
+                	{
+                		if( timing )
+                		{
+                			timing = false;
+                			timer.stop();
+                			timer.reset();
+                		}
+                	}
+                	return false;
                 }
             });
-            add("Not Past Ultra Target", new Trigger() {
+            add("Past Ultra Target", new Trigger() {
             	public boolean run()
             	{
-            		return ultra.getVoltage() < -0.845;
+            		return ultra.getVoltage() > -0.845;
             	}
             });
         }});
@@ -343,14 +362,14 @@ public class Drive extends Module {
                     pidUltra.setSetpoint(data.get("inches")/-42.56);
                     pidUltra.enable();
                 }
-                
+                /*
                 public void run (ActionData data){
                 	if(pidUltra.getSetpoint() != data.get("inches")/-42.56){
                 		pidUltra.setSetpoint(data.get("inches")/-42.56);
                 	}
                 	drive.tankDrive(PIDUltraOut, PIDUltraOut);
                 }
-                
+                */
                 public void end (ActionData data) {
                 	drive.stopMotor();
                     pidUltra.reset();
