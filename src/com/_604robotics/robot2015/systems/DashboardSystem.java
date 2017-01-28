@@ -69,20 +69,10 @@ public class DashboardSystem extends Coordinator {
         		 modules.getModule("DynamicToggle").getTrigger("inTank")));
          
          
-         this.fill(new DataWire(DashboardOutput.asDouble(), "Inches",
-        		 modules.getModule("Drive").getData("Inches")));
-         this.fill(new DataWire(DashboardOutput.asDouble(), "Voltage",
-        		 modules.getModule("Drive").getData("Voltage")));
-         this.fill(new DataWire(DashboardOutput.asDouble(), "Raw",
-        		 modules.getModule("Drive").getData("Raw")));
-         this.fill(new DataWire(DashboardOutput.asDouble(), "Error",
-        		 modules.getModule("Drive").getData("Error")));
-         this.fill(new DataWire(DashboardOutput.asBoolean(), "ultra drive on target",
-        		 modules.getModule("Drive").getTrigger("At Ultra Target")));
-         this.fill(new DataWire(DashboardOutput.asBoolean(), "ultra drive past target",
-        		 modules.getModule("Drive").getTrigger("Past Ultra Target")));
-         this.fill(new DataWire(DashboardOutput.asBoolean(), "Always False",
-        		 modules.getModule("Drive").getTrigger("Always False")));
+         this.fill(new DataWire(DashboardOutput.asDouble(), "Distance",
+        		 modules.getModule("Drive").getData("Distance")));
+         this.fill(new DataWire(DashboardOutput.asBoolean(), "Always True",
+        		 modules.getModule("Drive").getData("Always True")));
          
     }
 }

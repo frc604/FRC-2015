@@ -11,6 +11,7 @@ import com._604robotics.robotnik.module.Module;
 import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.CounterBase;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
@@ -45,14 +46,14 @@ public class Drive extends Module {
     /** The encoder right. */
     private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
     
-    private final ReverseAnalogUltrasonic ultra = new ReverseAnalogUltrasonic(0);
+    //private final ReverseAnalogUltrasonic ultra = new ReverseAnalogUltrasonic(0);
+    
+    private final AnalogInput ultra = new AnalogInput(0);
     
     private double PIDLeftOut = 0D;
     private double PIDRightOut = 0D;
     private double PIDUltraOut = 0D;
-    
-    private double pos = 0D;
-    
+        
     private double pid_power_cap = 0.6;
     
     /** The pid left. */
@@ -70,13 +71,14 @@ public class Drive extends Module {
         	else PIDRightOut = (output < -pid_power_cap) ? -pid_power_cap : output;
         }
     });
-    
+    /*
     private final PIDController pidUltra = new PIDController(0.020, 0D, 0.005, ultra, new PIDOutput () {
         public void pidWrite (double output) {
         	if (output > 0) PIDUltraOut = (output > pid_power_cap) ? pid_power_cap : output;
         	else PIDUltraOut = (output < -pid_power_cap) ? -pid_power_cap : output;
         }
     });
+    */
     
     /**
      * Instantiates a new drive.
@@ -84,15 +86,15 @@ public class Drive extends Module {
     public Drive () {
         encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
         encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
-        ultra.setPIDSourceType(PIDSourceType.kDisplacement);
+        //ultra.setPIDSourceType(PIDSourceType.kDisplacement);
         
         pidLeft.setAbsoluteTolerance(20);
         pidRight.setAbsoluteTolerance(20);
-        pidUltra.setAbsoluteTolerance(0.0235);
+        //pidUltra.setAbsoluteTolerance(0.0235);
         
         SmartDashboard.putData("Left Drive PID", pidLeft);
         SmartDashboard.putData("Right Drive PID", pidRight);
-        SmartDashboard.putData("Ultra PID", pidUltra);
+        //SmartDashboard.putData("Ultra PID", pidUltra);
         
         this.set(new DataMap() {{
             add("Left Drive Clicks", new Data() {
@@ -118,29 +120,16 @@ public class Drive extends Module {
                     return encoderRight.getRate();
                 }
             });
-            add("Inches", new Data() {
+            add("Distance", new Data() {
             	public double run() {
-            		double aV = ultra.getInches();
-            		pos = -aV;
-             		return aV;
-            	}
-            });
-            add("Voltage", new Data() {
-            	public double run() {
-            		double aV = ultra.getVoltage();
+            		double aV = 0;
+            		for( int f=0; f<64; f++ )
+            		{
+            			aV += ultra.getVoltage();
+            		}
+            		aV /= 64;
+            		aV *= 42.56;
             		return aV;
-            	}
-            });
-            add("Raw", new Data() {
-            	public double run() {
-            		double aT = ultra.getValue();
-             		System.out.println(aT);
-             		return aT;
-            	}
-            });
-            add("Error", new Data() {
-            	public double run() {
-            		return pidUltra.getError();
             	}
             });
         }});
@@ -194,41 +183,10 @@ public class Drive extends Module {
                     }
                 }
             });
-            add("At Ultra Target", new Trigger() {
-                private final Timer timer = new Timer();
-                private boolean timing = false;
-                public boolean run () {
-                	if( pidUltra.isEnabled() && pidUltra.onTarget() )
-                	{
-                		if( !timing )
-                		{
-                			timing = true;
-                			timer.start();
-                		}
-                		return timer.get() >= 1;
-                	}
-                	else
-                	{
-                		if( timing )
-                		{
-                			timing = false;
-                			timer.stop();
-                			timer.reset();
-                		}
-                	}
-                	return false;
-                }
-            });
-            add("Past Ultra Target", new Trigger() {
+            add("Always True", new Trigger() {
             	public boolean run()
             	{
-            		return ultra.getVoltage() > -1.690;
-            	}
-            });
-            add("Always False", new Trigger() {
-            	public boolean run()
-            	{
-            		return false;
+            		return true;
             	}
             });
         }});
@@ -332,11 +290,18 @@ public class Drive extends Module {
             }}) {
                 
                 public void run (ActionData data){
-                	if( pos < (data.get("inches")-data.get("tolerance"))/-42.56 )
+                	double aV = 0D;
+                	for( int f=0; f<64; f++ )
+                	{
+                		aV += ultra.getVoltage();
+                	}
+                	aV /= 64;
+                	double distance = aV * 42.56;
+                	if( distance < data.get("inches") - data.get("tolerance") )
                 	{
                 		drive.tankDrive(0.4, 0.4);
                 	}
-                	if( pos > (data.get("inches")+data.get("tolerance"))/-42.56 )
+                	if( distance > data.get("inches") + data.get("tolerance") )
                 	{
                 		drive.tankDrive(-0.4, -0.4);
                 	}
@@ -382,6 +347,7 @@ public class Drive extends Module {
                     pidRight.disable();
                 }
             });
+            /*
             add("Ultra Drive", new Action(new FieldMap() {{
                 define("inches", 0D);
                 define("power cap", 0.6D);
@@ -406,6 +372,7 @@ public class Drive extends Module {
                     pidUltra.disable();
                 }
             });
+            */
         }});
     }
 }
