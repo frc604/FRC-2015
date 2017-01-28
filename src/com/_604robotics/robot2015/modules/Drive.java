@@ -51,6 +51,8 @@ public class Drive extends Module {
     private double PIDRightOut = 0D;
     private double PIDUltraOut = 0D;
     
+    private double pos = 0D;
+    
     private double pid_power_cap = 0.6;
     
     /** The pid left. */
@@ -86,7 +88,7 @@ public class Drive extends Module {
         
         pidLeft.setAbsoluteTolerance(20);
         pidRight.setAbsoluteTolerance(20);
-        pidUltra.setAbsoluteTolerance(20);
+        pidUltra.setAbsoluteTolerance(0.0235);
         
         SmartDashboard.putData("Left Drive PID", pidLeft);
         SmartDashboard.putData("Right Drive PID", pidRight);
@@ -119,6 +121,7 @@ public class Drive extends Module {
             add("Inches", new Data() {
             	public double run() {
             		double aV = ultra.getInches();
+            		pos = -aV;
              		return aV;
             	}
             });
@@ -219,7 +222,7 @@ public class Drive extends Module {
             add("Past Ultra Target", new Trigger() {
             	public boolean run()
             	{
-            		return ultra.getVoltage() > -0.845;
+            		return ultra.getVoltage() > -1.690;
             	}
             });
             add("Always False", new Trigger() {
@@ -329,13 +332,13 @@ public class Drive extends Module {
             }}) {
                 
                 public void run (ActionData data){
-                	if( ultra.getVoltage() < (data.get("inches")-data.get("tolerance"))/-42.56 )
+                	if( pos < (data.get("inches")-data.get("tolerance"))/-42.56 )
                 	{
-                		drive.tankDrive(0.2, 0.2);
+                		drive.tankDrive(0.4, 0.4);
                 	}
-                	if( ultra.getVoltage() > (data.get("inches")+data.get("tolerance"))/-42.56 )
+                	if( pos > (data.get("inches")+data.get("tolerance"))/-42.56 )
                 	{
-                		drive.tankDrive(-0.2, -0.2);
+                		drive.tankDrive(-0.4, -0.4);
                 	}
                 }
                 
@@ -389,14 +392,14 @@ public class Drive extends Module {
                     pidUltra.setSetpoint(data.get("inches")/-42.56);
                     pidUltra.enable();
                 }
-                /*
+                
                 public void run (ActionData data){
                 	if(pidUltra.getSetpoint() != data.get("inches")/-42.56){
                 		pidUltra.setSetpoint(data.get("inches")/-42.56);
                 	}
                 	drive.tankDrive(PIDUltraOut, PIDUltraOut);
                 }
-                */
+                
                 public void end (ActionData data) {
                 	drive.stopMotor();
                     pidUltra.reset();
