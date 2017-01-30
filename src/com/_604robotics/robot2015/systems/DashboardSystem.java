@@ -35,11 +35,14 @@ public class DashboardSystem extends Coordinator {
     			"clicks", modules.getModule("Dashboard").getData("Test Setpoint 3")));
     	/* Drive servo testing and macro*/
     	{
+    		/*
     		this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"),
     				"left clicks", modules.getModule("Dashboard").getData("Left Drive Servo")));
     		this.fill(new DataWire(modules.getModule("Drive").getAction("Servo Drive"),
     				"right clicks", modules.getModule("Dashboard").getData("Right Drive Servo")));
+    				*/
     	}
+    	/*
     	 this.fill(new DataWire(DashboardOutput.asDouble(), "left clicks",
     			 modules.getModule("Drive").getData("Left Drive Clicks")));
          this.fill(new DataWire(DashboardOutput.asDouble(), "right clicks",
@@ -48,6 +51,7 @@ public class DashboardSystem extends Coordinator {
     			 modules.getModule("Drive").getData("Left Drive Rate")));
          this.fill(new DataWire(DashboardOutput.asDouble(), "right rate",
         		 modules.getModule("Drive").getData("Right Drive Rate")));
+        		 */
          this.fill(new DataWire(DashboardOutput.asDouble(), "elevator clicks",
         		 modules.getModule("Elevator").getData("Elevator Clicks")));
          this.fill(new DataWire(DashboardOutput.asDouble(), "elevator rate",
@@ -56,13 +60,14 @@ public class DashboardSystem extends Coordinator {
         		 modules.getModule("Gear").getData("Gear")));
          this.fill(new DataWire(DashboardOutput.asDouble(), "current multiplier",
         		 modules.getModule("Gear").getData("Current Multiplier")));
-         
+         /*
          this.fill(new DataWire(DashboardOutput.asBoolean(), "elevator on target",
         		 modules.getModule("Elevator").getTrigger("At Elevator Target")));
          this.fill(new DataWire(DashboardOutput.asBoolean(), "left drive on target",
         		 modules.getModule("Drive").getTrigger("At Left Servo Target")));
          this.fill(new DataWire(DashboardOutput.asBoolean(), "right drive on target",
         		 modules.getModule("Drive").getTrigger("At Right Servo Target")));
+        		 */
          this.fill(new DataWire(DashboardOutput.asBoolean("Tank","Arcade"), "Drive Mode",
         		 modules.getModule("DynamicToggle").getTrigger("inArcade")));
          this.fill(new DataWire(DashboardOutput.asBoolean("Arcade","Tank"), "Drive Mode2",

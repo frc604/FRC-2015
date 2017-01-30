@@ -27,11 +27,15 @@ public class AutonomousMode extends Coordinator {
     	step("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
     	
     	step("Moth PID", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
-    			modules.getModule("Drive").getTrigger("At Ultra Target")})
+    			modules.getModule("Drive").getTrigger("Always False")})
     	), new Coordinator() {
     		protected void apply (ModuleManager modules) {
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive"), "inches", 72));
+    			/*
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Oscil")));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "inches", 72.0));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "tolerance", 1.0));
+    			*/
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Just Drive")));
     		}
     	}));
 

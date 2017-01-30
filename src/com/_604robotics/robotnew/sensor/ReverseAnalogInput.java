@@ -16,6 +16,10 @@ public class ReverseAnalogInput extends AnalogInput implements PIDSource, LiveWi
 		super(port);
 		this.m_port = port;
 	}
+	public double getVoltageOrig()
+	{
+		return super.getVoltage();
+	}
 	public int getValue() {
 		return super.getValue() * -1;
 	}

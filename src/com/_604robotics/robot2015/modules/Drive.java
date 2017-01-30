@@ -34,43 +34,43 @@ public class Drive extends Module {
 	// When decreasing angle it needs a little bit less than you'd think
 	
     /** The drive. */
-    private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
+    //private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
+	private final RobotDrive drive = new RobotDrive(6, 7, 8, 9);
     
-    /*TEMP*/
-    private int i=0;
-    
+    //i=0 // TEMP
     /** The encoder left. */
-    private final Encoder encoderLeft = new Encoder(0, 1, true, CounterBase.EncodingType.k4X);
+    
+    //private final Encoder encoderLeft = new Encoder(0, 1, true, CounterBase.EncodingType.k4X);
     
     /** The encoder right. */
-    private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
+    //private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
     
     private final ReverseAnalogUltrasonic ultra = new ReverseAnalogUltrasonic(0);
     
-    private double PIDLeftOut = 0D;
-    private double PIDRightOut = 0D;
+    //private double PIDLeftOut = 0D;
+    //private double PIDRightOut = 0D;
     private double PIDUltraOut = 0D;
-    
-    private double pos = 0D;
-    
+        
     private double pid_power_cap = 0.6;
     
     /** The pid left. */
+    /*
     private final PIDController pidLeft = new PIDController(0.020, 0D, 0.005, encoderLeft, new PIDOutput () {
         public void pidWrite (double output) {
         	if (output > 0) PIDLeftOut = (output > pid_power_cap) ? pid_power_cap : output;
         	else PIDLeftOut = (output < -pid_power_cap) ? -pid_power_cap : output;
         }
     });
-    
+    */
     /** The pid right. */
-    private final PIDController pidRight = new PIDController(0.020, 0D, 0.005, encoderRight, new PIDOutput () {
+    
+    /*private final PIDController pidRight = new PIDController(0.020, 0D, 0.005, encoderRight, new PIDOutput () {
         public void pidWrite (double output) {
         	if (output > 0) PIDRightOut = (output > pid_power_cap) ? pid_power_cap : output;
         	else PIDRightOut = (output < -pid_power_cap) ? -pid_power_cap : output;
         }
     });
-    
+    */
     private final PIDController pidUltra = new PIDController(0.020, 0D, 0.005, ultra, new PIDOutput () {
         public void pidWrite (double output) {
         	if (output > 0) PIDUltraOut = (output > pid_power_cap) ? pid_power_cap : output;
@@ -82,20 +82,21 @@ public class Drive extends Module {
      * Instantiates a new drive.
      */
     public Drive () {
-        encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
-        encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
+        //encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
+        //encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
         ultra.setPIDSourceType(PIDSourceType.kDisplacement);
         
-        pidLeft.setAbsoluteTolerance(20);
-        pidRight.setAbsoluteTolerance(20);
+        //pidLeft.setAbsoluteTolerance(20);
+        //pidRight.setAbsoluteTolerance(20);
         pidUltra.setAbsoluteTolerance(0.0235);
         
-        SmartDashboard.putData("Left Drive PID", pidLeft);
-        SmartDashboard.putData("Right Drive PID", pidRight);
+        //SmartDashboard.putData("Left Drive PID", pidLeft);
+        //SmartDashboard.putData("Right Drive PID", pidRight);
         SmartDashboard.putData("Ultra PID", pidUltra);
         
         this.set(new DataMap() {{
-            add("Left Drive Clicks", new Data() {
+            /*
+        	add("Left Drive Clicks", new Data() {
                 public double run () {
                     return encoderLeft.get();
                 }
@@ -118,10 +119,10 @@ public class Drive extends Module {
                     return encoderRight.getRate();
                 }
             });
+            */
             add("Inches", new Data() {
             	public double run() {
-            		double aV = ultra.getInches();
-            		pos = -aV;
+            		double aV = ultra.getInches();            		
              		return aV;
             	}
             });
@@ -134,7 +135,6 @@ public class Drive extends Module {
             add("Raw", new Data() {
             	public double run() {
             		double aT = ultra.getValue();
-             		System.out.println(aT);
              		return aT;
             	}
             });
@@ -146,7 +146,8 @@ public class Drive extends Module {
         }});
         
         this.set(new TriggerMap() {{
-            add("At Left Servo Target", new Trigger() {
+            /*
+        	add("At Left Servo Target", new Trigger() {
                 private final Timer timer = new Timer();
                 private boolean timing = false;
                 
@@ -194,6 +195,7 @@ public class Drive extends Module {
                     }
                 }
             });
+            */
             add("At Ultra Target", new Trigger() {
                 private final Timer timer = new Timer();
                 private boolean timing = false;
@@ -236,8 +238,8 @@ public class Drive extends Module {
         this.set(new ElasticController() {{
             addDefault("Off", new Action() {
             	public void begin (ActionData data){
-            		encoderLeft.reset();
-            		encoderRight.reset();
+            		//encoderLeft.reset();
+            		//encoderRight.reset();
             	}
                 public void run (ActionData data) {
                     drive.tankDrive(0D, 0D);
@@ -279,7 +281,7 @@ public class Drive extends Module {
                 define("doArcade",0D);
             }}) {
                 public void run (ActionData data) {
-                	i++;
+                	//i++;
                 	//if triggerstuff.get("isTank")
                     if( data.get("doTank")==1 )
                     {
@@ -295,7 +297,7 @@ public class Drive extends Module {
                 
                 public void end (ActionData data) {
                     drive.stopMotor();
-                    i=0;
+                    //i=0;
                 }
             });
             
@@ -332,13 +334,13 @@ public class Drive extends Module {
             }}) {
                 
                 public void run (ActionData data){
-                	if( pos < (data.get("inches")-data.get("tolerance"))/-42.56 )
-                	{
-                		drive.tankDrive(0.4, 0.4);
-                	}
-                	if( pos > (data.get("inches")+data.get("tolerance"))/-42.56 )
+                	if( ultra.getVoltageOrig() < (data.get("inches")-data.get("tolerance"))/42.56 )
                 	{
                 		drive.tankDrive(-0.4, -0.4);
+                	}
+                	if( ultra.getVoltageOrig() > (data.get("inches")+data.get("tolerance"))/42.56 )
+                	{
+                		drive.tankDrive(0.4, 0.4);
                 	}
                 }
                 
@@ -346,7 +348,7 @@ public class Drive extends Module {
                 	drive.stopMotor();
                 }
             });
-            
+            /*
             add("Servo Drive", new Action(new FieldMap() {{
                 define("left clicks", 0D);
                 define("right clicks", 0D);
@@ -381,6 +383,18 @@ public class Drive extends Module {
                     pidLeft.disable();
                     pidRight.disable();
                 }
+            });
+            */
+            add( "Just Drive", new Action(new FieldMap() {{
+            	
+            }}) {
+            	public void run(ActionData data)
+            	{
+            		drive.tankDrive(0, 0);
+            	}
+            	public void end(ActionData data) {
+            		drive.stopMotor();
+            	}
             });
             add("Ultra Drive", new Action(new FieldMap() {{
                 define("inches", 0D);

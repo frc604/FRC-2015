@@ -122,6 +122,7 @@ public TeleopMode () {
             	}*/
             	/* Dropping Trash Cans */
             	{
+            		/*
             		this.bind(new Binding(modules.getModule("CanMacro").getAction("Active"), driver.buttons.A));
             		this.fill(new DataWire(modules.getModule("CanMacro").getAction("Active"), "at elevator target",
             				modules.getModule("Elevator").getTrigger("At Elevator Target")));
@@ -139,6 +140,7 @@ public TeleopMode () {
             				driver.buttons.A,
             				modules.getModule("CanMacro").getTrigger("Backing Up")
             		})));
+            		*/
             	}
             	/* Debugging and other Movement*/
             	/* WARNING: OBSOLETED BY DASHBOARD CHANGES*/
