@@ -73,6 +73,8 @@ public class DashboardSystem extends Coordinator {
         		 modules.getModule("Drive").getData("Distance")));
          this.fill(new DataWire(DashboardOutput.asBoolean(), "Always True",
         		 modules.getModule("Drive").getData("Always True")));
+         this.fill(new DataWire(DashboardOutput.asBoolean(), "At Ultra Target",
+        		 modules.getModule("Drive").getData("At Ultra Target")));
          
     }
 }

@@ -40,6 +40,7 @@ public class Dashboard extends Module {
             
             final DashboardTriggerChoice mothMode = new DashboardTriggerChoice("Moth Mode");
             add("Moth Oscil", mothMode.addDefault("Moth Oscil"));
+            add("Moth PID", mothMode.add("Moth PID"));
             
             /*final DashboardTriggerChoice debuggingOn = new DashboardTriggerChoice("Debugging On");
             add("Debugging Off", debuggingOn.add("Debugging Off"));

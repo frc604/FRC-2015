@@ -38,16 +38,17 @@ public class AutonomousMode extends Coordinator {
     		}
     	}));
     	*/
-    	/*
+    	
     	step("Moth PID", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Moth PID"),
-    			modules.getModule("Drive").getTrigger("Not At Ultra Target")})
+    			modules.getModule("Drive").getTrigger("At Ultra Target")})
     	), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive")));
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive"), "inches", 36));
     		}
     	}));
+    	/*
     	step("Moth Drive", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
     			modules.getModule("Dashboard").getTrigger("Moth Drive"),
     			modules.getModule("Drive").getTrigger("Not Past Ultra Target")})

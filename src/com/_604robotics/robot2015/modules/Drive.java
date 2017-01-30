@@ -35,7 +35,7 @@ public class Drive extends Module {
 	// When decreasing angle it needs a little bit less than you'd think
 	
     /** The drive. */
-    private final RobotDrive drive = new RobotDrive(0, 1, 2, 3);
+    private final RobotDrive drive = new RobotDrive(6, 7, 8, 9);
     
     /*TEMP*/
     private int i=0;
@@ -71,14 +71,14 @@ public class Drive extends Module {
         	else PIDRightOut = (output < -pid_power_cap) ? -pid_power_cap : output;
         }
     });
-    /*
+    
     private final PIDController pidUltra = new PIDController(0.020, 0D, 0.005, ultra, new PIDOutput () {
         public void pidWrite (double output) {
         	if (output > 0) PIDUltraOut = (output > pid_power_cap) ? pid_power_cap : output;
         	else PIDUltraOut = (output < -pid_power_cap) ? -pid_power_cap : output;
         }
     });
-    */
+    
     
     /**
      * Instantiates a new drive.
@@ -86,15 +86,15 @@ public class Drive extends Module {
     public Drive () {
         encoderLeft.setPIDSourceType(PIDSourceType.kDisplacement);
         encoderRight.setPIDSourceType(PIDSourceType.kDisplacement);
-        //ultra.setPIDSourceType(PIDSourceType.kDisplacement);
+        ultra.setPIDSourceType(PIDSourceType.kDisplacement);
         
         pidLeft.setAbsoluteTolerance(20);
         pidRight.setAbsoluteTolerance(20);
-        //pidUltra.setAbsoluteTolerance(0.0235);
+        pidUltra.setAbsoluteTolerance(0.0235);
         
         SmartDashboard.putData("Left Drive PID", pidLeft);
         SmartDashboard.putData("Right Drive PID", pidRight);
-        //SmartDashboard.putData("Ultra PID", pidUltra);
+        SmartDashboard.putData("Ultra PID", pidUltra);
         
         this.set(new DataMap() {{
             add("Left Drive Clicks", new Data() {
@@ -178,6 +178,31 @@ public class Drive extends Module {
                         return false;
                     }
                 }
+            });
+            add("At Ultra Target", new Trigger() {
+            	private final Timer timer = new Timer();
+            	private boolean timing = false;
+            	
+            	public boolean run() {
+            		if(pidUltra.isEnabled() && pidUltra.onTarget())
+            		{
+            			if( !timing )
+            			{
+            				timing = true;
+            				timer.start();
+            			}
+            			
+            			return timer.get() >= 0.5;
+            		} else {
+            			if(timing)
+            			{
+            				timing = false;
+            				timer.stop();
+            				timer.reset();
+            			}
+            			return false;
+            		}
+            	}
             });
             add("Always True", new Trigger() {
             	public boolean run()
@@ -287,7 +312,7 @@ public class Drive extends Module {
                 
                 public void run (ActionData data){
                 	double aV = ultra.getVoltage();
-                	double distance = aV * 42.56;
+                	double distance = aV * -42.56;
                 	if( distance < data.get("inches") - data.get("tolerance") )
                 	{
                 		drive.tankDrive(0.4, 0.4);
@@ -338,7 +363,7 @@ public class Drive extends Module {
                     pidRight.disable();
                 }
             });
-            /*
+            
             add("Ultra Drive", new Action(new FieldMap() {{
                 define("inches", 0D);
                 define("power cap", 0.6D);
@@ -363,7 +388,7 @@ public class Drive extends Module {
                     pidUltra.disable();
                 }
             });
-            */
+            
         }});
     }
 }
