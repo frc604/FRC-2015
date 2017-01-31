@@ -30,7 +30,7 @@ public class UltrasonicPair {
 	 */
 	public double getAngle()
 	{
-		double angle = Math.acos(separation/Math.pow(separation, 2) + Math.pow(getDifference(), 2));
+		double angle = Math.acos(separation/Math.pow((Math.pow(separation, 2) + Math.pow(getDifference(), 2)), 0.5));
 		if( getDifference() < 0 )
 		{
 			return angle * -1;
