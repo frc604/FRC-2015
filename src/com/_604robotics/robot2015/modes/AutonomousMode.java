@@ -1,6 +1,3 @@
-/*
- * 
- */
 package com._604robotics.robot2015.modes;
 
 import com._604robotics.robotnik.coordinator.Coordinator;
@@ -31,8 +28,8 @@ public class AutonomousMode extends Coordinator {
     	), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive"), "inches", 50.0));    			
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Oscil")));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "inches", 50.0));
     		}
     	}));
 

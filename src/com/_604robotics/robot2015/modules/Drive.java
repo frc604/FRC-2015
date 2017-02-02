@@ -327,27 +327,6 @@ public class Drive extends Module {
                     drive.stopMotor();
                 }
             });
-            
-            add("Ultra Oscil", new Action(new FieldMap() {{
-                define("inches", 0D);
-                define("tolerance", 0D);
-            }}) {
-                
-                public void run (ActionData data){
-                	if( ultra.getVoltageOrig() < (data.get("inches")-data.get("tolerance"))/42.56 )
-                	{
-                		drive.tankDrive(-0.4, -0.4);
-                	}
-                	if( ultra.getVoltageOrig() > (data.get("inches")+data.get("tolerance"))/42.56 )
-                	{
-                		drive.tankDrive(0.4, 0.4);
-                	}
-                }
-                
-                public void end (ActionData data) {
-                	drive.stopMotor();
-                }
-            });
             /*
             add("Servo Drive", new Action(new FieldMap() {{
                 define("left clicks", 0D);
@@ -386,7 +365,6 @@ public class Drive extends Module {
             });
             */
             add( "Just Drive", new Action(new FieldMap() {{
-            	
             }}) {
             	public void run(ActionData data)
             	{
@@ -420,6 +398,69 @@ public class Drive extends Module {
                     pidUltra.disable();
                 }
             });
-        }});
+        add("Ultra Oscil", new Action(new FieldMap() {{
+            define("inches", 0D);
+        }}) {
+            
+            public void run (ActionData data){
+            	// at half distance, half power
+            	// so like
+            	// > 24 inches, 0.8 power
+            	// > 12 inches, 0.4 power
+            	// > 6 inches, 0.2 power
+            	// > 3 inches, 0.1 power
+            	// > 1 inches, 0.05 power
+            	if( ultra.getInches() < -(data.get("inches")+24) )
+            	{
+            		drive.tankDrive(0.8, 0.8);
+            	}
+            	else if( ultra.getInches() < -(data.get("inches")+12) )
+            	{
+            		drive.tankDrive(0.4, 0.4);
+            	}
+            	else if( ultra.getInches() < -(data.get("inches")+6) )
+            	{
+            		drive.tankDrive(0.2, 0.2);
+            	}
+            	else if( ultra.getInches() < -(data.get("inches")+3) )
+            	{
+            		drive.tankDrive(0.1, 0.1);
+            	}
+            	else if( ultra.getInches() < -(data.get("inches")+1) )
+            	{
+            		drive.tankDrive(0.05, 0.05);
+            	}
+            	else if( ultra.getInches() > -(data.get("inches")-1) )
+            	{
+            		drive.tankDrive(-0.05, -0.05);
+            	}
+            	else if( ultra.getInches() > -(data.get("inches")-3) )
+            	{
+            		drive.tankDrive(-0.1, -0.1);
+            	}
+            	else if( ultra.getInches() > -(data.get("inches")-6) )
+            	{
+            		drive.tankDrive(-0.2, -0.2);
+            	}
+            	else if( ultra.getInches() > -(data.get("inches")-12) )
+            	{
+            		drive.tankDrive(-0.4, -0.4);
+            	}
+            	else if( ultra.getInches() > -(data.get("inches")-24) )
+            	{
+            		drive.tankDrive(-0.8, -0.8);
+            	}
+            	else
+            	{
+            		drive.stopMotor();
+            	}
+            }
+            
+            public void end (ActionData data) {
+            	drive.stopMotor();
+            }
+        });
+     }});
+
     }
 }

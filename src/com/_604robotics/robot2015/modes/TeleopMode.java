@@ -61,7 +61,6 @@ public TeleopMode () {
                     		driver.buttons.A,
                     		modules.getModule("Dashboard").getTrigger("Ultra Oscil")})));
                     this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "inches",  50.0));
-                    this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "tolerance", 1.0));
             	}
             	/* Dynamic Drive */
             	{
