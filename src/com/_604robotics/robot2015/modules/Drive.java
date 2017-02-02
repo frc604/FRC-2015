@@ -410,45 +410,46 @@ public class Drive extends Module {
             	// > 6 inches, 0.2 power
             	// > 3 inches, 0.1 power
             	// > 1 inches, 0.05 power
-            	if( ultra.getInches() < -(data.get("inches")+24) )
+            	double inches = ultra.getInches(1);
+            	if( inches < -(data.get("inches")+24) )
             	{
-            		drive.tankDrive(0.8, 0.8);
+            		drive.tankDrive(0.5, 0.5);
             	}
-            	else if( ultra.getInches() < -(data.get("inches")+12) )
+            	else if( inches < -(data.get("inches")+12) )
             	{
             		drive.tankDrive(0.4, 0.4);
             	}
-            	else if( ultra.getInches() < -(data.get("inches")+6) )
+            	else if( inches < -(data.get("inches")+6) )
+            	{
+            		drive.tankDrive(0.3, 0.3);
+            	}
+            	else if( inches < -(data.get("inches")+3) )
+            	{
+            		drive.tankDrive(0.25, 0.25);
+            	}
+            	else if( inches < -(data.get("inches")+1) )
             	{
             		drive.tankDrive(0.2, 0.2);
             	}
-            	else if( ultra.getInches() < -(data.get("inches")+3) )
-            	{
-            		drive.tankDrive(0.1, 0.1);
-            	}
-            	else if( ultra.getInches() < -(data.get("inches")+1) )
-            	{
-            		drive.tankDrive(0.05, 0.05);
-            	}
-            	else if( ultra.getInches() > -(data.get("inches")-1) )
-            	{
-            		drive.tankDrive(-0.05, -0.05);
-            	}
-            	else if( ultra.getInches() > -(data.get("inches")-3) )
-            	{
-            		drive.tankDrive(-0.1, -0.1);
-            	}
-            	else if( ultra.getInches() > -(data.get("inches")-6) )
+            	else if( inches > -(data.get("inches")-1) )
             	{
             		drive.tankDrive(-0.2, -0.2);
             	}
-            	else if( ultra.getInches() > -(data.get("inches")-12) )
+            	else if( inches > -(data.get("inches")-3) )
+            	{
+            		drive.tankDrive(-0.25, -0.25);
+            	}
+            	else if( inches > -(data.get("inches")-6) )
+            	{
+            		drive.tankDrive(-0.3, -0.3);
+            	}
+            	else if( inches > -(data.get("inches")-12) )
             	{
             		drive.tankDrive(-0.4, -0.4);
             	}
-            	else if( ultra.getInches() > -(data.get("inches")-24) )
+            	else if( inches > -(data.get("inches")-24) )
             	{
-            		drive.tankDrive(-0.8, -0.8);
+            		drive.tankDrive(-0.5, -0.5);
             	}
             	else
             	{

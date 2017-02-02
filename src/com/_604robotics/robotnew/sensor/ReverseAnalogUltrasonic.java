@@ -19,11 +19,11 @@ public class ReverseAnalogUltrasonic extends ReverseAnalogInput {
 	{
 		int averageValue = 0;
 		int total = 0;
-		for( int f=0; f<64; f++ )
+		for( int f=0; f<16; f++ )
 		{
 			total += super.getValue();
 		}
-		averageValue = total / 64;
+		averageValue = total / 16;
 		return averageValue;
 	}
 	// getValue except with custom sample size
@@ -43,11 +43,11 @@ public class ReverseAnalogUltrasonic extends ReverseAnalogInput {
 	{
 		double averageVoltage = 0;
 		double total = 0;
-		for( int f=0; f<64; f++ )
+		for( int f=0; f<16; f++ )
 		{
 			total += super.getVoltage();
 		}
-		averageVoltage = total/64;
+		averageVoltage = total/16;
 		return averageVoltage;
 	}
 	public double getVoltage(int sample)
