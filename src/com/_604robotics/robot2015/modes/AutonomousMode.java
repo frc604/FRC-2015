@@ -30,12 +30,9 @@ public class AutonomousMode extends Coordinator {
     			modules.getModule("Drive").getTrigger("Always False")})
     	), new Coordinator() {
     		protected void apply (ModuleManager modules) {
-    			/*
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Oscil")));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "inches", 72.0));
-    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "tolerance", 1.0));
-    			*/
-    			this.bind(new Binding(modules.getModule("Drive").getAction("Just Drive")));
+    			
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Drive")));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Drive"), "inches", 50.0));    			
     		}
     	}));
 

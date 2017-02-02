@@ -224,7 +224,7 @@ public class Drive extends Module {
             add("Past Ultra Target", new Trigger() {
             	public boolean run()
             	{
-            		return ultra.getVoltage() > -1.690;
+            		return ultra.getInches() > -50.0;
             	}
             });
             add("Always False", new Trigger() {
