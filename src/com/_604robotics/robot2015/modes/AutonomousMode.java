@@ -7,6 +7,7 @@ import com._604robotics.robotnik.coordinator.steps.Step;
 import com._604robotics.robotnik.module.ModuleManager;
 import com._604robotics.robotnik.prefabs.measure.TriggerMeasure;
 import com._604robotics.robotnik.prefabs.trigger.TriggerAnd;
+import com._604robotics.robotnik.prefabs.trigger.TriggerNot;
 import com._604robotics.robotnik.prefabs.trigger.TriggerOr;
 import com._604robotics.robotnik.trigger.TriggerAccess;
 
@@ -24,12 +25,21 @@ public class AutonomousMode extends Coordinator {
     	step("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
     	
     	step("Moth PID", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
-    			modules.getModule("Drive").getTrigger("Always False")})
+    			modules.getModule("Drive").getTrigger("Boop")})
     	), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			
     			this.bind(new Binding(modules.getModule("Drive").getAction("Ultra Oscil")));
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "inches", 50.0));
+    		}
+    	}));
+    	step("Boop", new Step(new TriggerMeasure(new TriggerNot(
+    			modules.getModule("Drive").getTrigger("Boop"))
+    	), new Coordinator() {
+    		protected void apply (ModuleManager modules) {
+    			this.bind(new Binding(modules.getModule("Drive").getAction("Tank Drive")));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "left", 0.2));
+    			this.fill(new DataWire(modules.getModule("Drive").getAction("Tank Drive"), "right", 0.2));
     		}
     	}));
 
