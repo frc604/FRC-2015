@@ -25,7 +25,8 @@ public class AutonomousMode extends Coordinator {
     	step("Enable", new Step(new TriggerMeasure(modules.getModule("Dashboard").getTrigger("Auton On")), new Coordinator()));
     	
     	step("Moth PID", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
-    			modules.getModule("Drive").getTrigger("Boop")})
+    			modules.getModule("Dashboard").getTrigger("Boop")})
+    			// not a typo
     	), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			
@@ -33,8 +34,10 @@ public class AutonomousMode extends Coordinator {
     			this.fill(new DataWire(modules.getModule("Drive").getAction("Ultra Oscil"), "inches", 50.0));
     		}
     	}));
-    	step("Boop", new Step(new TriggerMeasure(new TriggerNot(
-    			modules.getModule("Drive").getTrigger("Boop"))
+    	step("Moth PID", new Step(new TriggerMeasure(new TriggerAnd(new TriggerAccess[] {
+    			modules.getModule("Dashboard").getTrigger("Moth PID"),
+    			modules.getModule("Drive").getTrigger("Boop")})
+    			// neither is this one cut me some slack you guys
     	), new Coordinator() {
     		protected void apply (ModuleManager modules) {
     			this.bind(new Binding(modules.getModule("Drive").getAction("Tank Drive")));

@@ -202,7 +202,7 @@ public class Drive extends Module {
         	add("Boop", new Trigger() {
         		public boolean run()
         		{
-        			return sensor.get();
+        			return !sensor.get();
         		}
         	});
             add("At Ultra Target", new Trigger() {
