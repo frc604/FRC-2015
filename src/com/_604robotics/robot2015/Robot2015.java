@@ -11,6 +11,7 @@ import com._604robotics.robot2015.modules.Dashboard;
 import com._604robotics.robot2015.modules.Elevator;
 import com._604robotics.robot2015.modules.Gear;
 import com._604robotics.robot2015.modules.Intake;
+import com._604robotics.robot2015.modules.Camera;
 import com._604robotics.robot2015.modules.CanMacro;
 import com._604robotics.robotnik.Robot;
 import com._604robotics.robotnik.coordinator.CoordinatorList;
@@ -39,6 +40,7 @@ public class Robot2015 extends Robot {
             add("Gear", new Gear());
             add("Intake", new Intake());
             add("CanMacro", new CanMacro());
+            add("Camera", new Camera());
         }});
         
         this.set(new ModeMap() {{
