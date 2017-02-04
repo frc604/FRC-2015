@@ -12,6 +12,7 @@ import com._604robotics.robotnik.trigger.Trigger;
 import com._604robotics.robotnik.trigger.TriggerMap;
 
 import edu.wpi.first.wpilibj.CounterBase;
+import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.PIDController;
 import edu.wpi.first.wpilibj.PIDOutput;
@@ -46,6 +47,8 @@ public class Drive extends Module {
     //private final Encoder encoderRight = new Encoder(2, 3, false, CounterBase.EncodingType.k4X);
     
     private final ReverseAnalogUltrasonic ultra = new ReverseAnalogUltrasonic(0);
+    
+    private final DigitalInput sensor = new DigitalInput(1);
     
     //private double PIDLeftOut = 0D;
     //private double PIDRightOut = 0D;
@@ -196,6 +199,12 @@ public class Drive extends Module {
                 }
             });
             */
+        	add("Boop", new Trigger() {
+        		public boolean run()
+        		{
+        			return sensor.get();
+        		}
+        	});
             add("At Ultra Target", new Trigger() {
                 private final Timer timer = new Timer();
                 private boolean timing = false;
